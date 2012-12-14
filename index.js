@@ -1,13 +1,15 @@
 var restify = require('restify');
 var server = restify.createServer();
 
+var middleware = require('./lib/middleware');
+var users = require('./lib/users');
+
 server.use(restify.acceptParser(server.acceptable));
 server.use(restify.authorizationParser());
+server.use(middleware.authorizationHandler(server))
 server.use(restify.dateParser());
 server.use(restify.queryParser());
 server.use(restify.bodyParser());
-
-var users = require('./lib/users');
 
 users(server);
 
