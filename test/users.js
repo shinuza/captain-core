@@ -12,28 +12,38 @@ var client = restify.createJsonClient({
 before(function(done) {
   db.save('users', 'admin', {username: 'admin', password: encode('admin')}, function(err) {
     if(err) throw err;
-    done();
+    client.post('/logout', {}, function(err) {
+      if(err) throw err;
+      done();
+    });
   });
 });
 
-describe('Users', function(){
+describe('Users', function() {
+  it('should not be able to create users without login', function(done) {
+    client.post('/users', {username: 'johndoe', password: 'foobar'}, function(err, req, res){
+      assert.equal(res.statusCode, 401);
+      done();
+    });
+  });
+
   it('should not be able to log with wrong credentials', function(done) {
     client.post('/login', {username: 'pinochio', password: 'foobar'}, function(err, req, res) {
       assert.equal(res.statusCode, 403);
       done();
     });
   });
-  
+
   it('should be able to log with correct credentials', function(done) {
     client.post('/login', {username: 'admin', password: 'admin'}, function(err, req, res) {
       assert.equal(res.statusCode, 200);
       done();
     });
   });
-  
-  it('should create users', function(done) {
-    client.post('/users', {username: 'johndoe', password: 'foobar'}, function(err, req, res, obj){
-      if (err) throw err;
+
+  it('should be able to create users when logged in', function(done) {
+    client.post('/users', {username: 'johndoe', password: 'foobar'}, function(err, req, res){
+      assert.equal(res.statusCode, 201);
       done();
     });
   });
