@@ -5,6 +5,7 @@
   "private": true,
   "dependencies": {
     "restify": "*",
-    "resourceful": "*"
+    "riak-js": "*",
+    "bcrypt": "*"
   }
 }
