@@ -19,14 +19,7 @@ before(function(done) {
   });
 });
 
-describe('Users', function() {
-  it('should not be able to create users without login', function(done) {
-    client.post('/users', {username: 'johndoe', password: 'foobar'}, function(err, req, res){
-      assert.equal(res.statusCode, 401);
-      done();
-    });
-  });
-
+describe('Users:', function() {
   it('should not be able to log with wrong credentials', function(done) {
     client.post('/login', {username: 'pinochio', password: 'foobar'}, function(err, req, res) {
       assert.equal(res.statusCode, 403);
@@ -41,9 +34,16 @@ describe('Users', function() {
     });
   });
 
-  it('should be able to create users when logged in', function(done) {
+  it('should be able to create users', function(done) {
     client.post('/users', {username: 'johndoe', password: 'foobar'}, function(err, req, res){
       assert.equal(res.statusCode, 201);
+      done();
+    });
+  });
+  
+  it('should not be possible to create two users with the same uername', function(done) {
+    client.post('/users', {username: 'johndoe', password: 'foobar'}, function(err, req, res){
+      assert.equal(res.statusCode, 409);
       done();
     });
   });

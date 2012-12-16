@@ -4,11 +4,13 @@
   "version": "0.0.1",
   "private": true,
   "dependencies": {
-    "restify": "*",
+    "express": "*",
+    "express-resource": "*",
     "riak-js": "*",
     "bcrypt": "*"
   },
   "devDependencies": {
-    "mocha": "*"
+    "mocha": "*",
+    "restify": "*"
   }  
 }

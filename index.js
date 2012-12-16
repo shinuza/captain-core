@@ -1,17 +1,15 @@
-var restify = require('restify');
-var server = restify.createServer();
+var express = require('express'),
+    Resource = require('express-resource'),
+    app = express(),
+    settings = require('./settings');
 
-var middleware = require('./lib/middleware');
+app.use(express.bodyParser());
+
 var users = require('./lib/users');
+app.resource('users', users);
+app.post('/login', users.login);
+app.post('/logout', users.logout);
 
-server.use(restify.acceptParser(server.acceptable));
-server.use(restify.bodyParser());
-server.use(restify.dateParser());
-server.use(restify.queryParser());
-server.use(middleware.authorizationHandler(server));
-
-users.attach(server);
-
-server.listen(8080, function() {
-  console.log('%s listening at %s', server.name, server.url);
+app.listen(settings.PORT, settings.HOST, function() {
+  console.log('Listening at http://localhost:8080');
 });
