@@ -19,6 +19,9 @@ app.resource('users', users);
 app.post('/login', users.login);
 app.post('/logout', users.logout);
 
+var posts = require('./lib/posts');
+app.resource('posts', posts);
+
 app.listen(settings.PORT, settings.HOST, function() {
   console.log('Listening at http://localhost:8080');
 });
