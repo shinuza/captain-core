@@ -35,15 +35,36 @@ describe('Users:', function() {
   });
 
   it('should be able to create users', function(done) {
-    client.post('/users', {username: 'johndoe', password: 'foobar'}, function(err, req, res){
+    client.post('/users', {username: 'johndoe', password: 'foobar'}, function(err, req, res) {
       assert.equal(res.statusCode, 201);
       done();
     });
   });
   
   it('should not be possible to create two users with the same uername', function(done) {
-    client.post('/users', {username: 'johndoe', password: 'foobar'}, function(err, req, res){
+    client.post('/users', {username: 'johndoe', password: 'foobar'}, function(err, req, res) {
       assert.equal(res.statusCode, 409);
+      done();
+    });
+  });
+  
+  it('should not be possible to modify a non-existent user', function(done) {
+    client.put('/users/willie', {password: 'neely'}, function(err, req, res) {
+      assert.equal(res.statusCode, 404);
+      done();
+    });
+  });
+  
+  it('should not be possible to remove a non-existent user', function(done) {
+    client.del('/users/willie', function(err, req, res) {
+      assert.equal(res.statusCode, 404);
+      done();
+    });
+  });
+  
+  it('should not be possible to view a non-existent user', function(done) {
+    client.get('/users/willie', function(err, req, res) {
+      assert.equal(res.statusCode, 404);
       done();
     });
   });
