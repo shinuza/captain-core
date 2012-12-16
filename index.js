@@ -5,6 +5,15 @@ var express = require('express'),
 
 app.use(express.bodyParser());
 
+app.use(app.router);
+app.use(function(err, req, res, next){
+  if(err.statusCode) {
+    res.json(err.statusCode, {error: err.message, statusCode: err.statusCode});
+  } else {
+    next(err);
+  }
+});
+
 var users = require('./lib/users');
 app.resource('users', users);
 app.post('/login', users.login);
