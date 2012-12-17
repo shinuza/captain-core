@@ -21,15 +21,18 @@ before(function(done) {
 
 describe('Users:', function() {
   it('should not be able to log with wrong credentials', function(done) {
-    client.post('/login', {username: 'pinochio', password: 'foobar'}, function(err, req, res) {
+    client.post('/login', {username: 'pinochio', password: 'foobar'}, function(err, req, res, data) {
+      assert.equal(data.token, undefined);
       assert.equal(res.statusCode, 403);
       done();
     });
   });
 
   it('should be able to log with correct credentials', function(done) {
-    client.post('/login', {username: 'admin', password: 'admin'}, function(err, req, res) {
+    client.post('/login', {username: 'admin', password: 'admin'}, function(err, req, res, data) {
+      assert.notEqual(data.token, undefined);
       assert.equal(res.statusCode, 200);
+      client.headers.cookie = 'token=' + data.token + ';';
       done();
     });
   });

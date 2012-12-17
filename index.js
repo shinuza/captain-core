@@ -1,5 +1,6 @@
+require('express-resource');
+
 var express = require('express'),
-    Resource = require('express-resource'),
     app = express(),
     settings = require('./settings');
 
