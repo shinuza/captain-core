@@ -1,16 +1,15 @@
 var assert = require('assert');
 var restify = require('restify');
-var db = require('riak-js').getClient();
-
-var encode = require('../lib/users').encode;
 
 // Creates a JSON client
 var client = restify.createJsonClient({
   url: 'http://localhost:8080'
 });
 
+var cli = require('../lib/cli');
+
 before(function(done) {
-  db.save('users', 'admin', {username: 'admin', password: encode('admin')}, function(err) {
+  cli.createuser('admin', 'admin', function(err) {
     if(err) throw err;
     client.post('/logout', {}, function(err, req, res) {
       if(err) throw err;
