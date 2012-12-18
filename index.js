@@ -4,12 +4,32 @@ var express = require('express'),
     app = express(),
     settings = require('./settings');
 
+
+var db = require('riak-js').getClient();
 app.use(express.bodyParser());
+app.use(express.cookieParser());
+app.use(function(req, res, next) {
+  req.user = null;
+  if(!req.cookies.token) { return next(); }
+
+  db.get('tokens', req.cookies.token, function(err, user) {
+    if(!err && user) {
+      req.user = user;
+      next();
+    } else if(err && err.statusCode === 404) {
+      next();
+    } else {
+      next(err);
+    }
+  });
+})
 
 app.use(app.router);
-app.use(function(err, req, res, next){
+app.use(function(err, req, res, next) {
   if(err.statusCode) {
     res.json(err.statusCode, {error: err.message, statusCode: err.statusCode});
+  } else if(err.syscall) {
+    res.json(500, {error: 'An unexcepted error occured'});
   } else {
     next(err);
   }

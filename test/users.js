@@ -12,7 +12,7 @@ var client = restify.createJsonClient({
 before(function(done) {
   db.save('users', 'admin', {username: 'admin', password: encode('admin')}, function(err) {
     if(err) throw err;
-    client.post('/logout', {}, function(err) {
+    client.post('/logout', {}, function(err, req, res) {
       if(err) throw err;
       done();
     });
@@ -20,7 +20,7 @@ before(function(done) {
 });
 
 describe('Users:', function() {
-  it('should not be able to log with wrong credentials', function(done) {
+  it('allow to authenticate with wrong credentials', function(done) {
     client.post('/login', {username: 'pinochio', password: 'foobar'}, function(err, req, res, data) {
       assert.equal(data.token, undefined);
       assert.equal(res.statusCode, 403);
@@ -28,8 +28,16 @@ describe('Users:', function() {
     });
   });
 
-  it('should be able to log with correct credentials', function(done) {
+  it('not allow to create users when not logged in', function(done) {
+    client.post('/users', {username: 'johndoe', password: 'foobar'}, function(err, req, res) {
+      assert.equal(res.statusCode, 403);
+      done();
+    });
+  });
+
+  it('allow to authenticate with correct credentials', function(done) {
     client.post('/login', {username: 'admin', password: 'admin'}, function(err, req, res, data) {
+      assert.ifError(err);
       assert.notEqual(data.token, undefined);
       assert.equal(res.statusCode, 200);
       client.headers.cookie = 'token=' + data.token + ';';
@@ -37,7 +45,7 @@ describe('Users:', function() {
     });
   });
 
-  it('should be able to create users', function(done) {
+  it('allow to create users when logged in', function(done) {
     client.post('/users', {username: 'johndoe', password: 'foobar'}, function(err, req, res) {
       assert.equal(res.statusCode, 201);
       done();
