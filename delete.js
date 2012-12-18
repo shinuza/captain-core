@@ -1,13 +1,12 @@
 var db = require('riak-js').getClient()
 
-
-function remove(bucket) {
-  var delete_keys = function(key) {
-    db.remove(bucket, key);
-  }
-
-  db.keys(bucket, { keys: 'stream' }).on('keys', delete_keys).start()
+function remove(buckets) {
+  buckets.forEach(function(bucket) {
+    var deleteKeys = function(key) {
+      db.remove(bucket, key);
+    }
+    db.keys(bucket, { keys: 'stream' }).on('keys', deleteKeys).start();
+  })
 }
 
-remove('users');
-remove('posts');
+remove(['users', 'posts']);
