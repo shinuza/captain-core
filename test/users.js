@@ -9,7 +9,7 @@ var client = restify.createJsonClient({
 var cli = require('../lib/cli');
 
 before(function(done) {
-  cli.createuser('admin', 'admin', function(err) {
+  cli.createUser('admin', 'admin', function(err) {
     if(err) throw err;
     client.post('/logout', {}, function(err, req, res) {
       if(err) throw err;
@@ -54,6 +54,13 @@ describe('Users:', function() {
   it('should not be possible to create two users with the same uername', function(done) {
     client.post('/users', {username: 'johndoe', password: 'foobar'}, function(err, req, res) {
       assert.equal(res.statusCode, 409);
+      done();
+    });
+  });
+
+  it('should be possible to modify a user', function(done) {
+    client.put('/users/admin', {password: 'admin2'}, function(err, req, res) {
+      assert.equal(res.statusCode, 201);
       done();
     });
   });
