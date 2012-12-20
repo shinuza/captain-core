@@ -1,7 +1,6 @@
 var assert = require('assert');
 var restify = require('restify');
 
-// Creates a JSON client
 var client = restify.createJsonClient({
   url: 'http://localhost:8080'
 });

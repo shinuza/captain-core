@@ -1,18 +1,16 @@
 var assert = require('assert');
 var restify = require('restify');
 
-// Creates a JSON client
 var client = restify.createJsonClient({
   url: 'http://localhost:8080'
 });
 
-var User = require('../lib/users').User;
-var cli = require('../lib/cli');
+var users = require('../lib/users');
 
 before(function(done) {
-  User.destroyAll(function(err) {
+  users.User.destroyAll(function(err) {
     if(err) throw err;
-    cli.createUser('admin', 'admin', function(err) {
+    users.createUser('admin', 'admin', function(err) {
       if(err) throw err;
       client.post('/logout', {}, function(err) {
         if(err) throw err;
