@@ -20,13 +20,6 @@ before(function(done) {
   });
 });
 
-describe('Posts:helpers', function() {
-  it('should slugify the given string', function() {
-    var result = posts.slugify("Un éléphant à l'orée du bois");
-    assert.equal(result, 'un-elephant-a-loree-du-bois');
-  });
-});
-
 describe('Posts:', function() {
   it('should be possible to create posts', function(done) {
     client.post('/posts',
