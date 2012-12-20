@@ -6,12 +6,13 @@
   "dependencies": {
     "express": "*",
     "express-resource": "*",
-    "riak-js": "*",
+    "jugglingdb": "*",
+    "jugglingdb-redis": "*",
     "commander": "*",
     "bcrypt": "*"
   },
   "devDependencies": {
     "mocha": "*",
     "restify": "*"
-  }  
+  }
 }

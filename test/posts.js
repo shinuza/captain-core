@@ -1,18 +1,30 @@
 var assert = require('assert');
 var restify = require('restify');
-var db = require('riak-js').getClient();
 
 // Creates a JSON client
 var client = restify.createJsonClient({
   url: 'http://localhost:8080'
 });
 
+var posts = require('../lib/posts');
 
 before(function(done) {
-  db.save('posts', 'some-title',
-  {slug: 'some-title', title: 'Some title', created: new Date(), content: "Lorem ipsum"}, function(err) {
-    assert.ifError(err);
-    done();
+  posts.Post.destroyAll(function(err) {
+    if(err) throw err;
+    new posts.Post({title: 'Some title', created: new Date(), content: "Lorem ipsum"}).save(function(err) {
+      if(err) throw err;
+      client.post('/logout', {}, function(err) {
+        if(err) throw err;
+        done();
+      });
+    });
+  });
+});
+
+describe('Posts:helpers', function() {
+  it('should slugify the given string', function() {
+    var result = posts.slugify("Un éléphant à l'orée du bois");
+    assert.equal(result, 'un-elephant-a-loree-du-bois');
   });
 });
 
@@ -27,8 +39,7 @@ describe('Posts:', function() {
   });
 
   it('should be posibble to edit posts', function(done) {
-    client.put('/posts/some-title',
-    {title: 'Some edited title'}, function(err, req, res) {
+    client.put('/posts/some-title', {title: 'Some edited title'}, function(err, req, res) {
       assert.equal(res.statusCode, 201);
       done();
     });
@@ -51,9 +62,9 @@ describe('Posts:', function() {
     });
   });
 
-  it('should be posibble to remove a post', function(done) {
+  it('should be posible to remove a post', function(done) {
     client.del('/posts/some-title', function(err, req, res) {
-      assert.equal(res.statusCode, 200);
+      assert.equal(res.statusCode, 204);
       done();
     });
   });

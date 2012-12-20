@@ -6,14 +6,18 @@ var client = restify.createJsonClient({
   url: 'http://localhost:8080'
 });
 
+var User = require('../lib/users').User;
 var cli = require('../lib/cli');
 
 before(function(done) {
-  cli.createUser('admin', 'admin', function(err) {
+  User.destroyAll(function(err) {
     if(err) throw err;
-    client.post('/logout', {}, function(err, req, res) {
+    cli.createUser('admin', 'admin', function(err) {
       if(err) throw err;
-      done();
+      client.post('/logout', {}, function(err) {
+        if(err) throw err;
+        done();
+      });
     });
   });
 });
@@ -27,7 +31,7 @@ describe('Users:', function() {
     });
   });
 
-  it('not allow to create users when not logged in', function(done) {
+  it('does not allow to create users when not logged in', function(done) {
     client.post('/users', {username: 'johndoe', password: 'foobar'}, function(err, req, res) {
       assert.equal(res.statusCode, 403);
       done();
@@ -50,7 +54,7 @@ describe('Users:', function() {
       done();
     });
   });
-  
+
   it('should not be possible to create two users with the same uername', function(done) {
     client.post('/users', {username: 'johndoe', password: 'foobar'}, function(err, req, res) {
       assert.equal(res.statusCode, 409);
@@ -64,24 +68,38 @@ describe('Users:', function() {
       done();
     });
   });
-  
+
   it('should not be possible to modify a non-existent user', function(done) {
     client.put('/users/willie', {password: 'neely'}, function(err, req, res) {
       assert.equal(res.statusCode, 404);
       done();
     });
   });
-  
+
+  it('should not be possible to view a non-existent user', function(done) {
+    client.get('/users/willie', function(err, req, res) {
+      assert.equal(res.statusCode, 404);
+      done();
+    });
+  });
+
+  it('should be possible to view a user', function(done) {
+    client.get('/users/johndoe', function(err, req, res) {
+      assert.equal(res.statusCode, 200);
+      done();
+    });
+  });
+
   it('should not be possible to remove a non-existent user', function(done) {
     client.del('/users/willie', function(err, req, res) {
       assert.equal(res.statusCode, 404);
       done();
     });
   });
-  
-  it('should not be possible to view a non-existent user', function(done) {
-    client.get('/users/willie', function(err, req, res) {
-      assert.equal(res.statusCode, 404);
+
+  it('should be possible to remove a user', function(done) {
+    client.del('/users/johndoe', function(err, req, res) {
+      assert.equal(res.statusCode, 204);
       done();
     });
   });
