@@ -5,7 +5,7 @@ var client = restify.createJsonClient({
   url: 'http://localhost:8080'
 });
 
-var posts = require('../lib/posts');
+var models = require('../lib/models');
 
 function factory(items, cb) {
   var i, done = 0, tmpl;
@@ -14,7 +14,7 @@ function factory(items, cb) {
     tmpl.created = new Date();
     tmpl.title = 'Some title ' + i;
     tmpl.content = 'Lorem ipsum ' + i;
-    posts.Post.create(tmpl, function(err) {
+    models.Post.create(tmpl, function(err) {
       if(err) throw err;
       done++;
       if(done == items) cb();
@@ -23,7 +23,7 @@ function factory(items, cb) {
 }
 
 before(function(done) {
-  posts.Post.destroyAll(function(err) {
+  models.Post.destroyAll(function(err) {
     if(err) throw err;
     factory(50, function() {
       client.post('/logout', {}, function(err) {

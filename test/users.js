@@ -5,10 +5,11 @@ var client = restify.createJsonClient({
   url: 'http://localhost:8080'
 });
 
+var models = require('../lib/models');
 var users = require('../lib/users');
 
 before(function(done) {
-  users.User.destroyAll(function(err) {
+  models.User.destroyAll(function(err) {
     if(err) throw err;
     users.createUser('admin', 'admin', function(err) {
       if(err) throw err;
