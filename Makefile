@@ -1,4 +1,4 @@
 default: run
 
 run:
-	node lib/models && mocha
+	./lib/cli.js syncdb --force && mocha
