@@ -1,4 +1,4 @@
 default: run
 
 run:
-	mocha
+	node lib/models && mocha

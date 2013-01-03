@@ -7,8 +7,8 @@
     "commander": "*",
     "express": "*",
     "express-resource": "*",
-    "jugglingdb": "*",
-    "jugglingdb-redis": "*"
+    "sequelize": "*",
+    "sqlite3": "*"
   },
   "devDependencies": {
     "mocha": "*",

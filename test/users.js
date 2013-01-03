@@ -9,14 +9,10 @@ var models = require('../lib/models');
 var users = require('../lib/users');
 
 before(function(done) {
-  models.User.destroyAll(function(err) {
-    if(err) throw err;
-    users.createUser('admin', 'admin', function(err) {
+  users.createUser('admin', 'admin', function() {
+    client.post('/logout', {}, function(err) {
       if(err) throw err;
-      client.post('/logout', {}, function(err) {
-        if(err) throw err;
-        done();
-      });
+      done();
     });
   });
 });
@@ -49,12 +45,13 @@ describe('Users:', function() {
 
   it('allow to create users when logged in', function(done) {
     client.post('/users', {username: 'johndoe', password: 'foobar'}, function(err, req, res) {
+      assert.ifError(err);
       assert.equal(res.statusCode, 201);
       done();
     });
   });
 
-  it('should not be possible to create two users with the same uername', function(done) {
+  it('should not be possible to create two users with the same username', function(done) {
     client.post('/users', {username: 'johndoe', password: 'foobar'}, function(err, req, res) {
       assert.equal(res.statusCode, 409);
       done();
