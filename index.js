@@ -9,9 +9,9 @@ app.use(express.cookieParser());
 app.use(middleware.authenticate());
 
 
-var users = require('./lib/users');
-var posts = require('./lib/posts');
-var tags = require('./lib/tags');
+var users = require('./lib/resources/users');
+var posts = require('./lib/resources/posts');
+var tags = require('./lib/resources/tags');
 
 app.post('/users/login', users.login);
 app.post('/users/logout', users.logout);

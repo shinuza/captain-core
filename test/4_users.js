@@ -6,7 +6,7 @@ var client = restify.createJsonClient({
 });
 
 var models = require('../lib/models');
-var users = require('../lib/users');
+var users = require('../lib/resources/users');
 
 before(function(done) {
   users.createUser('admin', 'admin', function() {
