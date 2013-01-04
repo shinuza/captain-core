@@ -63,7 +63,7 @@ describe('Posts:', function() {
     });
   });
 
-  it('should be possible to view a non-existing post', function(done) {
+  it('should not be possible to view a non-existing post', function(done) {
     client.get('/posts/i-dont-exist', function(err, req, res) {
       var body = JSON.parse(res.body);
 
@@ -93,7 +93,7 @@ describe('Posts:', function() {
     });
   });
 
-  it('should be possible to remove a non-existing post', function(done) {
+  it('should not be possible to remove a non-existing post', function(done) {
     client.del('/posts/i-dont-exist', function(err, req, res) {
       var body = JSON.parse(res.body);
 
