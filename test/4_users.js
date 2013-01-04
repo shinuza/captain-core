@@ -10,7 +10,7 @@ var users = require('../lib/users');
 
 before(function(done) {
   users.createUser('admin', 'admin', function() {
-    client.post('/logout', {}, function(err) {
+    client.post('/users/logout', {}, function(err) {
       if(err) throw err;
       done();
     });
@@ -19,7 +19,7 @@ before(function(done) {
 
 describe('Users:', function() {
   it('allow to authenticate with wrong credentials', function(done) {
-    client.post('/login', {username: 'pinochio', password: 'foobar'}, function(err, req, res, data) {
+    client.post('/users/login', {username: 'pinochio', password: 'foobar'}, function(err, req, res, data) {
       assert.equal(data.token, undefined);
       assert.equal(res.statusCode, 403);
       done();
@@ -34,7 +34,7 @@ describe('Users:', function() {
   });
 
   it('allow to authenticate with correct credentials', function(done) {
-    client.post('/login', {username: 'admin', password: 'admin'}, function(err, req, res, data) {
+    client.post('/users/login', {username: 'admin', password: 'admin'}, function(err, req, res, data) {
       assert.ifError(err);
       assert.notEqual(data.token, undefined);
       assert.equal(res.statusCode, 200);

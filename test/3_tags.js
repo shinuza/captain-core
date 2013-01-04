@@ -9,17 +9,17 @@ var client = restify.createJsonClient({
 var models = require('../lib/models');
 
 function factory(nb, cb) {
-  var postChainer = new Sequelize.Utils.QueryChainer;
+  var tagChainer = new Sequelize.Utils.QueryChainer;
   for(var i = 0; i < nb; i++) {
-    var p = models.Post.build({title: 'post ' + i, slug: "post-" + i, description: 'Long text somehow', body: 'Cool'});
-    postChainer.add(p.save());
+    var p = models.Tag.build({title: 'tag ' + i, slug: "tag-" + i});
+    tagChainer.add(p.save());
   }
-  postChainer.run().success(cb).error(function(error) {throw error});
+  tagChainer.run().success(cb).error(function(error) {throw error});
 }
 
 before(function(done) {
-  factory(50, function() {
-    client.post('/logout', {}, function(err) {
+  factory(10, function() {
+    client.post('/users/logout', {}, function(err) {
       if(err) throw err;
       done();
     });
@@ -28,32 +28,32 @@ before(function(done) {
 
 describe('Posts:', function() {
 
-  it('should not be possible to create a post with an existing slug', function(done) {
-    client.post('/posts',
-      {title: 'post 49', description: 'A description', body: "Lorem ipsum!!"}, function(err, req, res) {
+  it('should not be possible to create a tag with an existing slug', function(done) {
+    client.post('/tags',
+      {title: 'tag 5'}, function(err, req, res) {
         assert.equal(res.statusCode, 409);
         done();
       });
   });
 
-  it('should be possible to create posts', function(done) {
-    client.post('/posts',
-    {title: 'Some other title', description: 'A description', body: "Lorem ipsum!!"}, function(err, req, res) {
-      assert.ifError(err);
-      assert.equal(res.statusCode, 201);
-      done();
-    });
+  it('should be possible to create tags', function(done) {
+    client.post('/tags',
+      {title: 'Some other title'}, function(err, req, res) {
+        assert.ifError(err);
+        assert.equal(res.statusCode, 201);
+        done();
+      });
   });
 
   it('should be possible to edit posts', function(done) {
-    client.put('/posts/some-other-title', {title: 'Some edited title 1'}, function(err, req, res) {
+    client.put('/tags/some-other-title', {title: 'Some edited title 1'}, function(err, req, res) {
       assert.equal(res.statusCode, 201);
       done();
     });
   });
 
   it('should be possible to view a single post', function(done) {
-    client.get('/posts/some-other-title', function(err, req, res) {
+    client.get('/tags/some-other-title', function(err, req, res) {
       var body = JSON.parse(res.body);
 
       assert.equal(res.statusCode, 200);
@@ -63,8 +63,8 @@ describe('Posts:', function() {
     });
   });
 
-  it('should not be possible to view a non-existing post', function(done) {
-    client.get('/posts/i-dont-exist', function(err, req, res) {
+  it('should be possible to view a non-existing post', function(done) {
+    client.get('/tags/i-dont-exist', function(err, req, res) {
       var body = JSON.parse(res.body);
 
       assert.equal(res.statusCode, 404);
@@ -75,26 +75,26 @@ describe('Posts:', function() {
 
 
   it('should be possible to view multiple posts at once', function(done) {
-    client.get('/posts', function(err, req, res) {
+    client.get('/tags', function(err, req, res) {
       var body = JSON.parse(res.body);
 
-      assert.equal(body.length, 51);
+      assert.equal(body.length, 11);
       done();
     });
   });
 
   it('should be possible to view only a subset of posts', function(done) {
-    client.get('/posts?offset=5&limit=10', function(err, req, res) {
+    client.get('/tags?offset=2&limit=3', function(err, req, res) {
       var body = JSON.parse(res.body);
 
-      assert.equal(body.length, 10);
-      assert.equal(body[0].title, 'post 5');
+      assert.equal(body.length, 3);
+      assert.equal(body[0].title, 'tag 2');
       done();
     });
   });
 
-  it('should not be possible to remove a non-existing post', function(done) {
-    client.del('/posts/i-dont-exist', function(err, req, res) {
+  it('should be possible to remove a non-existing post', function(done) {
+    client.del('/tags/i-dont-exist', function(err, req, res) {
       var body = JSON.parse(res.body);
 
       assert.equal(res.statusCode, 404);
@@ -104,9 +104,10 @@ describe('Posts:', function() {
   });
 
   it('should be posible to remove a post', function(done) {
-    client.del('/posts/post-49', function(err, req, res) {
+    client.del('/tags/tag-2', function(err, req, res) {
       assert.equal(res.statusCode, 204);
       done();
     });
   });
+
 });
