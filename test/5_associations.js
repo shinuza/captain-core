@@ -28,3 +28,24 @@ describe('Posts <-> user association:', function() {
   });
 
 });
+
+describe('User <-> posts association:', function() {
+
+  it('should possible to associate posts with a user', function(done) {
+    client.get('/posts/?limit=5', function(err, req, res, posts) {
+      client.post('/users/admin/posts', posts, function(err, req, res) {
+        assert.equal(res.statusCode, 201);
+        done();
+      });
+    });
+  });
+
+  it('should possible to get the associated posts of a user', function(done) {
+    client.get('/users/admin/posts', function(err, req, res, json) {
+      assert.equal(res.statusCode, 200);
+      assert.equal(json.length, 5);
+      done();
+    });
+  });
+
+});

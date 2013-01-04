@@ -16,7 +16,7 @@ var tags = require('./lib/tags');
 app.post('/users/login', users.login);
 app.post('/users/logout', users.logout);
 app.post('/users/:user/posts', users.posts.associate);
-app.get('/users/:user/posts/', users.posts.list);
+app.get('/users/:user/posts', users.posts.list);
 app.resource('users', users);
 
 app.post('/posts/:post/user', posts.user.associate);
