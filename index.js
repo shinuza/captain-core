@@ -22,7 +22,7 @@ app.resource('users', users);
 app.post('/posts/:post/user', posts.user.associate);
 app.get('/posts/:post/user', posts.user.show);
 app.post('/posts/:post/tags', posts.tags.associate);
-app.get('posts', posts.tags.list);
+app.get('/posts/:post/tags', posts.tags.list);
 app.resource('posts', posts);
 
 app.post('/tags/:tag/posts', tags.posts.associate);
