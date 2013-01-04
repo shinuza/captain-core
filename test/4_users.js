@@ -18,6 +18,7 @@ before(function(done) {
 });
 
 describe('Users:', function() {
+
   it('allow to authenticate with wrong credentials', function(done) {
     client.post('/users/login', {username: 'pinochio', password: 'foobar'}, function(err, req, res, data) {
       assert.equal(data.token, undefined);
@@ -99,4 +100,5 @@ describe('Users:', function() {
       done();
     });
   });
+
 });

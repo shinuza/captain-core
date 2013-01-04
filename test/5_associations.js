@@ -8,7 +8,7 @@ var client = restify.createJsonClient({
 
 var models = require('../lib/models');
 
-describe('Posts:', function() {
+describe('Posts <-> user association:', function() {
 
   it('should possible to associate a user with a post', function(done) {
     client.get('/users/admin', function(err, req, res, user) {
@@ -26,4 +26,5 @@ describe('Posts:', function() {
       done();
     });
   });
+
 });
