@@ -49,3 +49,24 @@ describe('User <-> posts association:', function() {
   });
 
 });
+
+describe('Posts <-> tags association:', function() {
+
+  it('should possible to associate posts with tags', function(done) {
+    client.get('/posts/?limit=5', function(err, req, res, posts) {
+      client.post('/tags/tag-1/posts', posts, function(err, req, res) {
+        assert.equal(res.statusCode, 201);
+        done();
+      });
+    });
+  });
+
+  it('should possible to get the associated posts of a tag', function(done) {
+    client.get('/tags/tag-1/posts', function(err, req, res, json) {
+      assert.equal(res.statusCode, 200);
+      assert.equal(json.length, 5);
+      done();
+    });
+  });
+
+});
