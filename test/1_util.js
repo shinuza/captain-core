@@ -1,7 +1,7 @@
 var assert = require('assert');
-var helpers = require('../lib/helpers');
+var helpers = require('../lib/util');
 
-describe('Helpers', function() {
+describe('Util', function() {
 
   it('should slugify the given string', function() {
     var result = helpers.slugify("Un éléphant à l'orée du bois");
