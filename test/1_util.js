@@ -1,10 +1,10 @@
 var assert = require('assert');
-var helpers = require('../lib/util');
+var util = require('../lib/util');
 
 describe('Util', function() {
 
   it('should slugify the given string', function() {
-    var result = helpers.slugify("Un éléphant à l'orée du bois");
+    var result = util.slugify("Un éléphant à l'orée du bois");
     assert.equal(result, 'un-elephant-a-loree-du-bois');
   });
 
@@ -14,8 +14,20 @@ describe('Util', function() {
       {name: 'Jeremy', age: 10},
       {name: 'Anna', age: 5}
     ];
-    assert.deepEqual(helpers.pluck(arr, 'name'), ['John', 'Jeremy', 'Anna']);
-    assert.deepEqual(helpers.pluck(arr, 'age'), [32, 10, 5]);
+    assert.deepEqual(util.pluck(arr, 'name'), ['John', 'Jeremy', 'Anna']);
+    assert.deepEqual(util.pluck(arr, 'age'), [32, 10, 5]);
+  });
+
+  it('should properly encode a password', function(done) {
+    util.encode('foobar', function(err, encrypted) {
+      assert.ifError(err);
+      assert.equal(128, encrypted.length);
+      util.compare('foobar', encrypted, function(err, same) {
+        assert.ifError(err);
+        assert.equal(true, same);
+        done()
+      });
+    });
   });
 
 });
