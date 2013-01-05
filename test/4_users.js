@@ -1,12 +1,12 @@
 var assert = require('assert');
 var restify = require('restify');
 
+var models = require('../lib/models');
+var users = require('../lib/resources/users');
+
 var client = restify.createJsonClient({
   url: 'http://localhost:8080'
 });
-
-var models = require('../lib/models');
-var users = require('../lib/resources/users');
 
 before(function(done) {
   users.createUser('admin', 'admin', function() {
@@ -20,8 +20,8 @@ before(function(done) {
 describe('Users:', function() {
 
   it('allow to authenticate with wrong credentials', function(done) {
-    client.post('/users/login', {username: 'pinochio', password: 'foobar'}, function(err, req, res, data) {
-      assert.equal(data.token, undefined);
+    client.post('/users/login', {username: 'pinochio', password: 'foobar'}, function(err, req, res, json) {
+      assert.equal(json.token, undefined);
       assert.equal(res.statusCode, 403);
       done();
     });
@@ -35,11 +35,11 @@ describe('Users:', function() {
   });
 
   it('allow to authenticate with correct credentials', function(done) {
-    client.post('/users/login', {username: 'admin', password: 'admin'}, function(err, req, res, data) {
+    client.post('/users/login', {username: 'admin', password: 'admin'}, function(err, req, res, json) {
       assert.ifError(err);
-      assert.notEqual(data.token, undefined);
+      assert.notEqual(json.token, undefined);
       assert.equal(res.statusCode, 200);
-      client.headers.cookie = 'token=' + data.token + ';';
+      client.headers.cookie = 'token=' + json.token + ';';
       done();
     });
   });

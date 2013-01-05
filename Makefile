@@ -1,4 +1,4 @@
 default: run
 
 run:
-	./lib/cli.js syncdb --force && mocha
+	./lib/cli.js syncdb --force && mocha -R spec

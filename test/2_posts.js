@@ -2,11 +2,11 @@ var assert = require('assert');
 var restify = require('restify');
 var Sequelize = require("sequelize");
 
+var models = require('../lib/models');
+
 var client = restify.createJsonClient({
   url: 'http://localhost:8080'
 });
-
-var models = require('../lib/models');
 
 function factory(nb, cb) {
   var postChainer = new Sequelize.Utils.QueryChainer;
@@ -53,52 +53,42 @@ describe('Posts:', function() {
   });
 
   it('should be possible to view a single post', function(done) {
-    client.get('/posts/some-other-title', function(err, req, res) {
-      var body = JSON.parse(res.body);
-
+    client.get('/posts/some-other-title', function(err, req, res, json) {
       assert.equal(res.statusCode, 200);
-      assert.equal(body.title, 'Some edited title 1');
-      assert.equal(body.slug, 'some-other-title');
+      assert.equal(json.title, 'Some edited title 1');
+      assert.equal(json.slug, 'some-other-title');
       done();
     });
   });
 
   it('should not be possible to view a non-existing post', function(done) {
-    client.get('/posts/i-dont-exist', function(err, req, res) {
-      var body = JSON.parse(res.body);
-
+    client.get('/posts/i-dont-exist', function(err, req, res, json) {
       assert.equal(res.statusCode, 404);
-      assert.equal(body.error, 'Not found');
+      assert.equal(json.error, 'Not found');
       done();
     });
   });
 
 
   it('should be possible to view multiple posts at once', function(done) {
-    client.get('/posts', function(err, req, res) {
-      var body = JSON.parse(res.body);
-
-      assert.equal(body.length, 51);
+    client.get('/posts', function(err, req, res, json) {
+      assert.equal(json.length, 51);
       done();
     });
   });
 
   it('should be possible to view only a subset of posts', function(done) {
-    client.get('/posts?offset=5&limit=10', function(err, req, res) {
-      var body = JSON.parse(res.body);
-
-      assert.equal(body.length, 10);
-      assert.equal(body[0].title, 'post 5');
+    client.get('/posts?offset=5&limit=10', function(err, req, res, json) {
+      assert.equal(json.length, 10);
+      assert.equal(json[0].title, 'post 5');
       done();
     });
   });
 
   it('should not be possible to remove a non-existing post', function(done) {
-    client.del('/posts/i-dont-exist', function(err, req, res) {
-      var body = JSON.parse(res.body);
-
+    client.del('/posts/i-dont-exist', function(err, req, res, json) {
       assert.equal(res.statusCode, 404);
-      assert.equal(body.error, 'Not found');
+      assert.equal(json.error, 'Not found');
       done();
     });
   });

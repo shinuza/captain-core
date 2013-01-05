@@ -2,24 +2,27 @@ var assert = require('assert');
 var restify = require('restify');
 var Sequelize = require("sequelize");
 
+var models = require('../lib/models');
+
 var client = restify.createJsonClient({
   url: 'http://localhost:8080'
 });
 
-var models = require('../lib/models');
+describe('Posts user association:', function() {
 
-describe('Posts <-> user association:', function() {
-
-  it('should possible to associate a user with a post', function(done) {
+  it('should associate a user with a post', function(done) {
+    console.log('asso')
     client.get('/users/admin', function(err, req, res, user) {
-      client.post('/posts/post-1/user', user, function(err, req, res, json) {
+      console.log(res.statusCode)
+      assert.equal(res.statusCode, 200);
+      client.post('/posts/post-1/user', user, function(err, req, res) {
         assert.equal(res.statusCode, 201);
         done();
       });
     });
   });
 
-  it('should possible to get the associated user of a post', function(done) {
+  it('should get the associated user of a post', function(done) {
     client.get('/posts/post-1/user', function(err, req, res, json) {
       assert.equal(res.statusCode, 200);
       assert.notEqual(json, null);
@@ -29,9 +32,9 @@ describe('Posts <-> user association:', function() {
 
 });
 
-describe('User <-> posts association:', function() {
+describe('User posts association:', function() {
 
-  it('should possible to associate posts with a user', function(done) {
+  it('should associate posts with a user', function(done) {
     client.get('/posts/?limit=5', function(err, req, res, posts) {
       client.post('/users/admin/posts', posts, function(err, req, res) {
         assert.equal(res.statusCode, 201);
@@ -40,7 +43,7 @@ describe('User <-> posts association:', function() {
     });
   });
 
-  it('should possible to get the associated posts of a user', function(done) {
+  it('should get the associated posts of a user', function(done) {
     client.get('/users/admin/posts', function(err, req, res, json) {
       assert.equal(res.statusCode, 200);
       assert.equal(json.length, 5);
@@ -50,9 +53,9 @@ describe('User <-> posts association:', function() {
 
 });
 
-describe('Posts <-> tags association:', function() {
+describe('Posts tags association:', function() {
 
-  it('should possible to associate posts with tags', function(done) {
+  it('should associate posts with tags', function(done) {
     client.get('/posts/?limit=5&offset=5', function(err, req, res, posts) {
       client.post('/tags/tag-1/posts', posts, function(err, req, res) {
         assert.equal(res.statusCode, 201);
@@ -61,7 +64,7 @@ describe('Posts <-> tags association:', function() {
     });
   });
 
-  it('should possible to get the associated posts of a tag', function(done) {
+  it('should get the associated posts of a tag', function(done) {
     client.get('/tags/tag-1/posts', function(err, req, res, json) {
       assert.equal(res.statusCode, 200);
       assert.equal(json.length, 5);
@@ -71,9 +74,9 @@ describe('Posts <-> tags association:', function() {
 
 });
 
-describe('Tags <-> posts association:', function() {
+describe('Tags posts association:', function() {
 
-  it('should possible to associate tags with posts', function(done) {
+  it('should associate tags with posts', function(done) {
     client.get('/tags/?limit=5', function(err, req, res, tags) {
       client.post('/posts/post-1/tags', tags, function(err, req, res) {
         assert.equal(res.statusCode, 201);
@@ -82,7 +85,7 @@ describe('Tags <-> posts association:', function() {
     });
   });
 
-  it('should possible to get the associated tags of a post', function(done) {
+  it('should get the associated tags of a post', function(done) {
     client.get('/posts/post-1/tags', function(err, req, res, json) {
       assert.equal(res.statusCode, 200);
       assert.equal(json.length, 5);
