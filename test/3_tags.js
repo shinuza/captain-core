@@ -64,7 +64,7 @@ describe('Posts:', function() {
   it('should be possible to view a non-existing post', function(done) {
     client.get('/tags/i-dont-exist', function(err, req, res, json) {
       assert.equal(res.statusCode, 404);
-      assert.equal(json.error, 'Not found');
+      assert.equal(json.message, 'Not found');
       done();
     });
   });
@@ -88,7 +88,7 @@ describe('Posts:', function() {
   it('should be possible to remove a non-existing post', function(done) {
     client.del('/tags/i-dont-exist', function(err, req, res, json) {
       assert.equal(res.statusCode, 404);
-      assert.equal(json.error, 'Not found');
+      assert.equal(json.message, 'Not found');
       done();
     });
   });
