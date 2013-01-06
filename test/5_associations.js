@@ -11,7 +11,6 @@ var client = restify.createJsonClient({
 describe('Posts user association:', function() {
 
   it('should associate a user with a post', function(done) {
-    console.log('asso')
     client.get('/users/admin', function(err, req, res, user) {
       console.log(res.statusCode)
       assert.equal(res.statusCode, 200);
