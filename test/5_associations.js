@@ -12,7 +12,6 @@ describe('Posts user association:', function() {
 
   it('should associate a user with a post', function(done) {
     client.get('/users/admin', function(err, req, res, user) {
-      console.log(res.statusCode)
       assert.equal(res.statusCode, 200);
       client.post('/posts/post-1/user', user, function(err, req, res) {
         assert.equal(res.statusCode, 201);
