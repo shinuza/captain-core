@@ -7,6 +7,10 @@ var middleware = require('./lib/middleware');
 app.use(express.bodyParser());
 app.use(express.cookieParser());
 app.use(middleware.authenticate());
+app.use(function(req, res, next) {
+  res.header('Access-Control-Allow-Origin', '*');
+  next()
+});
 
 
 var users = require('./lib/resources/users');
