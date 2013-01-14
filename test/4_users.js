@@ -9,7 +9,7 @@ var client = restify.createJsonClient({
 });
 
 before(function(done) {
-  users.createUser('admin', 'admin', function() {
+  users.createUser('admin', 'youplaboom', function() {
     client.post('/users/logout', {}, function(err) {
       if(err) throw err;
       done();
@@ -35,7 +35,7 @@ describe('Users:', function() {
   });
 
   it('allow to authenticate with correct credentials', function(done) {
-    client.post('/users/login', {username: 'admin', password: 'admin'}, function(err, req, res, json) {
+    client.post('/users/login', {username: 'admin', password: 'youplaboom'}, function(err, req, res, json) {
       assert.ifError(err);
       assert.notEqual(json.token, undefined);
       assert.equal(res.statusCode, 200);
