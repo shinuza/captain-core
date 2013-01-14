@@ -60,14 +60,14 @@ describe('Users:', function() {
   });
 
   it('should be possible to modify a user', function(done) {
-    client.put('/users/admin', {password: 'admin2'}, function(err, req, res) {
+    client.put('/users/1', {password: 'hellooooo'}, function(err, req, res) {
       assert.equal(res.statusCode, 201);
       done();
     });
   });
 
   it('should not be possible to modify a non-existent user', function(done) {
-    client.put('/users/willie', {password: 'neely'}, function(err, req, res) {
+    client.put('/users/50', {firstname: 'babyyy'}, function(err, req, res) {
       assert.equal(res.statusCode, 404);
       done();
     });
@@ -88,14 +88,14 @@ describe('Users:', function() {
   });
 
   it('should not be possible to remove a non-existent user', function(done) {
-    client.del('/users/willie', function(err, req, res) {
+    client.del('/users/50', function(err, req, res) {
       assert.equal(res.statusCode, 404);
       done();
     });
   });
 
   it('should be possible to remove a user', function(done) {
-    client.del('/users/johndoe', function(err, req, res) {
+    client.del('/users/2', function(err, req, res) {
       assert.equal(res.statusCode, 204);
       done();
     });

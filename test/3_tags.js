@@ -46,7 +46,7 @@ describe('Posts:', function() {
   });
 
   it('should be possible to edit posts', function(done) {
-    client.put('/tags/some-other-title', {title: 'Some edited title 1'}, function(err, req, res) {
+    client.put('/tags/11', {title: 'Some edited title 1'}, function(err, req, res) {
       assert.equal(res.statusCode, 201);
       done();
     });
@@ -85,8 +85,8 @@ describe('Posts:', function() {
     });
   });
 
-  it('should be possible to remove a non-existing post', function(done) {
-    client.del('/tags/i-dont-exist', function(err, req, res, json) {
+  it('should not be possible to remove a non-existing post', function(done) {
+    client.del('/tags/50', function(err, req, res, json) {
       assert.equal(res.statusCode, 404);
       assert.equal(json.message, 'Not found');
       done();
@@ -94,7 +94,7 @@ describe('Posts:', function() {
   });
 
   it('should be posible to remove a post', function(done) {
-    client.del('/tags/tag-2', function(err, req, res) {
+    client.del('/tags/3', function(err, req, res) {
       assert.equal(res.statusCode, 204);
       done();
     });
