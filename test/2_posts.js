@@ -46,7 +46,7 @@ describe('Posts:', function() {
   });
 
   it('should be possible to edit posts', function(done) {
-    client.put('/posts/some-other-title', {title: 'Some edited title 1'}, function(err, req, res) {
+    client.put('/posts/51', {title: 'Some edited title 1'}, function(err, req, res) {
       assert.equal(res.statusCode, 201);
       done();
     });
@@ -86,15 +86,15 @@ describe('Posts:', function() {
   });
 
   it('should not be possible to remove a non-existing post', function(done) {
-    client.del('/posts/i-dont-exist', function(err, req, res, json) {
+    client.del('/posts/999', function(err, req, res, json) {
       assert.equal(res.statusCode, 404);
       assert.equal(json.message, 'Not found');
       done();
     });
   });
 
-  it('should be posible to remove a post', function(done) {
-    client.del('/posts/post-49', function(err, req, res) {
+  it('should be possible to remove a post', function(done) {
+    client.del('/posts/49', function(err, req, res) {
       assert.equal(res.statusCode, 204);
       done();
     });
