@@ -38,9 +38,11 @@ describe('Posts:', function() {
 
   it('should be possible to create posts', function(done) {
     client.post('/posts',
-    {title: 'Some other title', description: 'A description', body: "Lorem ipsum!!"}, function(err, req, res) {
+    {title: 'Some other title', description: 'A description', body: "Lorem ipsum!!"}, function(err, req, res, json) {
       assert.ifError(err);
       assert.equal(res.statusCode, 201);
+      assert.notEqual(json.createdAt, undefined);
+      assert.notEqual(json.id, undefined);
       done();
     });
   });

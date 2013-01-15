@@ -45,9 +45,11 @@ describe('Users:', function() {
   });
 
   it('allow to create users when logged in', function(done) {
-    client.post('/users', {username: 'johndoe', password: 'foobar'}, function(err, req, res) {
+    client.post('/users', {username: 'johndoe', password: 'foobar'}, function(err, req, res, json) {
       assert.ifError(err);
       assert.equal(res.statusCode, 201);
+      assert.notEqual(json.createdAt, undefined);
+      assert.notEqual(json.id, undefined);
       done();
     });
   });

@@ -38,9 +38,11 @@ describe('Posts:', function() {
 
   it('should be possible to create tags', function(done) {
     client.post('/tags',
-      {title: 'Some other title'}, function(err, req, res) {
+      {title: 'Some other title'}, function(err, req, res, json) {
         assert.ifError(err);
         assert.equal(res.statusCode, 201);
+        assert.notEqual(json.createdAt, undefined);
+        assert.notEqual(json.id, undefined);
         done();
       });
   });
