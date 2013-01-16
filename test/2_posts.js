@@ -19,7 +19,7 @@ function factory(nb, cb) {
 
 before(function(done) {
   factory(50, function() {
-    client.post('/users/logout', {}, function(err) {
+    client.del('/users/session', function(err) {
       if(err) throw err;
       done();
     });

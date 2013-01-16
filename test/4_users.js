@@ -10,7 +10,7 @@ var client = restify.createJsonClient({
 
 before(function(done) {
   users.createUser({username: 'admin', password: 'admin', imageUrl: '30.png'}, function() {
-    client.post('/users/logout', {}, function(err) {
+    client.del('/users/session', function(err) {
       if(err) throw err;
       done();
     });
@@ -20,7 +20,7 @@ before(function(done) {
 describe('Users:', function() {
 
   it('allow to authenticate with wrong credentials', function(done) {
-    client.post('/users/login', {username: 'pinochio', password: 'foobar'}, function(err, req, res, json) {
+    client.post('/users/session', {username: 'pinochio', password: 'foobar'}, function(err, req, res, json) {
       assert.equal(json.token, undefined);
       assert.equal(res.statusCode, 403);
       done();
@@ -35,7 +35,7 @@ describe('Users:', function() {
   });
 
   it('allow to authenticate with correct credentials', function(done) {
-    client.post('/users/login', {username: 'admin', password: 'admin'}, function(err, req, res, json) {
+    client.post('/users/session', {username: 'admin', password: 'admin'}, function(err, req, res, json) {
       assert.ifError(err);
       assert.equal(res.statusCode, 200);
       client.headers.cookie = res.headers['set-cookie'];
