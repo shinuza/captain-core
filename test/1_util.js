@@ -19,10 +19,9 @@ describe('Util', function() {
   });
 
   it('should properly encode a password', function(done) {
-    util.encode('foobar', function(err, encrypted) {
+    util.encode('admin', function(err, encrypted) {
       assert.ifError(err);
-      assert.equal(404, encrypted.length);
-      util.compare('foobar', encrypted, function(err, same) {
+      util.compare('admin', encrypted, function(err, same) {
         assert.ifError(err);
         assert.equal(true, same);
         done()
