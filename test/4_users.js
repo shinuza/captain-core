@@ -37,9 +37,8 @@ describe('Users:', function() {
   it('allow to authenticate with correct credentials', function(done) {
     client.post('/users/login', {username: 'admin', password: 'admin'}, function(err, req, res, json) {
       assert.ifError(err);
-      assert.notEqual(json.token, undefined);
       assert.equal(res.statusCode, 200);
-      client.headers.cookie = 'token=' + json.token + ';';
+      client.headers.cookie = res.headers['set-cookie'];
       done();
     });
   });
