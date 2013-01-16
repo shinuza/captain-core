@@ -9,7 +9,7 @@ var client = restify.createJsonClient({
 });
 
 before(function(done) {
-  users.createUser('admin', 'admin', function() {
+  users.createUser({username: 'admin', password: 'admin', imageUrl: '30.png'}, function() {
     client.post('/users/logout', {}, function(err) {
       if(err) throw err;
       done();

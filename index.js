@@ -4,7 +4,8 @@ var express = require('express'),
     settings = require('./settings');
 
 var middleware = require('./lib/middleware');
-app.use(express.bodyParser());
+// TODO: Put this in settings
+app.use(express.bodyParser({ keepExtensions: true, uploadDir: __dirname + '../captainjs-media/' }));
 app.use(express.cookieParser());
 app.use(middleware.authenticate());
 app.use(function(req, res, next) {
