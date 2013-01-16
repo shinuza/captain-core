@@ -1,8 +1,11 @@
 {
-  "name": "captainjs-api",
+  "name": "captainjs-core",
   "description": "Captain JS",
   "version": "0.0.1",
   "private": true,
+  "bin": {
+    "captainjs": "./lib/cli.js"
+  },
   "dependencies": {
     "commander": "*",
     "express": "*",
