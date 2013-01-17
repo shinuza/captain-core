@@ -102,4 +102,14 @@ describe('Users:', function() {
     });
   });
 
+  it('should not allow creating a user after logout', function(done) {
+    client.del('/users/session', function(err, req, res) {
+      assert.equal(res.statusCode, 204);
+      client.post('/users', {username: 'johndoe', password: 'foobar'}, function(err, req, res) {
+        assert.equal(res.statusCode, 403);
+        done();
+      });
+    });
+  });
+
 });
