@@ -4,6 +4,7 @@ var express = require('express'),
     settings = require('./lib/settings');
 
 var middleware = require('./lib/middleware');
+var sessions = require('./lib/resources/sessions');
 var users = require('./lib/resources/users');
 var posts = require('./lib/resources/posts');
 var tags = require('./lib/resources/tags');
@@ -12,9 +13,7 @@ app.getSettings = function() {return settings};
 app.use(express.bodyParser({ keepExtensions: true, uploadDir: settings.get('MEDIA_ROOT') }));
 app.use(express.cookieParser());
 app.use(middleware.authenticate());
-
-app.post('/sessions', users.login);
-app.delete('/sessions', users.logout);
+app.use(express.logger('tiny'));
 
 app.post('/users/:user/posts', users.posts.associate);
 app.get('/users/:user/posts', users.posts.list);
@@ -29,6 +28,9 @@ app.resource('posts', posts);
 app.post('/tags/:tag/posts', tags.posts.associate);
 app.get('/tags/:tag/posts', tags.posts.list);
 app.resource('tags', tags);
+
+app.del('/sessions', sessions.remove);
+app.resource('sessions', sessions);
 
 app.use(app.router);
 //TODO: Only for dev, otherwise response with something stupid
