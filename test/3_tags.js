@@ -19,7 +19,7 @@ function factory(nb, cb) {
 
 before(function(done) {
   factory(10, function() {
-    client.del('/sessions/', function(err) {
+    client.del('/sessions/current', function(err) {
       if(err) throw err;
       done();
     });

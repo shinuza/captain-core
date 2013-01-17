@@ -10,7 +10,7 @@ var client = restify.createJsonClient({
 
 before(function(done) {
   users.createUser({username: 'admin', password: 'admin', imageUrl: '30.png'}, function() {
-    client.del('/sessions/', function(err) {
+    client.del('/sessions/current', function(err) {
       if(err) throw err;
       done();
     });
@@ -91,7 +91,7 @@ describe('Users:', function() {
   });
 
   it('should not allow creating a user after logout', function(done) {
-    client.del('/sessions/', function(err, req, res) {
+    client.del('/sessions/current', function(err, req, res) {
       assert.equal(res.statusCode, 204);
       client.post('/users', {username: 'johndoe', password: 'foobar'}, function(err, req, res) {
         assert.equal(res.statusCode, 403);
