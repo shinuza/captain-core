@@ -13,8 +13,9 @@ app.use(express.bodyParser({ keepExtensions: true, uploadDir: settings.get('MEDI
 app.use(express.cookieParser());
 app.use(middleware.authenticate());
 
-app.post('/users/session', users.login);
-app.delete('/users/session', users.logout);
+app.post('/sessions', users.login);
+app.delete('/sessions', users.logout);
+
 app.post('/users/:user/posts', users.posts.associate);
 app.get('/users/:user/posts', users.posts.list);
 app.resource('users', users);

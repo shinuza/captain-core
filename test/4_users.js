@@ -10,7 +10,7 @@ var client = restify.createJsonClient({
 
 before(function(done) {
   users.createUser({username: 'admin', password: 'admin', imageUrl: '30.png'}, function() {
-    client.del('/users/session', function(err) {
+    client.del('/sessions', function(err) {
       if(err) throw err;
       done();
     });
@@ -20,7 +20,7 @@ before(function(done) {
 describe('Users:', function() {
 
   it('allow to authenticate with wrong credentials', function(done) {
-    client.post('/users/session', {username: 'pinochio', password: 'foobar'}, function(err, req, res, json) {
+    client.post('/sessions', {username: 'pinochio', password: 'foobar'}, function(err, req, res, json) {
       assert.equal(json.token, undefined);
       assert.equal(res.statusCode, 403);
       done();
@@ -35,7 +35,7 @@ describe('Users:', function() {
   });
 
   it('allow to authenticate with correct credentials', function(done) {
-    client.post('/users/session', {username: 'admin', password: 'admin'}, function(err, req, res, json) {
+    client.post('/sessions', {username: 'admin', password: 'admin'}, function(err, req, res, json) {
       assert.ifError(err);
       assert.equal(res.statusCode, 200);
       client.headers.cookie = res.headers['set-cookie'];
@@ -103,7 +103,7 @@ describe('Users:', function() {
   });
 
   it('should not allow creating a user after logout', function(done) {
-    client.del('/users/session', function(err, req, res) {
+    client.del('/sessions', function(err, req, res) {
       assert.equal(res.statusCode, 204);
       client.post('/users', {username: 'johndoe', password: 'foobar'}, function(err, req, res) {
         assert.equal(res.statusCode, 403);
