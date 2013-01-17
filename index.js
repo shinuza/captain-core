@@ -29,7 +29,6 @@ app.post('/tags/:tag/posts', tags.posts.associate);
 app.get('/tags/:tag/posts', tags.posts.list);
 app.resource('tags', tags);
 
-app.del('/sessions', sessions.remove);
 app.resource('sessions', sessions);
 
 app.use(app.router);
