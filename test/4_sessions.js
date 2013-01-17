@@ -27,6 +27,17 @@ describe('Sessions:', function() {
     });
   });
 
+  it('should be return the associated user for a session', function(done) {
+    var token = client.headers.cookie[0].match(/=(.*);/)[1];
+    client.get('/sessions/' + token, function(err, req, res, json) {
+      assert.ifError(err);
+      assert.equal(res.statusCode, 200);
+      assert.equal(json.username, 'admin');
+      done();
+    });
+  });
+
+
   it('should be possible to logout', function(done) {
     client.del('/sessions/', function(err, req, res) {
       assert.equal(res.statusCode, 204);
