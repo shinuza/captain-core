@@ -19,14 +19,6 @@ before(function(done) {
 
 describe('Users:', function() {
 
-  it('allow to authenticate with wrong credentials', function(done) {
-    client.post('/sessions/', {username: 'pinochio', password: 'foobar'}, function(err, req, res, json) {
-      assert.equal(json.token, undefined);
-      assert.equal(res.statusCode, 403);
-      done();
-    });
-  });
-
   it('does not allow to create users when not logged in', function(done) {
     client.post('/users', {username: 'johndoe', password: 'foobar'}, function(err, req, res) {
       assert.equal(res.statusCode, 403);
@@ -34,22 +26,18 @@ describe('Users:', function() {
     });
   });
 
-  it('allow to authenticate with correct credentials', function(done) {
-    client.post('/sessions/', {username: 'admin', password: 'admin'}, function(err, req, res, json) {
-      assert.ifError(err);
-      assert.equal(res.statusCode, 200);
-      client.headers.cookie = res.headers['set-cookie'];
-      done();
-    });
-  });
-
   it('allow to create users when logged in', function(done) {
-    client.post('/users', {username: 'johndoe', password: 'foobar'}, function(err, req, res, json) {
-      assert.ifError(err);
+    client.post('/sessions/', {username: 'admin', password: 'admin'}, function(err, req, res) {
       assert.equal(res.statusCode, 201);
-      assert.notEqual(json.createdAt, undefined);
-      assert.notEqual(json.id, undefined);
-      done();
+      client.headers.cookie = res.headers['set-cookie'];
+
+      client.post('/users', {username: 'johndoe', password: 'foobar'}, function(err, req, res, json) {
+        assert.ifError(err);
+        assert.equal(res.statusCode, 201);
+        assert.notEqual(json.createdAt, undefined);
+        assert.notEqual(json.id, undefined);
+        done();
+      });
     });
   });
 
