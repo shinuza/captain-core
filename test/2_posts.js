@@ -23,7 +23,7 @@ before(function(done) {
 
 describe('Posts:', function() {
 
-  it('should be possible to create posts when not logged it', function(done) {
+  it('should not be possible to create posts when not logged it', function(done) {
     client.post('/posts',
       {title: 'Some other title', description: 'A description', body: "Lorem ipsum!!"}, function(err, req, res) {
         assert.equal(res.statusCode, 403);
@@ -31,10 +31,25 @@ describe('Posts:', function() {
       });
   });
 
+  it('should not be possible to list all posts when not logged it', function(done) {
+    client.get('/posts?force=true', function(err, req, res) {
+      assert.equal(res.statusCode, 403);
+      done();
+    });
+  });
+
   it('should log in', function(done) {
     client.post('/sessions/', {username: 'admin', password: 'admin'}, function(err, req, res) {
       assert.equal(res.statusCode, 201);
       client.headers.cookie = res.headers['set-cookie'];
+      done();
+    });
+  });
+
+  it('should be possible to list all posts when logged it', function(done) {
+    client.get('/posts?force=true', function(err, req, res, json) {
+      assert.equal(res.statusCode, 200);
+      assert.equal(json.length, 50);
       done();
     });
   });
@@ -59,7 +74,7 @@ describe('Posts:', function() {
   });
 
   it('should be possible to edit posts', function(done) {
-    client.put('/posts/51', {title: 'Some edited title 1'}, function(err, req, res) {
+    client.put('/posts/51', {title: 'Some edited title 1', published: true}, function(err, req, res) {
       assert.equal(res.statusCode, 201);
       done();
     });
@@ -83,15 +98,16 @@ describe('Posts:', function() {
   });
 
 
-  it('should be possible to view multiple posts at once', function(done) {
+  it('should display published posts only', function(done) {
     client.get('/posts', function(err, req, res, json) {
-      assert.equal(json.length, 51);
+      assert.equal(json.length, 1);
+      assert.equal(json[0].title, 'Some edited title 1');
       done();
     });
   });
 
   it('should be possible to view only a subset of posts', function(done) {
-    client.get('/posts?offset=5&limit=10', function(err, req, res, json) {
+    client.get('/posts?force=true&offset=5&limit=10', function(err, req, res, json) {
       assert.equal(json.length, 10);
       assert.equal(json[0].title, 'post 5');
       done();
