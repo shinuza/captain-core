@@ -9,35 +9,38 @@ var client = restify.createJsonClient({
 });
 
 before(function(done) {
-  users.createUser({username: 'admin', password: 'admin', imageUrl: '30.png'}, function() {
-    client.del('/sessions/current', function(err) {
-      if(err) throw err;
-      done();
-    });
-  });
+  users.createUser({
+    username: 'admin',
+    password: 'admin',
+    imageUrl: '30.png',
+    isStaff: true},
+  function() {done()});
 });
 
 describe('Users:', function() {
 
-  it('does not allow to create users when not logged in', function(done) {
+  it('should not be possible create users when not logged in', function(done) {
     client.post('/users', {username: 'johndoe', password: 'foobar'}, function(err, req, res) {
       assert.equal(res.statusCode, 403);
       done();
     });
   });
 
-  it('allow to create users when logged in', function(done) {
+  it('should log in', function(done) {
     client.post('/sessions/', {username: 'admin', password: 'admin'}, function(err, req, res) {
       assert.equal(res.statusCode, 201);
       client.headers.cookie = res.headers['set-cookie'];
+      done();
+    });
+  });
 
-      client.post('/users', {username: 'johndoe', password: 'foobar'}, function(err, req, res, json) {
-        assert.ifError(err);
-        assert.equal(res.statusCode, 201);
-        assert.notEqual(json.createdAt, undefined);
-        assert.notEqual(json.id, undefined);
-        done();
-      });
+  it('should be possible to create users when logged in', function(done) {
+    client.post('/users', {username: 'johndoe', password: 'foobar'}, function(err, req, res, json) {
+      assert.ifError(err);
+      assert.equal(res.statusCode, 201);
+      assert.notEqual(json.createdAt, undefined);
+      assert.notEqual(json.id, undefined);
+      done();
     });
   });
 
@@ -70,7 +73,7 @@ describe('Users:', function() {
   });
 
   it('should be possible to view a user', function(done) {
-    client.get('/users/johndoe', function(err, req, res) {
+    client.get('/users/admin', function(err, req, res) {
       assert.equal(res.statusCode, 200);
       done();
     });
@@ -90,13 +93,17 @@ describe('Users:', function() {
     });
   });
 
-  it('should not allow creating a user after logout', function(done) {
+  it('should log out', function(done) {
     client.del('/sessions/current', function(err, req, res) {
       assert.equal(res.statusCode, 204);
-      client.post('/users', {username: 'johndoe', password: 'foobar'}, function(err, req, res) {
-        assert.equal(res.statusCode, 403);
-        done();
-      });
+      done();
+    });
+  });
+
+  it('should not allow creating a user after logout', function(done) {
+    client.post('/users', {username: 'johndoe', password: 'foobar'}, function(err, req, res) {
+      assert.equal(res.statusCode, 403);
+      done();
     });
   });
 

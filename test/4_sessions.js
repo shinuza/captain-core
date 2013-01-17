@@ -36,8 +36,7 @@ describe('Sessions:', function() {
     });
   });
 
-
-  it('should be possible to logout', function(done) {
+  it('should log out', function(done) {
     client.del('/sessions/current', function(err, req, res) {
       assert.equal(res.statusCode, 204);
       done();

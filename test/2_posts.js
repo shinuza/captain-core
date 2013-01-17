@@ -18,25 +18,28 @@ function factory(nb, cb) {
 }
 
 before(function(done) {
-  factory(50, function() {
-    client.del('/sessions/current', function(err) {
-      if(err) throw err;
-      done();
-    });
-  });
+  factory(50, function() {done()});
 });
 
 describe('Posts:', function() {
 
-  it('should not be possible to create a post with an existing slug', function(done) {
+  it('should be possible to create posts when not logged it', function(done) {
     client.post('/posts',
-      {title: 'post 49', description: 'A description', body: "Lorem ipsum!!"}, function(err, req, res) {
-        assert.equal(res.statusCode, 409);
+      {title: 'Some other title', description: 'A description', body: "Lorem ipsum!!"}, function(err, req, res) {
+        assert.equal(res.statusCode, 403);
         done();
       });
   });
 
-  it('should be possible to create posts', function(done) {
+  it('should log in', function(done) {
+    client.post('/sessions/', {username: 'admin', password: 'admin'}, function(err, req, res) {
+      assert.equal(res.statusCode, 201);
+      client.headers.cookie = res.headers['set-cookie'];
+      done();
+    });
+  });
+
+  it('should be possible to create posts when logged in', function(done) {
     client.post('/posts',
     {title: 'Some other title', description: 'A description', body: "Lorem ipsum!!"}, function(err, req, res, json) {
       assert.ifError(err);
@@ -45,6 +48,14 @@ describe('Posts:', function() {
       assert.notEqual(json.id, undefined);
       done();
     });
+  });
+
+  it('should not be possible to create a post with an existing slug', function(done) {
+    client.post('/posts',
+      {title: 'post 49', description: 'A description', body: "Lorem ipsum!!"}, function(err, req, res) {
+        assert.equal(res.statusCode, 409);
+        done();
+      });
   });
 
   it('should be possible to edit posts', function(done) {
@@ -97,6 +108,13 @@ describe('Posts:', function() {
 
   it('should be possible to remove a post', function(done) {
     client.del('/posts/49', function(err, req, res) {
+      assert.equal(res.statusCode, 204);
+      done();
+    });
+  });
+
+  it('should log out', function(done) {
+    client.del('/sessions/current', function(err, req, res) {
       assert.equal(res.statusCode, 204);
       done();
     });

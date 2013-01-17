@@ -10,9 +10,17 @@ var client = restify.createJsonClient({
 
 describe('Posts user association:', function() {
 
+  it('should log in', function(done) {
+    client.post('/sessions/', {username: 'admin', password: 'admin'}, function(err, req, res) {
+      assert.equal(res.statusCode, 201);
+      client.headers.cookie = res.headers['set-cookie'];
+      done();
+    });
+  });
+
   it('should associate a user with a post', function(done) {
     client.get('/users/admin', function(err, req, res, user) {
-      assert.equal(res.statusCode, 200);
+       assert.equal(res.statusCode, 200);
       client.post('/posts/post-1/user', user, function(err, req, res) {
         assert.equal(res.statusCode, 201);
         done();
