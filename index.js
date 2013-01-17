@@ -29,6 +29,12 @@ app.post('/tags/:tag/posts', tags.posts.associate);
 app.get('/tags/:tag/posts', tags.posts.list);
 app.resource('tags', tags);
 
+app.use(app.router);
+//TODO: Only for dev, otherwise response with something stupid
+app.use(express.errorHandler());
+app.use(middleware.notFound());
+
+
 if(require.main === module) {
   app.listen(8080, function() {
     console.log('Listening at http://localhost:8080');
