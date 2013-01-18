@@ -11,7 +11,7 @@ var client = restify.createJsonClient({
 function factory(nb, cb) {
   var postChainer = new Sequelize.Utils.QueryChainer;
   for(var i = 0; i < nb; i++) {
-    var p = models.Post.build({title: 'post ' + i, slug: "post-" + i, body: 'Cool'});
+    var p = models.Post.build({title: 'post ' + i, slug: "post-" + i, body: 'Cool', published: i % 2 == 0});
     postChainer.add(p.save());
   }
   postChainer.run().success(cb).error(function(error) {throw error});
@@ -31,9 +31,10 @@ describe('Posts:', function() {
       });
   });
 
-  it('should not be possible to list all posts when not logged it', function(done) {
-    client.get('/posts?force=true', function(err, req, res) {
-      assert.equal(res.statusCode, 403);
+  it('should not list unpublished posts when not logged it', function(done) {
+    client.get('/posts', function(err, req, res, json) {
+      assert.equal(res.statusCode, 200);
+      assert.equal(json.length, 25);
       done();
     });
   });
@@ -46,8 +47,8 @@ describe('Posts:', function() {
     });
   });
 
-  it('should be possible to list all posts when logged it', function(done) {
-    client.get('/posts?force=true', function(err, req, res, json) {
+  it('should be possible to list all posts when logged in', function(done) {
+    client.get('/posts', function(err, req, res, json) {
       assert.equal(res.statusCode, 200);
       assert.equal(json.length, 50);
       done();
@@ -97,17 +98,8 @@ describe('Posts:', function() {
     });
   });
 
-
-  it('should display published posts only', function(done) {
-    client.get('/posts', function(err, req, res, json) {
-      assert.equal(json.length, 1);
-      assert.equal(json[0].title, 'Some edited title 1');
-      done();
-    });
-  });
-
   it('should be possible to view only a subset of posts', function(done) {
-    client.get('/posts?force=true&offset=5&limit=10', function(err, req, res, json) {
+    client.get('/posts?offset=5&limit=10', function(err, req, res, json) {
       assert.equal(json.length, 10);
       assert.equal(json[0].title, 'post 5');
       done();
