@@ -83,10 +83,12 @@ describe('Posts:', function() {
 
   it('should be possible to view a single post', function(done) {
     client.get('/posts/some-other-title', function(err, req, res, json) {
-      assert.equal(res.statusCode, 200);
-      assert.equal(json.title, 'Some edited title 1');
-      assert.equal(json.slug, 'some-other-title');
-      done();
+      client.get('/posts/51', function(err, req, res, json2) {
+        assert.equal(res.statusCode, 200);
+        assert.equal(json.title, json2.title);
+        assert.equal(json.slug, json2.slug);
+        done();
+      });
     });
   });
 
