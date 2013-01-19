@@ -103,7 +103,7 @@ describe('Posts:', function() {
   it('should be possible to view only a subset of posts', function(done) {
     client.get('/posts?offset=5&limit=10', function(err, req, res, json) {
       assert.equal(json.length, 10);
-      assert.equal(json[0].title, 'post 5');
+      assert.equal(json[0].title, 'post 45');
       done();
     });
   });
