@@ -106,7 +106,7 @@ describe('Tags:', function() {
     });
   });
 
-  it('should be posible to remove a tag', function(done) {
+  it('should be possible to remove a tag', function(done) {
     client.del('/tags/3', function(err, req, res) {
       assert.equal(res.statusCode, 204);
       done();

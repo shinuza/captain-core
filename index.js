@@ -19,13 +19,13 @@ app.post('/users/:user/posts', users.posts.associate);
 app.get('/users/:user/posts', users.posts.list);
 app.resource('users', users);
 
-app.post('/posts/:post/user', posts.user.associate);
-app.get('/posts/:post/user', posts.user.show);
-app.get('/posts/:post/tags', posts.tags.list);
+app.post('/posts/:post/user', posts.user.set);
+app.get('/posts/:post/user', posts.user.get);
+app.post('/posts/:post/tags', posts.tags.set);
+app.get('/posts/:post/tags', posts.tags.get);
 app.resource('posts', posts);
 
-app.post('/tags/:tag/posts', tags.posts.associate);
-app.get('/tags/:tag/posts', tags.posts.list);
+app.get('/tags/:tag/posts', tags.posts.get);
 app.resource('tags', tags);
 
 app.resource('sessions', sessions);
