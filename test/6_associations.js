@@ -63,7 +63,7 @@ describe('User posts association:', function() {
 describe('Posts tags association:', function() {
 
   it('should associate post 1 to tag 1', function(done) {
-    client.post('/posts/0/tags/', [{id: 1}, {id: 2}], function(err, req, res) {
+    client.post('/posts/0/tags/', {data: [{id: 1}, {id: 2}]}, function(err, req, res) {
       assert.equal(res.statusCode, 201);
       client.get('/tags/tag-1/posts', function(err, req, res, json) {
         assert.equal(res.statusCode, 200);
