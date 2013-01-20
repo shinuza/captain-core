@@ -1,0 +1,7 @@
+{% extends "layout.html" %}
+
+{% block content %}
+{% for tag in tags %}
+  <a href="/tags/{{tag.slug}}/posts">{{tag.title}}</a><br>
+{% endfor %}
+{% endblock %}

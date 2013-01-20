@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<p>Showing {{posts.length}} entries for tag: {{tag.title}}</p>
+
+{% for post in posts %}
+<h2>
+  <a href="/posts/{{post.slug}}">{{post.title}}</a>
+</h2>
+<p>Entry published: {{post.createdAt|date('F jS, Y')}}</p>
+<div>
+  {{post.body}}
+</div>
+<hr>
+{% endfor %}
+{% endblock %}
