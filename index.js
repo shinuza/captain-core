@@ -23,6 +23,7 @@ app.set('views',templateDir);
 app.set('view engine', 'html');
 app.set('view options', { layout: false });
 app.engine('.html', cons.swig);
+app.locals.siteTitle = settings.get('SITE_TITLE');
 
 app.use(express.bodyParser({ keepExtensions: true, uploadDir: settings.get('MEDIA_ROOT') }));
 app.use(express.cookieParser());
