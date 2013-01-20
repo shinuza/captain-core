@@ -11,7 +11,9 @@
     "express": "*",
     "express-resource": "*",
     "sequelize": "*",
-    "sqlite3": "*"
+    "sqlite3": "*",
+    "consolidate": "~0.7.0",
+    "swig": "~0.13.4"
   },
   "devDependencies": {
     "mocha": "*",
