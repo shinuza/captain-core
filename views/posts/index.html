@@ -1,6 +1,14 @@
 {% extends "layout.html" %}
 
-
 {% block content %}
-  Cool
+  {% for post in posts %}
+    <h2>
+      <a href="/posts/{{post.slug}}">{{post.title}}</a>
+    </h2>
+    <p>Entry published: {{post.createdAt|date('F jS, Y')}}</p>
+    <div>
+      {{post.body}}
+    </div>
+    <hr>
+  {% endfor %}
 {% endblock %}
