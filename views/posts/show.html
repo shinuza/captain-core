@@ -1,0 +1,10 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<h2>{{post.title}}</h2>
+<p>Entry published: {{post.createdAt|date('F jS, Y')}}</p>
+<div>
+  {{post.body}}
+</div>
+<hr>
+{% endblock %}
