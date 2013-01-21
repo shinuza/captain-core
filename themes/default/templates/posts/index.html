@@ -2,6 +2,22 @@
 
 {% block content %}
   {% for post in posts %}
-  {% include "includes/post.html" %}
+    {% include "includes/post.html" %}
   {% endfor %}
+
+  <div class="pagination">
+    {% if previous %}
+      <a href="/?page={{page - 1}}">« Previous</a>
+    {% else %}
+      <span>« Previous</span>
+    {% endif %}
+    —
+    <strong>{{page}}</strong>
+    —
+    {% if next %}
+    <a href="/?page={{page|add(1}}">Next »</a>
+    {% else %}
+    <span>Next »</span>
+    {% endif %}
+  </div>
 {% endblock %}

@@ -35,7 +35,8 @@ describe('Posts:', function() {
   it('should not list unpublished posts when not logged it', function(done) {
     client.get('/posts', function(err, req, res, json) {
       assert.equal(res.statusCode, 200);
-      assert.equal(json.length, 25);
+      assert.equal(json.length, 5);
+      assert.equal(json[1].published, true);
       done();
     });
   });
@@ -44,14 +45,6 @@ describe('Posts:', function() {
     client.post('/sessions/', {username: 'admin', password: 'admin'}, function(err, req, res) {
       assert.equal(res.statusCode, 201);
       client.headers.cookie = res.headers['set-cookie'];
-      done();
-    });
-  });
-
-  it('should be possible to list all posts when logged in', function(done) {
-    client.get('/posts', function(err, req, res, json) {
-      assert.equal(res.statusCode, 200);
-      assert.equal(json.length, 50);
       done();
     });
   });
@@ -101,12 +94,22 @@ describe('Posts:', function() {
     });
   });
 
-  it('should be possible to view only a subset of posts', function(done) {
-    client.get('/posts?offset=5&limit=10', function(err, req, res, json) {
-      assert.equal(json.length, 10);
-      assert.equal(json[0].title, 'post 45');
+  describe('Pagination', function() {
+    it('should be possible to view only a subset of posts', function(done) {
+      client.get('/posts', function(err, req, res, json) {
+        assert.equal(json.length, 5);
+        assert.equal(json[0].title, 'Some edited title 1');
+        done();
+      });
+    });
+
+    it('should be possible to posts by page', function(done) {
+      client.get('/posts?page=5', function(err, req, res, json) {
+      assert.equal(json.length, 5);
+      assert.equal(json[4].title, 'post 0');
       done();
     });
+});
   });
 
   it('should not be possible to remove a non-existing post', function(done) {

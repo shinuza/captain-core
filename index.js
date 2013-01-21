@@ -30,12 +30,12 @@ app.engine('.html', cons.swig);
 // Locals
 app.locals.SITE_TITLE = settings.get('SITE_TITLE');
 app.locals.STATIC_URL = settings.get('STATIC_URL');
+app.locals.POSTS_BY_PAGE = settings.get('POSTS_BY_PAGE');
 
 // Middleware
 app.use(express.static(staticRoot));
 app.use(express.bodyParser({ keepExtensions: true, uploadDir: mediaRoot }));
-app.use(express.cookieParser());
-app.use(middleware.templates({cache: !debug}));
+app.use(express.cookieParser());;
 app.use(middleware.authenticate());
 app.use(app.router);
 app.use(middleware.errorHandler());
