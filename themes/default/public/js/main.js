@@ -6,12 +6,12 @@ $(function() {
   App.Router = Backbone.Router.extend({
 
     routes: {
-      "posts/": "posts:index",
+      "posts": "posts:index",
       "posts/:slug": "posts:show"
     },
 
     "posts:index": function() {
-      $.getJSON('/posts/', function(posts) {
+      $.getJSON('/posts', function(posts) {
         var tmpl = getTmpl('post');
         var html = '';
 
@@ -54,6 +54,7 @@ $(function() {
 
     setContent: function(str) {
       this.$el.empty().html(str);
+      window.scrollTo(0);
     },
 
     intercept: function(e) {

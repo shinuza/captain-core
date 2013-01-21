@@ -2,7 +2,9 @@
   <h2>
     <a href="/posts/{{post.slug}}" class="intercept">{{post.title}}</a>
   </h2>
-  <p></p><em>Entry published: {{post.createdAt|date('F jS, Y')}}</em>
+  <p>
+    <em>Entry published: {{post.createdAt|date('F jS, Y')}}</em>
+  </p>
   <div>
     {{post.body}}
   </div>

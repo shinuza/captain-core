@@ -6,6 +6,13 @@
     <link rel="stylesheet" href="{{STATIC_URL}}css/main.css">
   </head>
   <body>
+    <header class="ctx">
+      <h1 class="float-left marginTop0">{% block header %}Foobar{% endblock %}</h1>
+      <nav class="float-right">
+        <a href="/posts">Blog</a>
+        <a href="/tags">Tags</a>
+      </nav>
+    </header>
     <div id="content">
       {% block content %}{% endblock %}
     </div>

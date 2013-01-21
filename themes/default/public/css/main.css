@@ -1,1 +1,8 @@
-body { font: 17px/25px Georgia, serif; }
+body { font: 17px/25px Georgia, serif; width: 70%; margin: 30px auto; }
+a { color: inherit; }
+a:visited { color: #666; }
+
+.float-left { float: left; }
+.float-right { float: right; }
+.ctx { overflow: hidden; }
+.marginTop0 { margin-top: 0 !important; }
