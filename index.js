@@ -3,7 +3,6 @@ var resource = require('express-resource'),
     cons = require('consolidate'),
     swig = require('swig');
 
-//TODO: Add an index in ./lib
 var settings = require('./lib/settings'),
     middleware = require('./lib/middleware'),
     sessions = require('./lib/resources/sessions'),
@@ -14,25 +13,26 @@ var settings = require('./lib/settings'),
 var app = express();
 
 var templateDir = settings.get('TEMPLATE_DIR'),
-    mediaRoot = settings.get('MEDIA_ROOT'),
-    siteTitle = settings.get('SITE_TITLE');
+    staticRoot = settings.get('STATIC_ROOT'),
+    mediaRoot = settings.get('MEDIA_ROOT');
 
 // TODO: Remove this
 app.getSettings = function() { return settings; };
 
 // Templates
-swig.init({
-  root: templateDir,
-  allowErrors: true, // TODO: Only for dev
-  cache: false  // TODO: Only for dev
-});
+// TODO: allowErrors and cache only for dev
+swig.init({ root: templateDir, allowErrors: true, cache: false });
 app.set('views',templateDir);
 app.set('view engine', 'html');
 app.set('view options', { layout: false });
 app.engine('.html', cons.swig);
-app.locals.siteTitle = siteTitle;
+
+// Locals
+app.locals.SITE_TITLE = settings.get('SITE_TITLE');
+app.locals.STATIC_URL = settings.get('STATIC_URL');
 
 // Middleware
+app.use(express.static(staticRoot));
 app.use(express.bodyParser({ keepExtensions: true, uploadDir: mediaRoot }));
 app.use(express.cookieParser());
 app.use(express.logger('tiny'));
