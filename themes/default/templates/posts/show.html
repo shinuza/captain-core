@@ -3,10 +3,12 @@
 {% block title %}{{post.title}}{% endblock %}
 
 {% block content %}
-<h2>{{post.title}}</h2>
-<p>Entry published: {{post.createdAt|date('F jS, Y')}}</p>
 <div>
-  {{post.body}}
+  <h2>{{post.title}}</h2>
+  <em>Entry published: {{post.createdAt|date('F jS, Y')}}</em>
+  <div>
+    {{post.body}}
+  </div>
+  <hr>
 </div>
-<hr>
 {% endblock %}
