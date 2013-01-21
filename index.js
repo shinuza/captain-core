@@ -37,8 +37,8 @@ app.use(middleware.authenticate());
 app.use(express.logger('tiny'));
 
 // Routes
-app.post('/users/:user/posts', users.posts.associate);
-app.get('/users/:user/posts', users.posts.list);
+app.post('/users/:user/posts', users.posts.set);
+app.get('/users/:user/posts', users.posts.get);
 app.resource('users', users);
 
 app.post('/posts/:post/user', posts.user.set);
