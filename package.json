@@ -17,6 +17,7 @@
   },
   "devDependencies": {
     "mocha": "*",
-    "restify": "*"
+    "restify": "*",
+    "boganipsum": "*"
   }
 }
