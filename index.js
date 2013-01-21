@@ -6,7 +6,6 @@ var resource = require('express-resource'),
 //TODO: Add an index in ./lib
 var settings = require('./lib/settings'),
     middleware = require('./lib/middleware'),
-    templates = require('./lib/templates'),
     sessions = require('./lib/resources/sessions'),
     users = require('./lib/resources/users'),
     posts = require('./lib/resources/posts'),
