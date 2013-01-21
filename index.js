@@ -12,7 +12,8 @@ var settings = require('./lib/settings'),
 
 var app = express();
 
-var templateDir = settings.get('TEMPLATE_DIR'),
+var debug = settings.get('DEBUG'),
+    templateDir = settings.get('TEMPLATE_DIR'),
     staticRoot = settings.get('STATIC_ROOT'),
     mediaRoot = settings.get('MEDIA_ROOT');
 
@@ -20,8 +21,7 @@ var templateDir = settings.get('TEMPLATE_DIR'),
 app.getSettings = function() { return settings; };
 
 // Templates
-// TODO: allowErrors and cache only for dev
-swig.init({ root: templateDir, allowErrors: true, cache: false });
+swig.init({ root: templateDir, allowErrors: debug, cache: !debug });
 app.set('views',templateDir);
 app.set('view engine', 'html');
 app.set('view options', { layout: false });
@@ -35,9 +35,13 @@ app.locals.STATIC_URL = settings.get('STATIC_URL');
 app.use(express.static(staticRoot));
 app.use(express.bodyParser({ keepExtensions: true, uploadDir: mediaRoot }));
 app.use(express.cookieParser());
-app.use(express.logger('tiny'));
+app.use(middleware.templates({cache: !debug}));
 app.use(middleware.authenticate());
-app.use(middleware.templates({cache: false}));
+app.use(app.router);
+app.use(middleware.errorHandler());
+if(debug) {
+  app.use(express.logger());
+}
 
 // Routes
 app.post('/users/:user/posts', users.posts.set);
@@ -56,10 +60,6 @@ app.resource('tags', tags);
 
 app.resource('sessions', sessions);
 
-// TODO: Maybe move this up
-app.use(app.router);
-app.use(express.errorHandler()); //TODO: Only for dev, otherwise response with something stupid
-app.use(middleware.notFound());
 
 if(require.main === module) {
   app.listen(8080, function() {

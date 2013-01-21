@@ -69,7 +69,7 @@ describe('Posts:', function() {
 
   it('should not be possible to create a post with an existing slug', function(done) {
     client.post('/posts',
-      {title: 'post 49', description: 'A description', body: "Lorem ipsum!!"}, function(err, req, res) {
+      {title: 'post 49', description: 'A description bis', body: "Lorem ipsum!!"}, function(err, req, res) {
         assert.equal(res.statusCode, 409);
         done();
       });

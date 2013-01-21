@@ -5,3 +5,4 @@ exports.DATABASE = {
   'NAME': __dirname + '/test.sqlite',
   'ENGINE': 'sqlite'
 };
+exports.DEBUG = true;
