@@ -3,14 +3,16 @@ var resource = require('express-resource'),
     cons = require('consolidate'),
     swig = require('swig');
 
-var middleware = require('./lib/middleware'),
+//TODO: Add an index in ./lib
+var settings = require('./lib/settings'),
+    middleware = require('./lib/middleware'),
+    templates = require('./lib/templates'),
     sessions = require('./lib/resources/sessions'),
     users = require('./lib/resources/users'),
     posts = require('./lib/resources/posts'),
     tags = require('./lib/resources/tags');
 
-var app = express(),
-    settings = require('./lib/settings');
+var app = express();
 
 var templateDir = settings.get('TEMPLATE_DIR'),
     mediaRoot = settings.get('MEDIA_ROOT'),
@@ -22,7 +24,8 @@ app.getSettings = function() { return settings; };
 // Templates
 swig.init({
   root: templateDir,
-  allowErrors: true // TODO: Only for dev
+  allowErrors: true, // TODO: Only for dev
+  cache: false  // TODO: Only for dev
 });
 app.set('views',templateDir);
 app.set('view engine', 'html');
@@ -33,8 +36,9 @@ app.locals.siteTitle = siteTitle;
 // Middleware
 app.use(express.bodyParser({ keepExtensions: true, uploadDir: mediaRoot }));
 app.use(express.cookieParser());
-app.use(middleware.authenticate());
 app.use(express.logger('tiny'));
+app.use(middleware.authenticate());
+app.use(middleware.templates({cache: false}));
 
 // Routes
 app.post('/users/:user/posts', users.posts.set);

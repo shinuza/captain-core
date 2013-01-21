@@ -7,5 +7,10 @@
   <body>
     {% block content %}{% endblock %}
     <p>Powered by Captain.js</p>
+    {% autoescape false %}
+      {% for template in templates %}
+        {{template}}
+      {% endfor %}
+    {% endautoescape %}
   </body>
 </html>
