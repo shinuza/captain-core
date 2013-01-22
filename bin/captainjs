@@ -1,11 +1,12 @@
 #!/usr/bin/env node
+var package = require('../package.json');
 var program = require('commander');
 
-var models = require('./models');
-var users = require('./resources/users');
+var models = require('./../lib/models');
+var users = require('./../lib/resources/users');
 
 program
-  .version('0.0.1')
+  .version(package.version)
   .option('createuser', 'Creates a user account')
   .option('syncdb', 'Synchronise all definitions')
   .option('-f, --force', 'Force operation')
