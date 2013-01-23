@@ -17,8 +17,9 @@ var debug = settings.get('DEBUG'),
     staticRoot = settings.get('STATIC_ROOT'),
     mediaRoot = settings.get('MEDIA_ROOT');
 
-// TODO: Remove this
-app.getSettings = function() { return settings; };
+
+app.settings = settings;
+app.middleware = middleware;
 
 // Templates
 swig.init({ root: templateDir, allowErrors: debug, cache: !debug });
