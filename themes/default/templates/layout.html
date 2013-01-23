@@ -16,11 +16,6 @@
     <div id="content">
       {% block content %}{% endblock %}
     </div>
-    <p>Powered by Captain.js</p>
-    {% autoescape false %}
-      {% for template in templates %}
-        {{template}}
-      {% endfor %}
-    {% endautoescape %}
+    <small>Powered by Captain.js</small>
   </body>
 </html>
