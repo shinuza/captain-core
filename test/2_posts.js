@@ -12,7 +12,13 @@ var client = restify.createJsonClient({
 function factory(nb, cb) {
   var postChainer = new Sequelize.Utils.QueryChainer;
   for(var i = 0; i < nb; i++) {
-    var p = models.Post.build({title: 'post ' + i, slug: "post-" + i, body: bogan(), published: i % 2 == 0});
+    var p = models.Post.build({
+      title: 'post ' + i,
+      slug: "post-" + i,
+      summary: bogan({paragraphs: 1}),
+      body: bogan(),
+      published: i % 2 == 0
+    });
     postChainer.add(p.save());
   }
   postChainer.run().success(cb).error(function(error) {throw error});
