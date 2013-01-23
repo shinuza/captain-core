@@ -127,7 +127,7 @@ function files(name) {
     , ''
     , 'app.use(\'/admin\', admin);'
     , 'app.use(core);'
-    , 'app.use(express.logger(\'tiny\'));'
+    , 'app.use(express.logger(\'dev\'));'
     , 'app.listen(settings.PORT, settings.HOST);'
     , ''
     , 'console.log(\'Running at http://%s:%d\', settings.HOST, settings.PORT);'
@@ -172,7 +172,8 @@ function files(name) {
   return {
     'index.js': index,
     'package.json': package,
-    'settings.js': settings
+    'settings.js': settings,
+    'README.md': '## ' + name
   };
 }
 
