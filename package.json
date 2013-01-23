@@ -2,10 +2,8 @@
   "name": "captainjs-core",
   "description": "Captain JS",
   "version": "0.0.1",
+  "author": "Samori Gorse <samorigorse@gmail.com>",
   "private": true,
-  "bin": {
-    "captainjs": "./bin/captainjs"
-  },
   "dependencies": {
     "commander": "*",
     "express": "*",
@@ -19,5 +17,13 @@
     "mocha": "*",
     "restify": "*",
     "boganipsum": "*"
+  },
+  "repository": "git://github.com/shinuza/captainjs-core",
+  "main": "index",
+  "bin": {
+    "captainjs": "./bin/captainjs"
+  },
+  "engine": {
+    "node": "0.6.x"
   }
 }

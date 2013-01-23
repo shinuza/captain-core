@@ -1,25 +1,191 @@
 #!/usr/bin/env node
-var package = require('../package.json');
+var fs = require('fs');
+var os = require('os');
+var crypto = require('crypto');
+var path = require('path');
+
 var program = require('commander');
 
-var models = require('./../lib/models');
-var users = require('./../lib/resources/users');
+var pkg = require('../package.json');
+
 
 program
-  .version(package.version)
+  .version(pkg.version)
   .option('createuser', 'Creates a user account')
   .option('syncdb', 'Synchronise all definitions')
+  .option('create [projectname]', 'Creates a new project')
   .option('-f, --force', 'Force operation')
   .parse(process.argv);
+
+/**
+ * Returns the `str` with red markers.
+ *
+ * @param {String} str
+ */
+
+
+function red(str) {
+  return '\x1b[31m' + str + '\x1b[0m';
+}
+
+/**
+ * Returns the `str` with cyan markers.
+ *
+ * @param {String} str
+ */
+
+
+function cyan(str) {
+  return '\x1b[36m' + str + '\x1b[0m';
+}
+
+/**
+ * echo str > path.
+ *
+ * @param {String} path
+ * @param {String} str
+ */
+
+function write(path, str) {
+  fs.writeFileSync(path, str);
+  console.log(cyan('   create : ') + path);
+}
+
+/**
+ * Mkdir.
+ *
+ * @param {String} path
+ */
+
+function mkdir(path) {
+  if(!fs.existsSync(path)) {
+    fs.mkdirSync(path, 0755);
+  }
+  console.log(cyan('   create : ') + path);
+}
+
+
+/**
+ *
+ * Creates on dir at `base`, and x `subs` under it.
+ *
+ * @param {String} base
+ * @param {Array} subs
+ */
+
+function dirs(base, subs) {
+  mkdir(base);
+  subs.forEach(function(sub) {
+    mkdir(path.join(base, sub));
+  });
+}
+
+/**
+ * Test if `path` is empty.
+ *
+ * @param {String} path
+ */
+
+function isEmptyDirectory(path) {
+  var files;
+  try {
+    files = fs.readdirSync(path);
+    if(files.length > 0) {
+      return false;
+    }
+  } catch(e) {
+    if(e.code) {
+      abort('Error: ' + e.message);
+    } else {
+      throw e;
+    }
+  }
+  return true;
+}
+
+/**
+ * Exit with the given `str`.
+ *
+ * @param {String} str
+ */
+
+function abort(str) {
+  console.error(red(str));
+  process.exit(1);
+}
+
+// Templates
+
+function files(name) {
+  var index = [
+      'var express = require(\'express\');'
+    , 'var app = express();'
+    , ''
+    , 'var settings = require(\'./settings\');'
+    , 'var core = require(\'captainjs-core\');'
+    , 'var admin = require(\'captainjs-admin\');'
+    , ''
+    , 'app.use(\'/admin\', admin);'
+    , 'app.use(core);'
+    , 'app.use(express.logger(\'tiny\'));'
+    , 'app.listen(settings.PORT, settings.HOST);'
+    , ''
+    , 'console.log(\'Running at http://%s:%d\', settings.HOST, settings.PORT);'
+  ].join(os.EOL);
+
+
+  var package = [
+      '{'
+    , '  "name": "' + name + '",'
+    , '  "description": "",'
+    , '  "version": "0.0.1",'
+    , '  "private": true,'
+    , '  "dependencies": {'
+    , '    "express": "*",'
+    , '    "captainjs-admin": "*",'
+    , '    "captainjs-core": "*"'
+    , '  },'
+    , '  "scripts": {'
+    , '    "syncdb": "captainjs syncdb",'
+    , '    "start": "node index.js"'
+    , '   }'
+    , '}'
+  ].join(os.EOL);
+
+  var settings = [
+    , 'exports.DEBUG = true;'
+    , ''
+    , 'exports.SITE_TITLE = \'' + name + '\';'
+    , 'exports.MEDIA_ROOT = __dirname + \'media\';'
+    , ''
+    , 'exports.SECRET_KEY = \'' + crypto.randomBytes(64).toString('base64') + '\';'
+    , ''
+    , 'exports.HOST = \'localhost\';'
+    , 'exports.PORT = 8080;'
+    , ''
+    , 'exports.DATABASE = {'
+    , '  NAME: __dirname + \'/' + name +'.sqlite\','
+    , '  ENGINE: \'sqlite\''
+    , '};'
+  ].join(os.EOL);
+
+  return {
+    'index.js': index,
+    'package.json': package,
+    'settings.js': settings
+  };
+}
+
+// Handlers
 
 if(program.createuser) {
   program.prompt('username: ', function(username) {
     program.password('password: ', '*', function(password) {
       program.password('confirm password: ', '*', function(password2) {
-        if(password != password2) return console.log('Password do not match, bailing out.');
+        if(password != password2) return console.log(red('Password do not match, bailing out.'));
         createUser(username, password, function(err) {
-          if(err) console.log('Failed to created user' + err.toString());
-          else console.log('User created!');
+          if(err) console.log(red('Failed to created user' + err.toString()));
+          else console.log(cyan('User created!'));
         });
       });
     });
@@ -28,6 +194,7 @@ if(program.createuser) {
 
 if(program.syncdb) {
   function syncAll(forceDrop) {
+    var models = require('./../lib/models');
     models.syncAll(forceDrop, function(err) {
       if(err) console.log(err);
       else process.exit();
@@ -37,8 +204,48 @@ if(program.syncdb) {
     syncAll(true);
   } else {
     program.prompt('Force drop? (y/n): ', function(answer) {
-      var forceDrop = !!answer.match(/y|yes/);
+      var forceDrop = !!answer.match(/y|yes|arrr/);
       syncAll(forceDrop);
     });
+  }
+}
+
+if(program.create) {
+  var target = program.create;
+
+  function createProject(name) {
+    console.log(cyan('Creating project: ') + name);
+    console.log();
+
+    // Creating dirs
+    dirs(name, ['media']);
+
+    // Creating files
+    var templates = files(name);
+    for(var template in templates) {
+      var p = path.join(name, template);
+      write(p, templates[template]);
+    }
+
+    console.log();
+    console.log(cyan('Now run: '));
+    console.log('    cd ' + target);
+    console.log('    npm install');
+    console.log('    npm run-script syncdb');
+    console.log('    npm run-script start');
+  }
+
+  if(fs.existsSync(target) && !isEmptyDirectory(target) && !program.force) {
+    program.prompt('Directory not empty, force create? (y/n): ', function(answer) {
+      var forceCreate = !!answer.match(/y|yes|arrr/);
+
+      if(forceCreate) {
+        createProject(target);
+      } else {
+        abort('Cowardly refusing to create project in a non-empty directory');
+      }
+    });
+  } else {
+    createProject(target);
   }
 }

@@ -35,13 +35,10 @@ app.locals.POSTS_BY_PAGE = settings.get('POSTS_BY_PAGE');
 // Middleware
 app.use(express.static(staticRoot));
 app.use(express.bodyParser({ keepExtensions: true, uploadDir: mediaRoot }));
-app.use(express.cookieParser());;
+app.use(express.cookieParser());
 app.use(middleware.authenticate());
 app.use(app.router);
 app.use(middleware.errorHandler());
-if(debug) {
-  app.use(express.logger());
-}
 
 // Routes
 app.post('/users/:user/posts', users.posts.set);
