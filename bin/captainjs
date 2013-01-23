@@ -146,7 +146,6 @@ function files(name) {
     , '    "captainjs-core": "*"'
     , '  },'
     , '  "scripts": {'
-    , '    "syncdb": "captainjs syncdb",'
     , '    "start": "node index.js"'
     , '   }'
     , '}'
@@ -183,10 +182,22 @@ if(program.createuser) {
   program.prompt('username: ', function(username) {
     program.password('password: ', '*', function(password) {
       program.password('confirm password: ', '*', function(password2) {
-        if(password != password2) return console.log(red('Password do not match, bailing out.'));
-        createUser(username, password, function(err) {
-          if(err) console.log(red('Failed to created user' + err.toString()));
-          else console.log(cyan('User created!'));
+        if(password != password2) {
+          return abort('Password do not match, bailing out.');
+        }
+        program.prompt('email: ', function(email) {
+          var users = require('../lib/resources/users');
+          var body = {username: username, password: password, isStaff: true, email: email};
+
+          users.createUser(body, function(err) {
+            if(err) {
+              console.log(err);
+              abort('Failed to created user');
+            } else {
+              console.log(cyan('User created!'));
+              process.exit(0);
+            }
+          });
         });
       });
     });
@@ -232,8 +243,9 @@ if(program.create) {
     console.log(cyan('Now run: '));
     console.log('    cd ' + target);
     console.log('    npm install');
-    console.log('    npm run-script syncdb');
-    console.log('    npm run-script start');
+    console.log('    captainjs syncdb');
+    console.log('    captainjs createuser');
+    console.log('    npm start');
   }
 
   if(fs.existsSync(target) && !isEmptyDirectory(target) && !program.force) {
