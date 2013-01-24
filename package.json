@@ -11,7 +11,8 @@
     "sequelize": "*",
     "sqlite3": "*",
     "consolidate": "~0.7.0",
-    "swig": "~0.13.4"
+    "swig": "~0.13.4",
+    "zoneinfo": "~0.1.7"
   },
   "devDependencies": {
     "mocha": "*",
