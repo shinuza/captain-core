@@ -160,7 +160,7 @@ function files(name) {
     , 'exports.SECRET_KEY = \'' + crypto.randomBytes(64).toString('base64') + '\';'
     , ''
     , 'exports.HOST = \'localhost\';'
-    , 'exports.PORT = 8080;'
+    , 'exports.PORT = 3000;'
     , ''
     , 'exports.DATABASE = {'
     , '  NAME: __dirname + \'/' + name +'.sqlite\','
