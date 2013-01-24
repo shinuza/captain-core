@@ -8,15 +8,6 @@ var client = restify.createJsonClient({
   url: 'http://localhost:8080'
 });
 
-before(function(done) {
-  users.createUser({
-    username: 'admin',
-    password: 'admin',
-    imageUrl: '30.png',
-    isStaff: true},
-  function() {done()});
-});
-
 describe('Users:', function() {
 
   it('should not be possible create users when not logged in', function(done) {

@@ -4,6 +4,7 @@ var Sequelize = require("sequelize");
 var bogan = require('boganipsum');
 
 var models = require('../lib/models');
+var users = require('../lib/resources/users');
 
 var client = restify.createJsonClient({
   url: 'http://localhost:8080'
@@ -25,7 +26,17 @@ function factory(nb, cb) {
 }
 
 before(function(done) {
-  factory(50, function() {done()});
+  factory(50, function() {
+    users.createUser({
+        username: 'admin',
+        password: 'admin',
+        imageUrl: '30.png',
+        email: 'amin@acme.com',
+        isStaff: true},
+      function() {
+        done()
+      });
+  });
 });
 
 describe('Posts:', function() {
