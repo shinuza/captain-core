@@ -33,6 +33,7 @@ app.engine('.html', cons.swig);
 app.locals.SITE_TITLE = settings.get('SITE_TITLE');
 app.locals.STATIC_URL = settings.get('STATIC_URL');
 app.locals.POSTS_BY_PAGE = settings.get('POSTS_BY_PAGE');
+app.locals.DATE_FORMAT = settings.get('DATE_FORMAT');
 
 // Middleware
 app.use(express.static(staticRoot));
