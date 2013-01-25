@@ -5,6 +5,7 @@ var resource = require('express-resource'),
 
 var util = require('./lib/util'),
     settings = require('./lib/settings'),
+    filters = require('./lib/filters'),
     middleware = require('./lib/middleware'),
     sessions = require('./lib/resources/sessions'),
     users = require('./lib/resources/users'),
@@ -23,7 +24,13 @@ app.settings = settings;
 app.middleware = middleware;
 
 // Templates
-swig.init({ root: templateDir, allowErrors: debug, cache: !debug, tzOffset: util.tzToMinutes(settings.get('TIME_ZONE')) });
+swig.init({
+  root: templateDir,
+  allowErrors: debug,
+  cache: !debug,
+  tzOffset: util.tzToMinutes(settings.get('TIME_ZONE')),
+  filters: filters
+});
 app.set('views',templateDir);
 app.set('view engine', 'html');
 app.set('view options', { layout: false });

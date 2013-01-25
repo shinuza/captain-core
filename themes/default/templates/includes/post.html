@@ -6,7 +6,9 @@
     <em>Entry published: {{post.createdAt|date(DATE_FORMAT)}}</em>
   </p>
   <div>
-    {{post.body}}
+    {% autoescape off %}
+    {{post.body|markdown}}
+    {% endautoescape %}
   </div>
   <hr>
 </div>

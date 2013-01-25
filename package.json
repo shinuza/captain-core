@@ -4,6 +4,7 @@
   "version": "0.0.1",
   "author": "Samori Gorse <samorigorse@gmail.com>",
   "private": true,
+  "preferGlobal": true,
   "dependencies": {
     "commander": "*",
     "express": "*",
@@ -12,7 +13,8 @@
     "sqlite3": "*",
     "consolidate": "~0.7.0",
     "swig": "~0.13.4",
-    "zoneinfo": "~0.1.7"
+    "zoneinfo": "~0.1.7",
+    "marked": "~0.2.7"
   },
   "devDependencies": {
     "mocha": "*",
