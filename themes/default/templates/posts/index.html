@@ -3,6 +3,8 @@
 {% block content %}
   {% for post in posts %}
     {% include "includes/post.html" %}
+  {% else %}
+    <h2>Nothing to see here</h2>
   {% endfor %}
 
   <div class="pagination">

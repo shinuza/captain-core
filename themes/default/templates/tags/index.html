@@ -3,5 +3,7 @@
 {% block content %}
 {% for tag in tags %}
   <a href="/tags/{{tag.slug}}/posts/">{{tag.title}}</a>
+{% else %}
+<h2>Nothing to see here</h2>
 {% endfor %}
 {% endblock %}
