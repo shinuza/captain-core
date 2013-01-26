@@ -53,7 +53,7 @@ describe('User posts association:', function() {
   it('should get the associated posts of a user', function(done) {
     client.get('/users/admin/posts', function(err, req, res, json) {
       assert.equal(res.statusCode, 200);
-      assert.equal(json.length, 5);
+      assert.equal(json.length, 50);
       done();
     });
   });
