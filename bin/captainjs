@@ -13,7 +13,7 @@ program
   .version(pkg.version)
   .option('createuser', 'Creates a user account')
   .option('syncdb', 'Synchronise all definitions')
-  .option('create [projectname]', 'Creates a new project')
+  .option('new [projectname]', 'Creates a new project')
   .option('-f, --force', 'Force operation')
   .parse(process.argv);
 
@@ -165,6 +165,8 @@ function files(name) {
     , 'exports.DATABASE = {'
     , '  NAME: __dirname + \'/' + name +'.sqlite\','
     , '  ENGINE: \'sqlite\''
+    , '  HOST: \'\''
+    , '  PORT: \'\''
     , '};'
   ].join(os.EOL);
 
@@ -204,7 +206,7 @@ if(program.createuser) {
   });
 }
 
-if(program.syncdb) {
+else if(program.syncdb) {
   function syncAll(forceDrop) {
     var models = require('./../lib/models');
     models.syncAll(forceDrop, function(err) {
@@ -222,10 +224,10 @@ if(program.syncdb) {
   }
 }
 
-if(program.create) {
-  var target = program.create;
+else if(program.new) {
+  var target = program.new;
 
-  function createProject(name) {
+  function newProject(name) {
     console.log(cyan('Creating project: ') + name);
     console.log();
 
@@ -253,12 +255,14 @@ if(program.create) {
       var forceCreate = !!answer.match(/y|yes|arrr/);
 
       if(forceCreate) {
-        createProject(target);
+        newProject(target);
       } else {
         abort('Cowardly refusing to create project in a non-empty directory');
       }
     });
   } else {
-    createProject(target);
+    newProject(target);
   }
+} else {
+  program.help();
 }
