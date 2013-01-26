@@ -7,6 +7,7 @@ var util = require('./lib/util'),
     settings = require('./lib/settings'),
     filters = require('./lib/filters'),
     middleware = require('./lib/middleware'),
+    signals = require('./lib/signals'),
     sessions = require('./lib/resources/sessions'),
     users = require('./lib/resources/users'),
     posts = require('./lib/resources/posts'),
@@ -22,6 +23,7 @@ var debug = settings.get('DEBUG'),
 
 app.settings = settings;
 app.middleware = middleware;
+app.signals = signals;
 
 // Templates
 swig.init({
@@ -66,7 +68,6 @@ app.get('/tags/:tag/posts', tags.posts.get);
 app.resource('tags', tags);
 
 app.resource('sessions', sessions);
-
 
 if(require.main === module) {
   app.listen(8080, function() {
