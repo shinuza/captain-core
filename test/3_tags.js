@@ -82,18 +82,9 @@ describe('Tags:', function() {
     });
   });
 
-
   it('should be possible to view multiple tags at once', function(done) {
     client.get('/tags', function(err, req, res, json) {
       assert.equal(json.length, 11);
-      done();
-    });
-  });
-
-  it('should be possible to view only a subset of tags', function(done) {
-    client.get('/tags?offset=2&limit=3', function(err, req, res, json) {
-      assert.equal(json.length, 3);
-      assert.equal(json[0].title, 'tag 2');
       done();
     });
   });
