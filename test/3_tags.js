@@ -50,10 +50,10 @@ describe('Tags:', function() {
       });
   });
 
-  it('should not be possible to create a tag with an existing slug', function(done) {
+  it('ignore creating a tag with an existing slug', function(done) {
     client.post('/tags',
       {title: 'tag 5'}, function(err, req, res) {
-        assert.equal(res.statusCode, 409);
+        assert.equal(res.statusCode, 200);
         done();
       });
   });
