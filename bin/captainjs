@@ -5,6 +5,7 @@ var crypto = require('crypto');
 var path = require('path');
 
 var program = require('commander');
+var uuid = require('node-uuid');
 
 var pkg = require('../package.json');
 
@@ -155,6 +156,8 @@ function files(name) {
     , 'exports.DEBUG = true;'
     , ''
     , 'exports.SITE_TITLE = \'' + name + '\';'
+    , 'exports.SITE_URL = \'http://' + name + '.com/\';'
+    , 'exports.SITE_ID = \'' + uuid.v4() + '\';'
     , 'exports.MEDIA_ROOT = __dirname + \'media\';'
     , ''
     , 'exports.SECRET_KEY = \'' + crypto.randomBytes(64).toString('base64') + '\';'
@@ -232,7 +235,7 @@ else if(program.new) {
     console.log();
 
     // Creating dirs
-    dirs(name, ['media']);
+    dirs(name, ['media', 'cache']);
 
     // Creating files
     var templates = files(name);
