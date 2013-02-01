@@ -1,0 +1,6 @@
+CREATE TABLE `tags` (
+  `id` INTEGER AUTO_INCREMENT,
+  `title` VARCHAR(255) NOT NULL,
+  `slug` VARCHAR(255) NOT NULL UNIQUE,
+  PRIMARY KEY (`id`)
+);
