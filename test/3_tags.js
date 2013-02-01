@@ -1,29 +1,19 @@
 var assert = require('assert');
-var restify = require('restify');
-var Sequelize = require("sequelize");
 
+var client = require('./client');
 var models = require('../lib/models');
 
-var client = restify.createJsonClient({
-  url: 'http://localhost:8080'
-});
-
 function factory(nb, cb) {
-  var tagChainer = new Sequelize.Utils.QueryChainer;
-  for(var i = 0; i < nb; i++) {
-    var p = models.Tag.build({title: 'tag ' + i, slug: "tag-" + i});
-    tagChainer.add(p.save());
-  }
-  tagChainer.run().success(cb).error(function(error) {throw error});
+ cb();
 }
 
 before(function(done) {
-  factory(10, function() {done()});
+  factory(10, done);
 });
 
 describe('Tags:', function() {
 
-  it('should be possible to create tags when not logged it', function(done) {
+  it('should not be possible to create tags when not logged it', function(done) {
     client.post('/tags',
       {title: 'Some other title'}, function(err, req, res) {
         assert.equal(res.statusCode, 403);
@@ -39,12 +29,11 @@ describe('Tags:', function() {
     });
   });
 
-  it('should be possible to create tags when logged it', function(done) {
+  it.only('should be possible to create tags when logged it', function(done) {
     client.post('/tags',
       {title: 'Some other title'}, function(err, req, res, json) {
         assert.ifError(err);
         assert.equal(res.statusCode, 201);
-        assert.notEqual(json.createdAt, undefined);
         assert.notEqual(json.id, undefined);
         done();
       });

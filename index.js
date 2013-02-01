@@ -75,8 +75,9 @@ app.resource('sessions', sessions);
 app.resource('feed', feed);
 
 if(require.main === module) {
-  app.listen(8080, function() {
-    console.log('Listening at http://localhost:8080');
+  var port = settings.get('PORT');
+  app.listen(port, function() {
+    console.log('Listening at http://localhost:%d', port);
   });
 }
 

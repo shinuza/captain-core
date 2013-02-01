@@ -1,6 +1,7 @@
 var assert = require('assert');
 var util = require('../lib/util');
 
+
 describe('Util', function() {
 
   it('should slugify the given string', function() {

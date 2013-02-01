@@ -1,12 +1,7 @@
 var assert = require('assert');
-var restify = require('restify');
 
+var client = require('./client');
 var models = require('../lib/models');
-var users = require('../lib/resources/users');
-
-var client = restify.createJsonClient({
-  url: 'http://localhost:8080'
-});
 
 describe('Users:', function() {
 
