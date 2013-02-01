@@ -10,4 +10,4 @@ CREATE TABLE `users` (
   `last_login` DATETIME,
   `created_at` DATETIME NOT NULL,
   `updated_at` DATETIME NOT NULL
-);s
+);

@@ -9,5 +9,4 @@ CREATE TABLE `posts` (
   `created_at` DATETIME NOT NULL,
   `updated_at` DATETIME,
   `UserId` INTEGER
-  PRIMARY KEY (`id`)
 );
