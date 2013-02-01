@@ -1,12 +1,7 @@
 var assert = require('assert');
-var restify = require('restify');
-var Sequelize = require("sequelize");
 
+var client = require('./client');
 var models = require('../lib/models');
-
-var client = restify.createJsonClient({
-  url: 'http://localhost:8080'
-});
 
 describe('Posts user association:', function() {
 

@@ -1,43 +1,19 @@
 var assert = require('assert');
-var restify = require('restify');
-var Sequelize = require("sequelize");
-var bogan = require('boganipsum');
 
+var client = require('./client');
 var models = require('../lib/models');
-var users = require('../lib/resources/users');
-
-var client = restify.createJsonClient({
-  url: 'http://localhost:8080'
-});
 
 function factory(nb, cb) {
-  var postChainer = new Sequelize.Utils.QueryChainer;
-  for(var i = 0; i < nb; i++) {
-    var p = models.Post.build({
-      title: 'post ' + i,
-      slug: "post-" + i,
-      summary: bogan({paragraphs: 1}),
-      body: bogan(),
-      published: i % 2 == 0
-    });
-    postChainer.add(p.save());
+  var bogan = require('boganipsum');
+  var x = {
+    username: 'admin',
+      password: 'admin',
+    imageUrl: '30.png',
+    email: 'amin@acme.com',
+    isStaff: true
   }
-  postChainer.run().success(cb).error(function(error) {throw error});
 }
 
-before(function(done) {
-  factory(50, function() {
-    users.createUser({
-        username: 'admin',
-        password: 'admin',
-        imageUrl: '30.png',
-        email: 'amin@acme.com',
-        isStaff: true},
-      function() {
-        done()
-      });
-  });
-});
 
 describe('Posts:', function() {
 
