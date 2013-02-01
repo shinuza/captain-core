@@ -213,8 +213,13 @@ else if(program.syncdb) {
   function syncAll(forceDrop) {
     var models = require('./../lib/models');
     models.syncAll(forceDrop, function(err) {
-      if(err) console.log(err);
-      else process.exit();
+      if(err) {
+        abort(err.toString());
+      }
+      else {
+        console.log(cyan('\nAll done.'));
+        process.exit(0);
+      }
     });
   }
   if(program.force) {
