@@ -9,6 +9,8 @@
     "commander": "*",
     "express": "*",
     "express-resource": "*",
+    "gesundheit": "~0.6.1",
+    "any-db": "~0.3.1",
     "sequelize": "*",
     "sqlite3": "*",
     "consolidate": "~0.7.0",
