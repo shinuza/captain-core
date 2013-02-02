@@ -1,9 +1,8 @@
 var assert = require('assert');
+var client = require('../client');
+var models = require('../../lib/models');
 
-var client = require('./client');
-var models = require('../lib/models');
-
-describe('Sessions:', function() {
+describe.skip('Sessions', function() {
 
   it('allow to authenticate with wrong credentials', function(done) {
     client.post('/sessions/', {username: 'pinochio', password: 'foobar'}, function(err, req, res, json) {

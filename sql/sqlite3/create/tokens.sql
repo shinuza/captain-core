@@ -1,7 +1,0 @@
-CREATE TABLE `tokens` (
-  `id` INTEGER PRIMARY KEY AUTOINCREMENT,
-  `token` VARCHAR(255) NOT NULL UNIQUE,
-  `created_at` DATETIME NOT NULL,
-  `updated_at` DATETIME NOT NULL,
-  `user_id` INTEGER NOT NULL
-);

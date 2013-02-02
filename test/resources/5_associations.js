@@ -1,9 +1,8 @@
 var assert = require('assert');
+var client = require('../client');
+var models = require('../../lib/models');
 
-var client = require('./client');
-var models = require('../lib/models');
-
-describe('Posts user association:', function() {
+describe.skip('Posts user association', function() {
 
   it('should log in', function(done) {
     client.post('/sessions/', {username: 'admin', password: 'admin'}, function(err, req, res) {
@@ -34,7 +33,7 @@ describe('Posts user association:', function() {
 
 });
 
-describe('User posts association:', function() {
+describe.skip('User posts association:', function() {
 
   it('should associate posts with a user', function(done) {
     client.get('/posts/?limit=5', function(err, req, res, posts) {
@@ -55,7 +54,7 @@ describe('User posts association:', function() {
 
 });
 
-describe('Posts tags association:', function() {
+describe.skip('Posts tags association:', function() {
 
   it('should associate post 1 to tag 1', function(done) {
     client.post('/posts/0/tags/', {data: [{id: 1}, {id: 2}]}, function(err, req, res) {
