@@ -2,7 +2,11 @@ var assert = require('assert');
 var client = require('../client');
 var models = require('../../lib/models');
 
-describe.skip('Sessions', function() {
+describe('Sessions', function() {
+
+  before(function(done) {
+    models.users.create({username: 'admin', password: 'admin'}, done);
+  });
 
   it('allow to authenticate with wrong credentials', function(done) {
     client.post('/sessions/', {username: 'pinochio', password: 'foobar'}, function(err, req, res, json) {
@@ -21,7 +25,7 @@ describe.skip('Sessions', function() {
     });
   });
 
-  it('should be return the associated user for a session', function(done) {
+  it('should return the associated user for a session', function(done) {
     client.get('/sessions/current', function(err, req, res, json) {
       assert.ifError(err);
       assert.equal(res.statusCode, 200);

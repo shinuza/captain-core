@@ -2,17 +2,6 @@ var assert = require('assert');
 var client = require('../client');
 var models = require('../../lib/models');
 
-function factory(nb, cb) {
-  var bogan = require('boganipsum');
-  var x = {
-    username: 'admin',
-      password: 'admin',
-    imageUrl: '30.png',
-    email: 'amin@acme.com',
-    isStaff: true
-  }
-}
-
 
 describe.skip('Posts', function() {
 
