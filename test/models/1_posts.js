@@ -55,6 +55,30 @@ describe('Models', function() {
       });
     });
 
+    it('all', function(done) {
+      models.posts.all(function(err, posts) {
+        assert.ifError(err);
+        assert.equal(posts.length, 1);
+        done();
+      });
+    });
+
+    it('query', function(done) {
+      models.posts.query('SELECT COUNT(id) FROM posts', function(err, r) {
+        assert.ifError(err);
+        assert.equal(r.rows[0].count, 1);
+        done();
+      });
+    });
+
+    it('del', function(done) {
+      models.posts.del(1, function(err, count) {
+        assert.ifError(err);
+        assert.ok(count == 1);
+        done();
+      });
+    });
+
   });
 
 });
