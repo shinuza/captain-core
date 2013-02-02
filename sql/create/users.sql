@@ -6,9 +6,8 @@ CREATE TABLE users (
   last_name VARCHAR(255),
   email VARCHAR(255),
   image_url VARCHAR(255),
-  is_staff BOOLEAN NOT NULL DEFAULT false,
   last_login TIMESTAMP,
   created_at TIMESTAMP NOT NULL,
-  updated_at TIMESTAMP NOT NULL,
+  updated_at TIMESTAMP,
   CONSTRAINT users_pkey PRIMARY KEY (id)
 );
