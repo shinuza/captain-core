@@ -1,17 +1,12 @@
 var assert = require('assert');
-
-var client = require('./client');
-var models = require('../lib/models');
+var client = require('../client');
+var models = require('../../lib/models');
 
 function factory(nb, cb) {
  cb();
 }
 
-before(function(done) {
-  factory(10, done);
-});
-
-describe('Tags:', function() {
+describe.skip('Tags', function() {
 
   it('should not be possible to create tags when not logged it', function(done) {
     client.post('/tags',
@@ -29,7 +24,7 @@ describe('Tags:', function() {
     });
   });
 
-  it.only('should be possible to create tags when logged it', function(done) {
+  it('should be possible to create tags when logged it', function(done) {
     client.post('/tags',
       {title: 'Some other title'}, function(err, req, res, json) {
         assert.ifError(err);

@@ -1,7 +1,6 @@
 var assert = require('assert');
-
-var client = require('./client');
-var models = require('../lib/models');
+var client = require('../client');
+var models = require('../../lib/models');
 
 function factory(nb, cb) {
   var bogan = require('boganipsum');
@@ -15,7 +14,7 @@ function factory(nb, cb) {
 }
 
 
-describe('Posts:', function() {
+describe.skip('Posts', function() {
 
   it('should not be possible to create posts when not logged it', function(done) {
     client.post('/posts',

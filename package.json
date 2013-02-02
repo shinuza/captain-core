@@ -9,15 +9,12 @@
     "commander": "*",
     "express": "*",
     "express-resource": "*",
-    "gesundheit": "~0.6.1",
-    "any-db": "~0.3.1",
-    "sequelize": "*",
-    "sqlite3": "*",
     "consolidate": "~0.7.0",
     "swig": "~0.13.4",
     "zoneinfo": "~0.1.7",
     "marked": "~0.2.7",
-    "node-uuid": "~1.4.0"
+    "node-uuid": "~1.4.0",
+    "pg": "~0.12.3"
   },
   "devDependencies": {
     "mocha": "*",
