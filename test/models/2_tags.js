@@ -6,7 +6,7 @@ describe('Models', function() {
   describe('Tags', function() {
 
     it('create', function(done) {
-      models.tags.create({title: 'Foo', slug: 'foo'}, function(err, tag) {
+      models.tags.create({title: 'Foo'}, function(err, tag) {
         assert.ifError(err);
         assert.notEqual(tag.id, undefined);
         done();
@@ -14,7 +14,7 @@ describe('Models', function() {
     });
 
     it('create twice the same tag should trigger an error', function(done) {
-      models.tags.create({title: 'Foo', slug: 'foo'}, function(err) {
+      models.tags.create({title: 'Foo'}, function(err) {
         assert.notEqual(null, err);
         done();
       });
