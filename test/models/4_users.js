@@ -14,7 +14,7 @@ describe('Models', function() {
     });
 
     it('create twice the same user should trigger an error', function(done) {
-      models.users.create({title: 'Foo'}, function(err) {
+      models.users.create({username: 'shinuza', password: 'secret'}, function(err) {
         assert.notEqual(null, err);
         done();
       });
@@ -30,6 +30,14 @@ describe('Models', function() {
 
     it('get by id', function(done) {
       models.users.find('1', function(err, user) {
+        assert.ifError(err);
+        assert.equal(user.username, 'shinuza');
+        done();
+      });
+    });
+
+    it('get by credentials', function(done) {
+      models.users.findByCredentials('shinuza', 'secret', function(err, user) {
         assert.ifError(err);
         assert.equal(user.username, 'shinuza');
         done();

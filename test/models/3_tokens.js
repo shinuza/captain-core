@@ -53,7 +53,7 @@ describe('Models', function() {
     });
 
     it('del', function(done) {
-      models.tokens.del(1, function(err, count) {
+      models.tokens.del('BOOM', function(err, count) {
         assert.ifError(err);
         assert.ok(count == 1);
         done();
