@@ -14,7 +14,9 @@
     "zoneinfo": "~0.1.7",
     "marked": "~0.2.7",
     "node-uuid": "~1.4.0",
-    "pg": "~0.12.3"
+    "pg": "~0.12.3",
+    "uuid": "0.0.2",
+    "squel": "~1.0.6"
   },
   "devDependencies": {
     "mocha": "*",
