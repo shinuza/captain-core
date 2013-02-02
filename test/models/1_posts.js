@@ -46,6 +46,15 @@ describe('Models', function() {
       });
     });
 
+    it('update', function(done) {
+      models.posts.update(1, {'title': 'FOO'}, function(err, post) {
+        assert.ifError(err);
+        assert.equal(post.title, 'FOO');
+        assert.notEqual(post.updated_at, undefined);
+        done();
+      });
+    });
+
   });
 
 });
