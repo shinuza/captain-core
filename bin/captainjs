@@ -14,7 +14,7 @@ program
   .version(pkg.version)
   .option('createuser', 'Creates a user account')
   .option('syncdb', 'Synchronise all definitions')
-  .option('new [projectname]', 'Creates a new project')
+  .option('init [projectname]', 'Creates a new project')
   .option('-f, --force', 'Force operation')
   .parse(process.argv);
 
@@ -232,10 +232,10 @@ else if(program.syncdb) {
   }
 }
 
-else if(program.new) {
-  var target = program.new;
+else if(program.init) {
+  var target = program.init;
 
-  function newProject(name) {
+  function initProject(name) {
     console.log(cyan('Creating project: ') + name);
     console.log();
 
@@ -263,13 +263,13 @@ else if(program.new) {
       var forceCreate = !!answer.match(/y|yes|arrr/);
 
       if(forceCreate) {
-        newProject(target);
+        initProject(target);
       } else {
         abort('Cowardly refusing to create project in a non-empty directory');
       }
     });
   } else {
-    newProject(target);
+    initProject(target);
   }
 } else {
   program.help();
