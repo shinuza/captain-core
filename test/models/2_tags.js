@@ -61,7 +61,7 @@ describe('Models', function() {
     });
 
     it('del', function(done) {
-      models.tags.del(1, function(err, count) {
+      models.tags.del(4, function(err, count) {
         assert.ifError(err);
         assert.ok(count == 1);
         done();

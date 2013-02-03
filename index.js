@@ -62,8 +62,6 @@ app.get('/users/:user/posts', users.posts.get);
 app.resource('users', users);
 
 app.get('/', posts.index);
-app.post('/posts/:post/user', posts.user.set);
-app.get('/posts/:post/user', posts.user.get);
 app.post('/posts/:post/tags', posts.tags.set);
 app.get('/posts/:post/tags', posts.tags.get);
 app.resource('posts', posts);

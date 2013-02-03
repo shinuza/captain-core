@@ -4,11 +4,11 @@ var models = require('../../lib/models');
 
 describe('Resource', function() {
 
-  describe.skip('Posts', function() {
+  describe('Posts', function() {
 
     it('should not be possible to create posts when not logged it', function(done) {
       client.post('/posts',
-        {title: 'Some other title', description: 'A description', body: "Lorem ipsum!!"}, function(err, req, res) {
+        {title: 'Something that fails', summary: 'A description', body: "Lorem ipsum!!", published: true}, function(err, req, res) {
           assert.equal(res.statusCode, 403);
           done();
         });
@@ -32,39 +32,48 @@ describe('Resource', function() {
     });
 
     it('should be possible to create posts when logged in', function(done) {
-      client.post('/posts',
-      {title: 'Some other title', description: 'A description', body: "Lorem ipsum!!"}, function(err, req, res, json) {
-        assert.ifError(err);
-        assert.equal(res.statusCode, 201);
-        assert.notEqual(json.createdAt, undefined);
-        assert.notEqual(json.id, undefined);
-        done();
-      });
+      client.post('/posts', {title: 'Something that succeed', summary: "Something something", body: "Lorem ipsum!!", published: true},
+        function(err, req, res, json) {
+          assert.ifError(err);
+          assert.equal(res.statusCode, 201);
+          assert.notEqual(json.created_at, undefined);
+          assert.notEqual(json.id, undefined);
+          done();
+        });
     });
 
     it('should not be possible to create a post with an existing slug', function(done) {
       client.post('/posts',
-        {title: 'post 49', description: 'A description bis', body: "Lorem ipsum!!"}, function(err, req, res) {
+        {title: 'A blog post about Node.js', summary: 'A description bis', body: "Lorem ipsum!!"}, function(err, req, res) {
           assert.equal(res.statusCode, 409);
           done();
         });
     });
 
     it('should be possible to edit posts', function(done) {
-      client.put('/posts/51', {title: 'Some edited title 1', published: true}, function(err, req, res) {
+      client.put('/posts/3', {title: 'Some edited title 1', published: true}, function(err, req, res) {
         assert.equal(res.statusCode, 201);
         done();
       });
     });
 
-    it('should be possible to view a single post', function(done) {
-      client.get('/posts/some-other-title', function(err, req, res, json) {
-        client.get('/posts/51', function(err, req, res, json2) {
-          assert.equal(res.statusCode, 200);
-          assert.equal(json.title, json2.title);
-          assert.equal(json.slug, json2.slug);
-          done();
-        });
+    it('should be possible to view a single post by id', function(done) {
+      client.get('/posts/5', function(err, req, res, json) {
+        assert.ifError(err);
+        assert.equal(res.statusCode, 200);
+        assert.equal(json.title, 'A blog post about Trance');
+        assert.equal(json.slug, 'a-blog-post-about-trance');
+        done();
+      });
+    });
+
+    it('should be possible to view single post by slug', function(done) {
+      client.get('/posts/a-blog-post-about-trance', function(err, req, res, json) {
+        assert.ifError(err);
+        assert.equal(res.statusCode, 200);
+        assert.equal(json.title, 'A blog post about Trance');
+        assert.equal(json.id, 5);
+        done();
       });
     });
 
@@ -80,15 +89,15 @@ describe('Resource', function() {
       it('should be possible to view only a subset of posts', function(done) {
         client.get('/posts', function(err, req, res, json) {
           assert.equal(json.length, 5);
-          assert.equal(json[0].title, 'Some edited title 1');
+          assert.equal(json[0].title, 'A blog post about Node.js');
           done();
         });
       });
 
       it('should be possible to posts by page', function(done) {
-        client.get('/posts?page=5', function(err, req, res, json) {
+        client.get('/posts?page=1', function(err, req, res, json) {
         assert.equal(json.length, 5);
-        assert.equal(json[4].title, 'post 0');
+        assert.equal(json[4].title, 'A blog post about No publishing something');
         done();
       });
   });
@@ -103,7 +112,7 @@ describe('Resource', function() {
     });
 
     it('should be possible to remove a post', function(done) {
-      client.del('/posts/49', function(err, req, res) {
+      client.del('/posts/9', function(err, req, res) {
         assert.equal(res.statusCode, 204);
         done();
       });
