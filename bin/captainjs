@@ -14,6 +14,7 @@ program
   .version(pkg.version)
   .option('createuser', 'Creates a user account')
   .option('syncdb', 'Synchronise all definitions')
+  .option('loaddata [filename]', 'Loads data')
   .option('init [projectname]', 'Creates a new project')
   .option('-f, --force', 'Force operation')
   .parse(process.argv);
@@ -27,6 +28,17 @@ program
 
 function red(str) {
   return '\x1b[31m' + str + '\x1b[0m';
+}
+
+/**
+ * Returns the `str` with yellow markers.
+ *
+ * @param {String} str
+ */
+
+
+function yellow(str) {
+  return '\x1b[33m' + str + '\x1b[0m';
 }
 
 /**
@@ -61,10 +73,11 @@ function write(path, str) {
 function mkdir(path) {
   if(!fs.existsSync(path)) {
     fs.mkdirSync(path, 0755);
+    console.log(cyan('   create : ') + path);
+  } else {
+    console.log(yellow('   dir exists : ') + path);
   }
-  console.log(cyan('   create : ') + path);
 }
-
 
 /**
  *
@@ -80,6 +93,7 @@ function dirs(base, subs) {
     mkdir(path.join(base, sub));
   });
 }
+
 
 /**
  * Test if `path` is empty.
