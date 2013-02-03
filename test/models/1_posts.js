@@ -41,7 +41,7 @@ describe('Models', function() {
     it('get by id', function(done) {
       models.posts.find('1', function(err, post) {
         assert.ifError(err);
-        assert.equal(post.slug, 'foobar');
+        assert.equal(post.slug, 'a-blog-post-about-sql');
         done();
       });
     });
@@ -58,7 +58,7 @@ describe('Models', function() {
     it('query', function(done) {
       models.posts.query('SELECT COUNT(id) FROM posts', function(err, r) {
         assert.ifError(err);
-        assert.equal(r.rows[0].count, 1);
+        assert.equal(r.rows[0].count, 7);
         done();
       });
     });
@@ -66,7 +66,7 @@ describe('Models', function() {
     it('count published', function(done) {
       models.posts.countPublished(function(err, count) {
         assert.ifError(err);
-        assert.equal(count, 1);
+        assert.equal(count, 6);
         done();
       });
     });

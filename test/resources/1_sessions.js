@@ -4,10 +4,6 @@ var models = require('../../lib/models');
 
 describe('Sessions', function() {
 
-  before(function(done) {
-    models.users.create({username: 'admin', password: 'admin'}, done);
-  });
-
   it('allow to authenticate with wrong credentials', function(done) {
     client.post('/sessions/', {username: 'pinochio', password: 'foobar'}, function(err, req, res, json) {
       assert.equal(json.token, undefined);

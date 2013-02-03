@@ -31,7 +31,7 @@ describe('Models', function() {
     it('get by id', function(done) {
       models.users.find('1', function(err, user) {
         assert.ifError(err);
-        assert.equal(user.username, 'shinuza');
+        assert.equal(user.username, 'admin');
         done();
       });
     });
@@ -55,7 +55,7 @@ describe('Models', function() {
     it('all', function(done) {
       models.users.all(function(err, users) {
         assert.ifError(err);
-        assert.equal(users.length, 1);
+        assert.equal(users.length, 2);
         done();
       });
     });
@@ -63,13 +63,13 @@ describe('Models', function() {
     it('query', function(done) {
       models.users.query('SELECT COUNT(id) FROM users', function(err, r) {
         assert.ifError(err);
-        assert.equal(r.rows[0].count, 1);
+        assert.equal(r.rows[0].count, 2);
         done();
       });
     });
 
     it('del', function(done) {
-      models.users.del(1, function(err, count) {
+      models.users.del(2, function(err, count) {
         assert.ifError(err);
         assert.ok(count == 1);
         done();

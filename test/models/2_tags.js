@@ -31,15 +31,15 @@ describe('Models', function() {
     it('get by id', function(done) {
       models.tags.find('1', function(err, tag) {
         assert.ifError(err);
-        assert.equal(tag.slug, 'foo');
+        assert.equal(tag.slug, 'programming');
         done();
       });
     });
 
     it('update', function(done) {
-      models.tags.update(1, {'title': 'FOO'}, function(err, tag) {
+      models.tags.update(1, {'title': 'PROGRAMMING!'}, function(err, tag) {
         assert.ifError(err);
-        assert.equal(tag.title, 'FOO');
+        assert.equal(tag.title, 'PROGRAMMING!');
         done();
       });
     });
@@ -47,7 +47,7 @@ describe('Models', function() {
     it('all', function(done) {
       models.tags.all(function(err, tags) {
         assert.ifError(err);
-        assert.equal(tags.length, 1);
+        assert.equal(tags.length, 3);
         done();
       });
     });
@@ -55,7 +55,7 @@ describe('Models', function() {
     it('query', function(done) {
       models.tags.query('SELECT COUNT(id) FROM tags', function(err, r) {
         assert.ifError(err);
-        assert.equal(r.rows[0].count, 1);
+        assert.equal(r.rows[0].count, 4);
         done();
       });
     });

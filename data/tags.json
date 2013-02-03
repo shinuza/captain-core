@@ -1,0 +1,14 @@
+{
+  "table": "tags",
+  "rows": [
+    {
+      "title": "Programming"
+    },
+    {
+      "title": "General"
+    },
+    {
+      "title": "Music"
+    }
+  ]
+}
