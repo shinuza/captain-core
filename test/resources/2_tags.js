@@ -4,7 +4,7 @@ var models = require('../../lib/models');
 
 describe('Resource', function() {
 
-  describe('Tags', function() {
+  describe.only('Tags', function() {
 
     it('should not be possible to create tags when not logged it', function(done) {
       client.post('/tags',
@@ -34,24 +34,25 @@ describe('Resource', function() {
 
     it('ignore creating a tag with an existing slug', function(done) {
       client.post('/tags',
-        {title: 'tag 5'}, function(err, req, res) {
-          assert.equal(res.statusCode, 200);
+        {title: 'General'}, function(err, req, res) {
+          assert.equal(res.statusCode, 201);
           done();
         });
     });
 
     it('should be possible to edit tags', function(done) {
-      client.put('/tags/11', {title: 'Some edited title 1'}, function(err, req, res) {
+      client.put('/tags/1', {title: 'Some edited title 1'}, function(err, req, res, json) {
         assert.equal(res.statusCode, 201);
+        assert.notEqual(json, undefined);
         done();
       });
     });
 
     it('should be possible to view a single tag', function(done) {
-      client.get('/tags/some-other-title', function(err, req, res, json) {
+      client.get('/tags/1', function(err, req, res, json) {
         assert.equal(res.statusCode, 200);
         assert.equal(json.title, 'Some edited title 1');
-        assert.equal(json.slug, 'some-other-title');
+        assert.equal(json.slug, 'programming');
         done();
       });
     });
@@ -66,7 +67,7 @@ describe('Resource', function() {
 
     it('should be possible to view multiple tags at once', function(done) {
       client.get('/tags', function(err, req, res, json) {
-        assert.equal(json.length, 11);
+        assert.equal(json.length, 3);
         done();
       });
     });
