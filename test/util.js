@@ -30,15 +30,4 @@ describe('Util', function() {
     assert.strictEqual(result4, 0);
   });
 
-  it('should properly encode a password', function(done) {
-    util.encode('admin', function(err, encrypted) {
-      assert.ifError(err);
-      util.compare('admin', encrypted, function(err, same) {
-        assert.ifError(err);
-        assert.equal(true, same);
-        done()
-      });
-    });
-  });
-
 });

@@ -2,11 +2,7 @@ var assert = require('assert');
 var client = require('../client');
 var models = require('../../lib/models');
 
-function factory(nb, cb) {
- cb();
-}
-
-describe.skip('Tags', function() {
+describe('Tags', function() {
 
   it('should not be possible to create tags when not logged it', function(done) {
     client.post('/tags',
