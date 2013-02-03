@@ -4,7 +4,7 @@ var models = require('../../lib/models');
 
 describe('Resource', function() {
 
-  describe.only('Tags', function() {
+  describe('Tags', function() {
 
     it('should not be possible to create tags when not logged it', function(done) {
       client.post('/tags',
@@ -16,6 +16,7 @@ describe('Resource', function() {
 
     it('should log in', function(done) {
       client.post('/sessions/', {username: 'admin', password: 'admin'}, function(err, req, res) {
+        assert.ifError(err);
         assert.equal(res.statusCode, 201);
         client.headers.cookie = res.headers['set-cookie'];
         done();
@@ -41,7 +42,7 @@ describe('Resource', function() {
     });
 
     it('should be possible to edit tags', function(done) {
-      client.put('/tags/1', {title: 'Some edited title 1'}, function(err, req, res, json) {
+      client.put('/tags/6', {title: 'FOOBAR'}, function(err, req, res, json) {
         assert.equal(res.statusCode, 201);
         assert.notEqual(json, undefined);
         done();
@@ -49,10 +50,10 @@ describe('Resource', function() {
     });
 
     it('should be possible to view a single tag', function(done) {
-      client.get('/tags/1', function(err, req, res, json) {
+      client.get('/tags/6', function(err, req, res, json) {
         assert.equal(res.statusCode, 200);
-        assert.equal(json.title, 'Some edited title 1');
-        assert.equal(json.slug, 'programming');
+        assert.equal(json.title, 'FOOBAR');
+        assert.equal(json.slug, 'some-other-title');
         done();
       });
     });
@@ -81,7 +82,7 @@ describe('Resource', function() {
     });
 
     it('should be possible to remove a tag', function(done) {
-      client.del('/tags/3', function(err, req, res) {
+      client.del('/tags/6', function(err, req, res) {
         assert.equal(res.statusCode, 204);
         done();
       });
