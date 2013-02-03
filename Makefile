@@ -1,4 +1,6 @@
-default: run
+default: test
 
-run:
-	./bin/captainjs syncdb --force && mocha -G -b --recursive
+test:
+	@./bin/captainjs syncdb --force && ./bin/captainjs loaddata data && mocha -G -b --recursive
+
+.PHONY: test
