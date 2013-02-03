@@ -5,10 +5,11 @@ var crypto = require('crypto');
 var path = require('path');
 
 var program = require('commander');
+var async = require('async');
 var uuid = require('node-uuid');
 
 var pkg = require('../package.json');
-
+var models = require('./../lib/models');
 
 program
   .version(pkg.version)
@@ -226,11 +227,11 @@ if(program.createuser) {
 else if(program.syncdb) {
   function syncAll(forceDrop) {
     var models = require('./../lib/models');
+
     models.syncAll(forceDrop, function(err) {
       if(err) {
-        abort(err.toString());
-      }
-      else {
+        abort(err.stack);
+      } else {
         console.log(cyan('\nAll done.'));
         process.exit(0);
       }
@@ -244,6 +245,31 @@ else if(program.syncdb) {
       syncAll(forceDrop);
     });
   }
+}
+
+else if(program.loaddata) {
+  (function() {
+    var files = [];
+    var filename = program.loaddata;
+    var stats = fs.statSync(filename);
+
+    if(stats.isDirectory()) {
+      fs.readdirSync(filename).forEach(function(file) {
+        files.push(path.join(filename, file));
+      });
+    } else {
+      files.push(filename);
+    }
+
+    async.forEach(files, models.load, function(err){
+      if(err) {
+        abort(err.stack);
+      } else {
+        console.log(cyan('\nAll done.'));
+        process.exit(0);
+      }
+    });
+  }());
 }
 
 else if(program.init) {
@@ -279,12 +305,14 @@ else if(program.init) {
       if(forceCreate) {
         initProject(target);
       } else {
-        abort('Cowardly refusing to create project in a non-empty directory');
+        abort('Cowardly refusing to init project in a non-empty directory');
       }
     });
   } else {
     initProject(target);
   }
-} else {
+}
+
+else {
   program.help();
 }
