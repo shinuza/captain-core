@@ -41,8 +41,16 @@ describe('Resource', function() {
     });
 
     it('should be possible to modify a user', function(done) {
-      client.put('/users/4', {first_name: 'hellooooo'}, function(err, req, res) {
+      client.put('/users/5', {password: 'pass'}, function(err, req, res) {
         assert.equal(res.statusCode, 201);
+        done();
+      });
+    });
+
+    it('should log in with a new password', function(done) {
+      client.post('/sessions/', {username: 'johndoe', password: 'pass'}, function(err, req, res) {
+        assert.equal(res.statusCode, 201);
+        client.headers.cookie = res.headers['set-cookie'];
         done();
       });
     });
@@ -78,7 +86,7 @@ describe('Resource', function() {
     });
 
     it('should be possible to remove a user', function(done) {
-      client.del('/users/4', function(err, req, res) {
+      client.del('/users/5', function(err, req, res) {
         assert.equal(res.statusCode, 204);
         done();
       });
@@ -87,13 +95,6 @@ describe('Resource', function() {
     it('should log out', function(done) {
       client.del('/sessions/current', function(err, req, res) {
         assert.equal(res.statusCode, 204);
-        done();
-      });
-    });
-
-    it('should not allow creating a user after logout', function(done) {
-      client.post('/users', {username: 'johndoe', password: 'foobar'}, function(err, req, res) {
-        assert.equal(res.statusCode, 403);
         done();
       });
     });
