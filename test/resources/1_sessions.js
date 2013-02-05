@@ -2,11 +2,11 @@ var assert = require('assert');
 var client = require('../client');
 var models = require('../../lib/models');
 
-describe('Resource', function() {
+describe('Resource:', function() {
 
-  describe('Sessions', function() {
+  describe('Sessions:', function() {
 
-    it('allow to authenticate with wrong credentials', function(done) {
+    it('should not allow to authenticate with wrong credentials', function(done) {
       client.post('/sessions/', {username: 'pinochio', password: 'foobar'}, function(err, req, res, json) {
         assert.equal(json.token, undefined);
         assert.equal(res.statusCode, 403);
@@ -14,7 +14,7 @@ describe('Resource', function() {
       });
     });
 
-    it('allow to authenticate with correct credentials', function(done) {
+    it('should allow to authenticate with correct credentials', function(done) {
       client.post('/sessions/', {username: 'admin', password: 'admin'}, function(err, req, res) {
         assert.ifError(err);
         assert.equal(res.statusCode, 201);

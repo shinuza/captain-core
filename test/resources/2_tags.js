@@ -24,8 +24,7 @@ describe('Resource', function() {
     });
 
     it('should be possible to create tags when logged it', function(done) {
-      client.post('/tags',
-        {title: 'Some other title'}, function(err, req, res, json) {
+      client.post('/tags', {title: 'Some other title'}, function(err, req, res, json) {
           assert.ifError(err);
           assert.equal(res.statusCode, 201);
           assert.notEqual(json.id, undefined);
@@ -34,11 +33,18 @@ describe('Resource', function() {
     });
 
     it('ignore creating a tag with an existing slug', function(done) {
-      client.post('/tags',
-        {title: 'General'}, function(err, req, res) {
+      client.post('/tags', {title: 'General'}, function(err, req, res) {
           assert.equal(res.statusCode, 201);
           done();
         });
+    });
+
+    it('retrieve all tags', function(done) {
+      client.get('/tags', function(err, req, res, json) {
+        assert.equal(res.statusCode, 200);
+        assert.equal(json.length, 3);
+        done();
+      });
     });
 
     it('should be possible to edit tags', function(done) {
