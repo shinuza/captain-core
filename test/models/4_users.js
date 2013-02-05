@@ -55,7 +55,7 @@ describe('Models', function() {
     it('all', function(done) {
       models.users.all(function(err, users) {
         assert.ifError(err);
-        assert.equal(users.length, 2);
+        assert.equal(users.length, 3);
         done();
       });
     });
@@ -63,7 +63,7 @@ describe('Models', function() {
     it('query', function(done) {
       models.users.query('SELECT COUNT(id) FROM users', function(err, r) {
         assert.ifError(err);
-        assert.equal(r.rows[0].count, 2);
+        assert.equal(r.rows[0].count, 3);
         done();
       });
     });
