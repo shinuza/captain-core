@@ -51,8 +51,9 @@ describe('Resource', function() {
     });
 
     it('should be possible to edit posts', function(done) {
-      client.put('/posts/3', {title: 'Some edited title 1', published: true}, function(err, req, res) {
+      client.put('/posts/3', {title: 'Some edited title 1', published: true}, function(err, req, res, json) {
         assert.equal(res.statusCode, 201);
+        assert.equal(json.title, 'Some edited title 1');
         done();
       });
     });
