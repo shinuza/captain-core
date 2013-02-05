@@ -57,8 +57,6 @@ app.use(app.router);
 app.use(middleware.errorHandler());
 
 // Routes
-app.post('/users/:user/posts', users.posts.set);
-app.get('/users/:user/posts', users.posts.get);
 app.resource('users', users);
 
 app.get('/', posts.index);
