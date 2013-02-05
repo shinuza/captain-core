@@ -77,7 +77,15 @@ describe('Resource', function() {
       });
     });
 
-    it('should not be possible to view a non-existing post', function(done) {
+    it('should not be possible to edit a non-existent post', function(done) {
+      client.put('/posts/50', {title: 'DO NOT EXIST'}, function(err, req, res, json) {
+        assert.equal(res.statusCode, 404);
+        assert.equal(json.message, 'Not found');
+        done();
+      });
+    });
+
+    it('should not be possible to view a non-existent post', function(done) {
       client.get('/posts/i-dont-exist', function(err, req, res, json) {
         assert.equal(res.statusCode, 404);
         assert.equal(json.message, 'Not found');

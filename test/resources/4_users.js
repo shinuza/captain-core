@@ -1,10 +1,12 @@
 var assert = require('assert');
+
 var client = require('../client');
 var models = require('../../lib/models');
 
+
 describe('Resource', function() {
 
-  describe.skip('Users:', function() {
+  describe('Users:', function() {
 
     it('should not be possible create users when not logged in', function(done) {
       client.post('/users', {username: 'johndoe', password: 'foobar'}, function(err, req, res) {
@@ -25,7 +27,7 @@ describe('Resource', function() {
       client.post('/users', {username: 'johndoe', password: 'foobar', email: 'john@doe.com'}, function(err, req, res, json) {
         assert.ifError(err);
         assert.equal(res.statusCode, 201);
-        assert.notEqual(json.createdAt, undefined);
+        assert.notEqual(json.created_at, undefined);
         assert.notEqual(json.id, undefined);
         done();
       });
@@ -39,22 +41,24 @@ describe('Resource', function() {
     });
 
     it('should be possible to modify a user', function(done) {
-      client.put('/users/2', {password: 'hellooooo'}, function(err, req, res) {
+      client.put('/users/4', {first_name: 'hellooooo'}, function(err, req, res) {
         assert.equal(res.statusCode, 201);
         done();
       });
     });
 
     it('should not be possible to modify a non-existent user', function(done) {
-      client.put('/users/50', {firstname: 'babyyy'}, function(err, req, res) {
+      client.put('/users/50', {first_name: 'babyyy'}, function(err, req, res, json) {
         assert.equal(res.statusCode, 404);
+        assert.equal(json.message, 'Not found');
         done();
       });
     });
 
     it('should not be possible to view a non-existent user', function(done) {
-      client.get('/users/willie', function(err, req, res) {
+      client.get('/users/willie', function(err, req, res, json) {
         assert.equal(res.statusCode, 404);
+        assert.equal(json.message, 'Not found');
         done();
       });
     });
@@ -74,7 +78,7 @@ describe('Resource', function() {
     });
 
     it('should be possible to remove a user', function(done) {
-      client.del('/users/2', function(err, req, res) {
+      client.del('/users/4', function(err, req, res) {
         assert.equal(res.statusCode, 204);
         done();
       });
