@@ -6,9 +6,9 @@
   "private": true,
   "preferGlobal": true,
   "dependencies": {
-    "commander": "*",
-    "express": "*",
-    "express-resource": "*",
+    "commander": "~1.1.1",
+    "express": "~3.0.6",
+    "express-resource": "~1.0.0",
     "consolidate": "~0.7.0",
     "swig": "~0.13.4",
     "zoneinfo": "~0.1.7",
