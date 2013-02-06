@@ -1,5 +1,5 @@
 var assert = require('assert');
-var models = require('../../lib/models');
+var models = require('../../lib/db');
 
 var bogan = require('boganipsum');
 

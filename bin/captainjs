@@ -9,7 +9,7 @@ var async = require('async');
 var uuid = require('node-uuid');
 
 var pkg = require('../package.json');
-var models = require('./../lib/models');
+var models = require('./../lib/db');
 
 program
   .version(pkg.version)
@@ -237,7 +237,7 @@ if(program.createuser) {
 
 else if(program.syncdb) {
   function syncAll(forceDrop) {
-    var models = require('./../lib/models');
+    var models = require('./../lib/db');
 
     models.syncAll(forceDrop, function(err) {
       if(err) {
