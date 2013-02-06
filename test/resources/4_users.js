@@ -1,7 +1,7 @@
 var assert = require('assert');
 
 var client = require('../client');
-var models = require('../../lib/db');
+var db = require('../../lib/db');
 
 
 describe('Resource', function() {

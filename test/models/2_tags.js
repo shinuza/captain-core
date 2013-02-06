@@ -1,12 +1,12 @@
 var assert = require('assert');
-var models = require('../../lib/db');
+var db = require('../../lib/db');
 
 describe('Models', function() {
 
   describe('Tags', function() {
 
     it('create', function(done) {
-      models.tags.create({title: 'Foo'}, function(err, tag) {
+      db.tags.create({title: 'Foo'}, function(err, tag) {
         assert.ifError(err);
         assert.notEqual(tag.id, undefined);
         done();
@@ -14,14 +14,14 @@ describe('Models', function() {
     });
 
     it('create twice the same tag should trigger an error', function(done) {
-      models.tags.create({title: 'Foo'}, function(err) {
+      db.tags.create({title: 'Foo'}, function(err) {
         assert.notEqual(null, err);
         done();
       });
     });
 
     it('get by slug', function(done) {
-      models.tags.find('foo', function(err, tag) {
+      db.tags.find('foo', function(err, tag) {
         assert.ifError(err);
         assert.equal(tag.slug, 'foo');
         done();
@@ -29,7 +29,7 @@ describe('Models', function() {
     });
 
     it('get by id', function(done) {
-      models.tags.find('1', function(err, tag) {
+      db.tags.find('1', function(err, tag) {
         assert.ifError(err);
         assert.equal(tag.slug, 'programming');
         done();
@@ -37,7 +37,7 @@ describe('Models', function() {
     });
 
     it('update', function(done) {
-      models.tags.update(1, {'title': 'PROGRAMMING!'}, function(err, tag) {
+      db.tags.update(1, {'title': 'PROGRAMMING!'}, function(err, tag) {
         assert.ifError(err);
         assert.equal(tag.title, 'PROGRAMMING!');
         done();
@@ -45,7 +45,7 @@ describe('Models', function() {
     });
 
     it('all', function(done) {
-      models.tags.all(function(err, tags) {
+      db.tags.all(function(err, tags) {
         assert.ifError(err);
         assert.equal(tags.length, 3);
         done();
@@ -53,7 +53,7 @@ describe('Models', function() {
     });
 
     it('query', function(done) {
-      models.tags.query('SELECT COUNT(id) FROM tags', function(err, r) {
+      db.tags.query('SELECT COUNT(id) FROM tags', function(err, r) {
         assert.ifError(err);
         assert.equal(r.rows[0].count, 4);
         done();
@@ -61,7 +61,7 @@ describe('Models', function() {
     });
 
     it('del', function(done) {
-      models.tags.del(4, function(err, count) {
+      db.tags.del(4, function(err, count) {
         assert.ifError(err);
         assert.ok(count == 1);
         done();
