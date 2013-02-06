@@ -44,14 +44,6 @@ describe('Models', function() {
       });
     });
 
-    it('query', function(done) {
-      db.tokens.query('SELECT COUNT(id) FROM tokens', function(err, r) {
-        assert.ifError(err);
-        assert.equal(r.rows[0].count, 1);
-        done();
-      });
-    });
-
     it('del', function(done) {
       db.tokens.del('BOOM', function(err, count) {
         assert.ifError(err);

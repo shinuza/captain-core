@@ -60,14 +60,6 @@ describe('Models', function() {
       });
     });
 
-    it('query', function(done) {
-      db.users.query('SELECT COUNT(id) FROM users', function(err, r) {
-        assert.ifError(err);
-        assert.equal(r.rows[0].count, 3);
-        done();
-      });
-    });
-
     it('del', function(done) {
       db.users.del(2, function(err, count) {
         assert.ifError(err);

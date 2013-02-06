@@ -52,14 +52,6 @@ describe('Models', function() {
       });
     });
 
-    it('query', function(done) {
-      db.tags.query('SELECT COUNT(id) FROM tags', function(err, r) {
-        assert.ifError(err);
-        assert.equal(r.rows[0].count, 4);
-        done();
-      });
-    });
-
     it('del', function(done) {
       db.tags.del(4, function(err, count) {
         assert.ifError(err);

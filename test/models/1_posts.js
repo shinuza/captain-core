@@ -55,14 +55,6 @@ describe('Models', function() {
       });
     });
 
-    it('query', function(done) {
-      db.posts.query('SELECT COUNT(id) FROM posts', function(err, r) {
-        assert.ifError(err);
-        assert.equal(r.rows[0].count, 7);
-        done();
-      });
-    });
-
     it('count published', function(done) {
       db.posts.countPublished(function(err, count) {
         assert.ifError(err);
