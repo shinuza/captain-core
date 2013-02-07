@@ -6,7 +6,7 @@ describe('Models', function() {
   describe('Tokens', function() {
 
     it('create', function(done) {
-      db.tokens.create({token: 'Blablabla', user_id: 1}, function(err, token) {
+      db.tokens.create({token: 'foobar', user_id: 1}, function(err, token) {
         assert.ifError(err);
         assert.notEqual(token.id, undefined);
         done();
@@ -14,7 +14,7 @@ describe('Models', function() {
     });
 
     it('create twice the same token should trigger an error', function(done) {
-      db.tokens.create({token: 'Blablabla', user_id: 1}, function(err) {
+      db.tokens.create({token: 'foobar', user_id: 1}, function(err) {
         assert.notEqual(null, err);
         done();
       });
@@ -23,29 +23,13 @@ describe('Models', function() {
     it('get by id', function(done) {
       db.tokens.findById(1, function(err, token) {
         assert.ifError(err);
-        assert.equal(token.token, 'Blablabla');
-        done();
-      });
-    });
-
-    it('update', function(done) {
-      db.tokens.update(1, {'token': 'BOOM'}, function(err, token) {
-        assert.ifError(err);
-        assert.equal(token.token, 'BOOM');
-        done();
-      });
-    });
-
-    it('all', function(done) {
-      db.tokens.all(function(err, tokens) {
-        assert.ifError(err);
-        assert.equal(tokens.length, 1);
+        assert.equal(token.token, 'foobar');
         done();
       });
     });
 
     it('del', function(done) {
-      db.tokens.del('BOOM', function(err, count) {
+      db.tokens.del('foobar', function(err, count) {
         assert.ifError(err);
         assert.ok(count == 1);
         done();
