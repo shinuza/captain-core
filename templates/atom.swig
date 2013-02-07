@@ -7,21 +7,25 @@
   <updated>{{updated|date('c')}}</updated>
   <id>urn:uuid:{{settings.SITE_ID}}</id>
 
-  {% for post in posts %}
+  {% for row in rows %}
   <entry>
-    <title>{{post.title}}</title>
-    <id>urn:uuid:{{post.uuid}}</id>
-    <updated>{{post.updatedAt|date('c')}}</updated>
-    <link href="{{settings.SITE_URL}}posts/{{post.slug}}"/>
-    <summary>{{post.summary}}</summary>
+    <title>{{row.title}}</title>
+    <id>urn:uuid:{{row.uuid}}</id>
+    {% if row.updated_at %}
+    <updated>{{row.updated_at|date('c')}}</updated>
+    {% else %}
+    <updated>{{row.created_at|date('c')}}</updated>
+    {% endif %}
+    <link href="{{settings.SITE_URL}}rows/{{row.slug}}"/>
+    <summary>{{row.summary}}</summary>
     <author>
-      <name>{{post.author.firstname}} {{post.author.lastname}}</name>
-      <email>{{post.author.email}}</email>
+      <name>{{row.first_name|default("")}} {{row.last_name|default("")}}</name>
+      <email>{{row.email|default("")}}</email>
     </author>
     <content type="xhtml" xml:lang="en" xml:base="{{settings.SITE_URL}}">
       <div xmlns="http://www.w3.org/1999/xhtml">
         {% autoescape off %}
-        {{post.body|markdown}}
+        {{row.body|markdown}}
         {% endautoescape %}
       </div>
     </content>
