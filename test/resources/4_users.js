@@ -71,6 +71,14 @@ describe('Resource', function() {
       });
     });
 
+    it('should be possible to view all users', function(done) {
+      client.get('/users', function(err, req, res, json) {
+        assert.equal(res.statusCode, 200);
+        assert.equal(json.length, 3);
+        done();
+      });
+    });
+
     it('should be possible to view a user', function(done) {
       client.get('/users/admin', function(err, req, res) {
         assert.equal(res.statusCode, 200);
