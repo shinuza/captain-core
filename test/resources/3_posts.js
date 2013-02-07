@@ -106,7 +106,7 @@ describe('Resource', function() {
       it('should be possible to posts by page', function(done) {
         client.get('/posts?page=1', function(err, req, res, json) {
         assert.equal(json.length, 5);
-        assert.equal(json[4].title, 'A blog post about not publishing something');
+        assert.equal(json[4].title, 'Foobar');
         done();
       });
   });
