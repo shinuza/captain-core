@@ -39,6 +39,20 @@ describe('Resource:', function() {
       });
     });
 
+    it('should return 404 when not authenticated', function(done) {
+      client.get('/sessions/current', function(err, req, res) {
+        assert.equal(res.statusCode, 404);
+        done();
+      });
+    });
+
+    it('should return a 404 when trying to log out again', function(done) {
+      client.del('/sessions/current', function(err, req, res) {
+        assert.equal(res.statusCode, 404);
+        done();
+      });
+    });
+
   });
 
 });

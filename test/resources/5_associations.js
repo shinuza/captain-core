@@ -27,7 +27,7 @@ describe('Resource:', function() {
       });
 
       it('should return 404 for an non-existent tag"', function(done) {
-        client.get('/tags/drugs/posts/', function(err, req, res, json) {
+        client.get('/tags/drugs/posts/', function(err, req, res) {
           assert.equal(res.statusCode, 404);
           done();
         });
