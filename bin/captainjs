@@ -143,6 +143,23 @@ function exit(str) {
   process.exit(0);
 }
 
+/**
+ * Synchronize database.
+ *
+ * @param {Boolean} forceDrop
+ */
+function syncAll(forceDrop) {
+  var db = require('./../lib/db');
+
+  db.syncAll(forceDrop, function(err) {
+    if(err) {
+      abort('Failed syncing', err);
+    } else {
+      exit('\nAll done\n\n');
+    }
+  });
+}
+
 // Templates
 
 function files(name) {
@@ -236,17 +253,6 @@ if(program.createuser) {
 }
 
 else if(program.syncdb) {
-  function syncAll(forceDrop) {
-    var db = require('./../lib/db');
-
-    db.syncAll(forceDrop, function(err) {
-      if(err) {
-        abort('Failed syncing', err);
-      } else {
-        exit('\nAll done\n\n');
-      }
-    });
-  }
   if(program.force) {
     syncAll(true);
   } else {
