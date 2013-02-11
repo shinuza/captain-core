@@ -30,4 +30,14 @@ describe('Util', function() {
     assert.strictEqual(result4, 0);
   });
 
+  it('should convert a human interval into a date', function() {
+    var date = new Date();
+    var date2 = new Date(date);
+    date2.setDate(date2.getDate() + 2);
+    date2.setHours(date2.getHours() + 4);
+    date2.setSeconds(date2.getSeconds() + 50);
+    var result = util.stampify('2 days, 4 hours, 50 seconds', date);
+    assert.equal(result.toJSON(), date2.toJSON());
+  });
+
 });
