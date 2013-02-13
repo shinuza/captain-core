@@ -41,14 +41,6 @@ app.set('view engine', 'html');
 app.set('view options', { layout: false });
 app.engine('.html', cons.swig);
 
-// Locals
-app.locals.SITE_TITLE = settings.get('SITE_TITLE');
-app.locals.SITE_ID = settings.get('SITE_ID');
-app.locals.SITE_URL = settings.get('SITE_URL');
-app.locals.STATIC_URL = settings.get('STATIC_URL');
-app.locals.POSTS_BY_PAGE = settings.get('POSTS_BY_PAGE');
-app.locals.DATE_FORMAT = settings.get('DATE_FORMAT');
-
 // Middleware
 app.use(express.static(staticRoot));
 app.use(express.bodyParser({ keepExtensions: true, uploadDir: mediaRoot }));
@@ -70,6 +62,17 @@ app.resource('sessions', sessions);
 app.resource('feed', feed);
 app.resource('users', users);
 app.resource('conf', conf);
+
+// Locals
+function cacheSettings() {
+  ['SITE_TITLE', 'SITE_ID', 'SITE_URL', 'STATIC_URL', 'DATE_FORMAT', 'POSTS_BY_PAGE',
+    'TIME_ZONE', 'THEME', 'SESSION_MAX_AGE'].forEach(function(s) {
+      app.locals[s] = settings.get(s);
+    });
+}
+
+signals.on('settings:change', cacheSettings);
+cacheSettings();
 
 if(require.main === module) {
   var port = settings.get('PORT');
