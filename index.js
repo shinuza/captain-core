@@ -10,6 +10,7 @@ var util = require('./lib/util'),
     signals = require('./lib/signals'),
 
     feed = require('./lib/resources/feed'),
+    conf = require('./lib/resources/conf'),
     sessions = require('./lib/resources/sessions'),
     users = require('./lib/resources/users'),
     posts = require('./lib/resources/posts'),
@@ -57,8 +58,6 @@ app.use(app.router);
 app.use(middleware.errorHandler());
 
 // Routes
-app.resource('users', users);
-
 app.get('/', posts.index);
 app.post('/posts/:post/tags', posts.tags.set);
 app.get('/posts/:post/tags', posts.tags.get);
@@ -69,6 +68,8 @@ app.resource('tags', tags);
 
 app.resource('sessions', sessions);
 app.resource('feed', feed);
+app.resource('users', users);
+app.resource('conf', conf);
 
 if(require.main === module) {
   var port = settings.get('PORT');
