@@ -10,6 +10,7 @@ var uuid = require('node-uuid');
 
 var pkg = require('../package.json');
 var db = require('./../lib/db');
+var util = require('../lib/util');
 
 program
   .version(pkg.version)
@@ -20,38 +21,6 @@ program
   .option('-f, --force', 'Force operation')
   .parse(process.argv);
 
-/**
- * Returns the `str` with red markers.
- *
- * @param {String} str
- */
-
-
-function red(str) {
-  return '\x1b[31m' + str + '\x1b[0m';
-}
-
-/**
- * Returns the `str` with yellow markers.
- *
- * @param {String} str
- */
-
-
-function yellow(str) {
-  return '\x1b[33m' + str + '\x1b[0m';
-}
-
-/**
- * Returns the `str` with cyan markers.
- *
- * @param {String} str
- */
-
-
-function cyan(str) {
-  return '\x1b[36m' + str + '\x1b[0m';
-}
 
 /**
  * echo str > path.
@@ -62,7 +31,7 @@ function cyan(str) {
 
 function write(path, str) {
   fs.writeFileSync(path, str);
-  console.log(cyan('   create : ') + path);
+  console.log(util.cyan('   create : ') + path);
 }
 
 /**
@@ -74,9 +43,9 @@ function write(path, str) {
 function mkdir(path) {
   if(!fs.existsSync(path)) {
     fs.mkdirSync(path, 0755);
-    console.log(cyan('   create : ') + path);
+    console.log(util.cyan('   create : ') + path);
   } else {
-    console.log(yellow('   dir exists : ') + path);
+    console.log(util.yellow('   dir exists : ') + path);
   }
 }
 
@@ -111,36 +80,12 @@ function isEmptyDirectory(path) {
     }
   } catch(err) {
     if(err.code) {
-      abort('Error: ', err);
+      util.abort('Error: ', err);
     } else {
       throw e;
     }
   }
   return true;
-}
-
-/**
- * Abort with the given `str` and `err`.
- *
- * @param {String} str
- * @param {Error} err
- */
-
-function abort(str, err) {
-  console.error(red(str));
-  err && console.error(err.stack || err);
-  process.exit(1);
-}
-
-/**
-* Exit gracefully with the given `str`.
-*
-* @param {String} str
-*/
-
-function exit(str) {
-  console.log(cyan(str));
-  process.exit(0);
 }
 
 /**
@@ -153,9 +98,9 @@ function syncAll(forceDrop) {
 
   db.syncAll(forceDrop, function(err) {
     if(err) {
-      abort('Failed syncing', err);
+      util.abort('Failed syncing', err);
     } else {
-      exit('\nAll done\n\n');
+      util.exit('\nAll done\n\n');
     }
   });
 }
@@ -233,7 +178,7 @@ if(program.createuser) {
     program.password('password: ', '*', function(password) {
       program.password('confirm password: ', '*', function(password2) {
         if(password != password2) {
-          return abort('Password do not match, bailing out.');
+          return util.abort('Password do not match, bailing out.');
         }
         program.prompt('email: ', function(email) {
           var users = require('../lib/resources/users');
@@ -241,9 +186,9 @@ if(program.createuser) {
 
           users.createUser(body, function(err) {
             if(err) {
-              abort('Failed to created user', err);
+              util.abort('Failed to created user', err);
             } else {
-              exit('\nUser created!\n\n');
+              util.exit('\nUser created!\n\n');
             }
           });
         });
@@ -279,9 +224,9 @@ else if(program.loaddata) {
 
     async.forEach(files, db.load, function(err){
       if(err) {
-        abort('Failed loading data', err);
+        util.abort('Failed loading data', err);
       } else {
-        exit('\nAll done.\n\n');
+        util.exit('\nAll done.\n\n');
       }
     });
   }());
@@ -291,7 +236,7 @@ else if(program.init) {
   var target = program.init;
 
   function initProject(name) {
-    console.log(cyan('Creating project: ') + name);
+    console.log(util.cyan('Creating project: ') + name);
     console.log();
 
     // Creating dirs
@@ -305,7 +250,7 @@ else if(program.init) {
     }
 
     console.log();
-    console.log(cyan('Now run: '));
+    console.log(util.cyan('Now run: '));
     console.log('    cd ' + target);
     console.log('    npm install');
     console.log('    captainjs syncdb');
@@ -320,7 +265,7 @@ else if(program.init) {
       if(forceCreate) {
         initProject(target);
       } else {
-        abort('Cowardly refusing to init project in a non-empty directory');
+        util.abort('Cowardly refusing to init project in a non-empty directory');
       }
     });
   } else {
