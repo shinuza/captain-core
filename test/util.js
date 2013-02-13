@@ -9,16 +9,6 @@ describe('Util', function() {
     assert.equal(result, 'un-elephant-a-loree-du-bois');
   });
 
-  it('should pluck attributes from objects in an array', function() {
-    var arr = [
-      {name: 'John', age: 32},
-      {name: 'Jeremy', age: 10},
-      {name: 'Anna', age: 5}
-    ];
-    assert.deepEqual(util.pluck(arr, 'name'), ['John', 'Jeremy', 'Anna']);
-    assert.deepEqual(util.pluck(arr, 'age'), [32, 10, 5]);
-  });
-
   it('should convert a timezone to its minutes equivalent', function() {
     var result = util.tzToMinutes();
     var result2 = util.tzToMinutes('America/Chicago');
