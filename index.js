@@ -46,6 +46,7 @@ app.use(express.static(staticRoot));
 app.use(express.bodyParser({ keepExtensions: true, uploadDir: mediaRoot }));
 app.use(express.cookieParser());
 app.use(middleware.authenticate());
+app.use(express.logger('dev'));
 app.use(app.router);
 app.use(middleware.errorHandler());
 
