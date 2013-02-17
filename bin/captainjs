@@ -1,16 +1,16 @@
 #!/usr/bin/env node
-var fs = require('fs');
-var os = require('os');
-var crypto = require('crypto');
-var path = require('path');
+var fs = require('fs'),
+    os = require('os'),
+    crypto = require('crypto'),
+    path = require('path');
 
-var program = require('commander');
-var async = require('async');
-var uuid = require('node-uuid');
+var program = require('commander'),
+    async = require('async'),
+    uuid = require('node-uuid');
 
-var pkg = require('../package.json');
-var db = require('./../lib/db');
-var util = require('../lib/util');
+var pkg = require('../package.json'),
+    db = require('./../lib/db'),
+    util = require('../lib/util');
 
 program
   .version(pkg.version)
@@ -94,8 +94,6 @@ function isEmptyDirectory(path) {
  * @param {Boolean} forceDrop
  */
 function syncAll(forceDrop) {
-  var db = require('./../lib/db');
-
   db.syncAll(forceDrop, function(err) {
     if(err) {
       util.abort('Failed syncing', err);
@@ -181,10 +179,9 @@ if(program.createuser) {
           return util.abort('Password do not match, bailing out.');
         }
         program.prompt('email: ', function(email) {
-          var users = require('../lib/resources/users');
           var body = {username: username, password: password, isStaff: true, email: email};
 
-          users.createUser(body, function(err) {
+          db.users.create(body, function(err) {
             if(err) {
               util.abort('Failed to created user', err);
             } else {

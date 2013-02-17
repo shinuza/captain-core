@@ -23,7 +23,6 @@ var debug = settings.get('DEBUG'),
     staticRoot = settings.get('STATIC_ROOT'),
     mediaRoot = settings.get('MEDIA_ROOT');
 
-
 app.settings = settings;
 app.middleware = middleware;
 app.signals = signals;
