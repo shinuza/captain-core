@@ -1,7 +1,7 @@
 {
   "name": "captainjs-core",
   "description": "Captain JS",
-  "version": "0.2.1",
+  "version": "0.3.1",
   "author": "Samori Gorse <samorigorse@gmail.com>",
   "private": true,
   "preferGlobal": true,
@@ -17,7 +17,8 @@
     "pg": "~0.12.3",
     "uuid": "0.0.2",
     "underscore": "~1.4.4",
-    "async": "~0.1.22"
+    "async": "~0.1.22",
+    "js-schema": "~0.6.2"
   },
   "devDependencies": {
     "mocha": "*",
@@ -30,6 +31,6 @@
     "captainjs": "./bin/captainjs"
   },
   "engine": {
-    "node" : ">=0.6"
+    "node": ">=0.6"
   }
 }

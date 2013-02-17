@@ -16,15 +16,22 @@ describe('Models', function() {
     };
 
     it('create', function(done) {
-      db.posts.create(posts, function(err, tag) {
+      db.posts.create(posts, function(err, post) {
         assert.ifError(err);
-        assert.notEqual(tag.id, undefined);
+        assert.notEqual(post.id, undefined);
         done();
       });
     });
 
     it('create twice the same post should trigger an error', function(done) {
       db.posts.create(posts, function(err) {
+        assert.notEqual(null, err);
+        done();
+      });
+    });
+
+    it('create a post with incorrect parameters should trigger an error', function(done) {
+      db.posts.create({}, function(err) {
         assert.notEqual(null, err);
         done();
       });

@@ -20,6 +20,13 @@ describe('Models', function() {
       });
     });
 
+    it('create a token with incorrect parameters should trigger an error', function(done) {
+      db.tokens.create({}, function(err) {
+        assert.notEqual(null, err);
+        done();
+      });
+    });
+
     it('get by id', function(done) {
       db.tokens.findById(1, function(err, token) {
         assert.ifError(err);

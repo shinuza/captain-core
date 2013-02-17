@@ -44,7 +44,7 @@ describe('Resource', function() {
 
     it('should not be possible to create a post with an existing slug', function(done) {
       client.post('/posts',
-        {title: 'A blog post about Node.js', summary: 'A description bis', body: "Lorem ipsum!!"}, function(err, req, res) {
+        {title: 'A blog post about Node.js', summary: 'A description bis', body: "Lorem ipsum!!", published: false}, function(err, req, res) {
           assert.equal(res.statusCode, 409);
           done();
         });

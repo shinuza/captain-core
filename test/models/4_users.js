@@ -20,6 +20,13 @@ describe('Models', function() {
       });
     });
 
+    it('create a user with incorrect parameters should trigger an error', function(done) {
+      db.users.create({}, function(err) {
+        assert.notEqual(null, err);
+        done();
+      });
+    });
+
     it('get by slug', function(done) {
       db.users.find('shinuza', function(err, user) {
         assert.ifError(err);

@@ -20,6 +20,13 @@ describe('Models', function() {
       });
     });
 
+    it('create a tag with incorrect parameters should trigger an error', function(done) {
+      db.tags.create({}, function(err) {
+        assert.notEqual(null, err);
+        done();
+      });
+    });
+
     it('get by slug', function(done) {
       db.tags.find('foo', function(err, tag) {
         assert.ifError(err);
