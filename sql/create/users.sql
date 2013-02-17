@@ -1,5 +1,5 @@
 CREATE TABLE users (
-  id SERIAL,
+  id SERIAL UNIQUE,
   username VARCHAR(255) NOT NULL UNIQUE,
   password TEXT NOT NULL,
   first_name VARCHAR(255),

@@ -1,5 +1,5 @@
 CREATE TABLE tokens (
-  id SERIAL,
+  id SERIAL UNIQUE,
   token VARCHAR(255) NOT NULL UNIQUE,
   created_at TIMESTAMP NOT NULL,
   user_id INTEGER NOT NULL,
