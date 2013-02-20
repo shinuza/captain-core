@@ -23,6 +23,14 @@ describe('Resource', function() {
       });
     });
 
+    it('should return the number of tags in the database', function(done) {
+      client.get('/tags/count', function(err, req, res, json) {
+        assert.ifError(err);
+        assert.equal(json.count, 3);
+        done();
+      });
+    });
+
     it('should be possible to create tags when logged it', function(done) {
       client.post('/tags', {title: 'Some other title'}, function(err, req, res, json) {
           assert.ifError(err);

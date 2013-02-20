@@ -52,11 +52,13 @@ app.use(middleware.errorHandler());
 
 // Routes
 app.get('/', posts.index);
+//app.get('/posts/count', posts.count);
 app.post('/posts/:post/tags', posts.tags.set);
 app.get('/posts/:post/tags', posts.tags.get);
 app.resource('posts', posts);
 
 app.get('/tags/:tag/posts', tags.posts.get);
+app.get('/tags/count', tags.count);
 app.resource('tags', tags);
 
 app.resource('sessions', sessions);
