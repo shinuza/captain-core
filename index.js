@@ -52,7 +52,8 @@ app.use(middleware.errorHandler());
 
 // Routes
 app.get('/', posts.index);
-//app.get('/posts/count', posts.count);
+app.get('/posts/count', posts.count);
+app.get('/posts/count_published', posts.countPublished);
 app.post('/posts/:post/tags', posts.tags.set);
 app.get('/posts/:post/tags', posts.tags.get);
 app.resource('posts', posts);

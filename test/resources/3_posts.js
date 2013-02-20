@@ -31,6 +31,22 @@ describe('Resource', function() {
       });
     });
 
+    it('should count the number of posts', function(done) {
+      client.get('/posts/count/', function(err, req, res, json) {
+        assert.ifError(err);
+        assert.equal(json.count, 6);
+        done();
+      });
+    });
+
+    it('should count the number of published posts', function(done) {
+      client.get('/posts/count_published/', function(err, req, res, json) {
+        assert.ifError(err);
+        assert.equal(json.count, 5);
+        done();
+      });
+    });
+
     it('should be possible to create posts when logged in', function(done) {
       client.post('/posts', {title: 'Something that succeed', summary: "Something something", body: "Lorem ipsum!!", published: true},
         function(err, req, res, json) {
