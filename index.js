@@ -62,9 +62,11 @@ app.get('/tags/:tag/posts', tags.posts.get);
 app.get('/tags/count', tags.count);
 app.resource('tags', tags);
 
+app.get('/users/count', users.count);
+app.resource('users', users);
+
 app.resource('sessions', sessions);
 app.resource('feed', feed);
-app.resource('users', users);
 app.resource('conf', conf);
 
 // Locals

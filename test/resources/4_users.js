@@ -23,6 +23,14 @@ describe('Resource', function() {
       });
     });
 
+    it('should count users', function(done) {
+      client.get('/users/count', function(err, req, res, json) {
+        assert.ifError(err);
+        assert.equal(json.count, 2);
+        done();
+      });
+    });
+
     it('should be possible to create users when logged in', function(done) {
       client.post('/users', {username: 'johndoe', password: 'foobar', email: 'john@doe.com'}, function(err, req, res, json) {
         assert.ifError(err);
