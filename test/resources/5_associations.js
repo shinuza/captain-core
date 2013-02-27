@@ -51,7 +51,7 @@ describe('Resource:', function() {
       });
 
       it('should associate posts "A blog post about not publishing something" to tags "Programing" And "Music"', function(done) {
-        client.post('/posts/6/tags/', {data: [{id: 1}, {id: 3}]}, function(err, req, res, json) {
+        client.post('/posts/6/tags/', [{id: 1}, {id: 3}], function(err, req, res, json) {
           assert.ifError(err);
           assert.equal(res.statusCode, 201);
           assert.equal(json.count, 2);
