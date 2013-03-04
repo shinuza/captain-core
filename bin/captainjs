@@ -219,7 +219,11 @@ else if(program.loaddata) {
       files.push(filename);
     }
 
-    async.forEach(files, db.load, function(err){
+    files = files.map(function(file) {
+      return db.load(file);
+    });
+
+    async.series(files, function(err){
       if(err) {
         util.abort('Failed loading data', err);
       } else {
