@@ -17,8 +17,8 @@ describe('Resource', function() {
     it('should not list unpublished posts when not logged it', function(done) {
       client.get('/posts', function(err, req, res, json) {
         assert.equal(res.statusCode, 200);
-        assert.equal(json.length, 5);
-        assert.equal(json[1].published, true);
+        assert.equal(json.posts.length, 5);
+        assert.equal(json.posts[1].published, true);
         done();
       });
     });
@@ -113,16 +113,16 @@ describe('Resource', function() {
     describe('Pagination', function() {
       it('should be possible to view only a subset of posts', function(done) {
         client.get('/posts', function(err, req, res, json) {
-          assert.equal(json.length, 5);
-          assert.equal(json[0].title, 'A blog post about Node.js');
+          assert.equal(json.posts.length, 5);
+          assert.equal(json.posts[0].title, 'A blog post about Node.js');
           done();
         });
       });
 
       it('should be possible to posts by page', function(done) {
         client.get('/posts?page=1', function(err, req, res, json) {
-        assert.equal(json.length, 5);
-        assert.equal(json[4].title, 'Foobar');
+        assert.equal(json.posts.length, 5);
+        assert.equal(json.posts[4].title, 'Foobar');
         done();
       });
   });
