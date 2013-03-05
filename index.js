@@ -51,6 +51,7 @@ app.configure('development', function() {
 
 app.use(express.bodyParser({ keepExtensions: true, uploadDir: mediaRoot }));
 app.use(express.cookieParser());
+app.use(middleware.charset('utf-8'));
 app.use(middleware.authenticate());
 app.use(express.favicon(settings.get('FAVICON')));
 app.use(app.router);
