@@ -10,7 +10,7 @@ var util = require('./lib/util'),
     signals = require('./lib/signals'),
 
     feed = require('./lib/resources/feed'),
-    conf = require('./lib/resources/conf'),
+    setup = require('./lib/resources/setup'),
     sessions = require('./lib/resources/sessions'),
     users = require('./lib/resources/users'),
     posts = require('./lib/resources/posts'),
@@ -48,6 +48,7 @@ app.configure('development', function() {
   app.use(express.logger('dev'));
   app.use(express.responseTime());
   app.use(middleware.configurationHandler());
+  app.resource('setup', setup);
 });
 
 app.use(express.bodyParser({ keepExtensions: true, uploadDir: mediaRoot }));
@@ -76,7 +77,6 @@ app.resource('users', users);
 
 app.resource('sessions', sessions);
 app.resource('feed', feed);
-app.resource('conf', conf);
 
 // Locals
 function cacheSettings() {
