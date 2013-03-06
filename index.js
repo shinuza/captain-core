@@ -47,13 +47,14 @@ app.configure('development', function() {
   app.use(express.static(staticRoot));
   app.use(express.logger('dev'));
   app.use(express.responseTime());
+  app.use(middleware.configurationHandler());
 });
 
 app.use(express.bodyParser({ keepExtensions: true, uploadDir: mediaRoot }));
 app.use(express.cookieParser());
+app.use(express.favicon(settings.get('FAVICON')));
 app.use(middleware.charset('utf-8'));
 app.use(middleware.authenticate(true));
-app.use(express.favicon(settings.get('FAVICON')));
 app.use(app.router);
 app.use(middleware.notFoundHandler());
 app.use(middleware.errorHandler());
@@ -84,7 +85,6 @@ function cacheSettings() {
       app.locals[s] = settings.get(s);
     });
 }
-
 signals.on('settings:change', cacheSettings);
 cacheSettings();
 

@@ -123,7 +123,7 @@ function files(name) {
   ].join(os.EOL);
 
 
-  var package = [
+  var pkg = [
       '{'
     , '  "name": "' + name + '",'
     , '  "description": "",'
@@ -140,31 +140,9 @@ function files(name) {
     , '}'
   ].join(os.EOL);
 
-  var settings = [
-    , 'exports.DEBUG = true;'
-    , ''
-    , 'exports.SITE_TITLE = \'' + name + '\';'
-    , 'exports.SITE_URL = \'http://' + name + '.com/\';'
-    , 'exports.SITE_ID = \'' + uuid.v4() + '\';'
-    , 'exports.MEDIA_ROOT = __dirname + \'media\';'
-    , ''
-    , 'exports.SECRET_KEY = \'' + crypto.randomBytes(64).toString('base64') + '\';'
-    , ''
-    , 'exports.HOST = \'localhost\';'
-    , 'exports.PORT = 3000;'
-    , ''
-    , 'exports.DATABASE = {'
-    , '  NAME: __dirname + \'/' + name +'.sqlite\','
-    , '  ENGINE: \'sqlite\''
-    , '  HOST: \'\''
-    , '  PORT: \'\''
-    , '};'
-  ].join(os.EOL);
-
   return {
     'index.js': index,
-    'package.json': package,
-    'settings.js': settings,
+    'package.json': pkg,
     'README.md': '## ' + name
   };
 }
@@ -245,17 +223,16 @@ else if(program.init) {
 
     // Creating files
     var templates = files(name);
-    for(var template in templates) {
-      var p = path.join(name, template);
-      write(p, templates[template]);
-    }
+    Object.keys(templates).forEach(function(key) {
+      var p = path.join(name, key);
+      write(p, templates[key]);
+    });
 
+    // Instructions
     console.log();
     console.log(util.cyan('Now run: '));
     console.log('    cd ' + target);
     console.log('    npm install');
-    console.log('    captainjs syncdb');
-    console.log('    captainjs createuser');
     console.log('    npm start');
   }
 
