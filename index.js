@@ -43,6 +43,11 @@ app.set('view options', { layout: false });
 app.engine('.html', cons.swig);
 
 // Middleware
+app.use(express.bodyParser({ keepExtensions: true, uploadDir: mediaRoot }));
+app.use(express.cookieParser());
+app.use(express.favicon(settings.get('FAVICON')));
+app.use(middleware.charset('utf-8'));
+app.use(middleware.authenticate(true));
 app.configure('development', function() {
   app.use(express.static(staticRoot));
   app.use(express.logger('dev'));
@@ -50,12 +55,6 @@ app.configure('development', function() {
   app.use(middleware.configurationHandler());
   app.resource('setup', setup);
 });
-
-app.use(express.bodyParser({ keepExtensions: true, uploadDir: mediaRoot }));
-app.use(express.cookieParser());
-app.use(express.favicon(settings.get('FAVICON')));
-app.use(middleware.charset('utf-8'));
-app.use(middleware.authenticate(true));
 app.use(app.router);
 app.use(middleware.notFoundHandler());
 app.use(middleware.errorHandler());
