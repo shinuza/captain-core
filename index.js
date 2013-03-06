@@ -55,6 +55,7 @@ app.use(middleware.charset('utf-8'));
 app.use(middleware.authenticate(true));
 app.use(express.favicon(settings.get('FAVICON')));
 app.use(app.router);
+app.use(middleware.notFoundHandler());
 app.use(middleware.errorHandler());
 
 // Routes
