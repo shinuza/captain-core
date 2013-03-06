@@ -245,10 +245,10 @@ else if(program.init) {
 
     // Creating files
     var templates = files(name);
-    for(var template in templates) {
-      var p = path.join(name, template);
-      write(p, templates[template]);
-    }
+    Object.keys(templates).forEach(function(key) {
+      var p = path.join(name, key);
+      write(p, templates[key]);
+    });
 
     console.log();
     console.log(util.cyan('Now run: '));
