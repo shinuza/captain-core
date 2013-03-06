@@ -1,9 +1,14 @@
 default: run
 
+SETTINGS = `pwd`/settings_test.js
+
 run:
-	@node-dev index.js
+	@CAPTAINJS_SETTINGS=$(SETTINGS) node-dev index.js
 
 test:
-	@./bin/captainjs syncdb --force && ./bin/captainjs loaddata data && mocha -G -b --recursive
+	@\
+	CAPTAINJS_SETTINGS=$(SETTINGS) ./bin/captainjs syncdb --force &&\
+	CAPTAINJS_SETTINGS=$(SETTINGS) ./bin/captainjs loaddata data &&\
+	CAPTAINJS_SETTINGS=$(SETTINGS) mocha -G -b --recursive
 
 .PHONY: test run

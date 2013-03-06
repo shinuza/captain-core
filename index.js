@@ -10,7 +10,7 @@ var util = require('./lib/util'),
     signals = require('./lib/signals'),
 
     feed = require('./lib/resources/feed'),
-    conf = require('./lib/resources/conf'),
+    setup = require('./lib/resources/setup'),
     sessions = require('./lib/resources/sessions'),
     users = require('./lib/resources/users'),
     posts = require('./lib/resources/posts'),
@@ -43,18 +43,18 @@ app.set('view options', { layout: false });
 app.engine('.html', cons.swig);
 
 // Middleware
-app.configure('development', function() {
-  app.use(express.static(staticRoot));
-  app.use(express.logger('dev'));
-  app.use(express.responseTime());
-  app.use(middleware.configurationHandler());
-});
-
 app.use(express.bodyParser({ keepExtensions: true, uploadDir: mediaRoot }));
 app.use(express.cookieParser());
 app.use(express.favicon(settings.get('FAVICON')));
 app.use(middleware.charset('utf-8'));
 app.use(middleware.authenticate(true));
+app.configure('development', function() {
+  app.use(express.static(staticRoot));
+  app.use(express.logger('dev'));
+  app.use(express.responseTime());
+  app.use(middleware.configurationHandler());
+  app.resource('setup', setup);
+});
 app.use(app.router);
 app.use(middleware.notFoundHandler());
 app.use(middleware.errorHandler());
@@ -76,7 +76,6 @@ app.resource('users', users);
 
 app.resource('sessions', sessions);
 app.resource('feed', feed);
-app.resource('conf', conf);
 
 // Locals
 function cacheSettings() {

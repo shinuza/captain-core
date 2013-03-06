@@ -110,16 +110,15 @@ function files(name) {
       'var express = require(\'express\');'
     , 'var app = express();'
     , ''
-    , 'var settings = require(\'./settings\');'
     , 'var core = require(\'captainjs-core\');'
     , 'var admin = require(\'captainjs-admin\');'
+    , 'var settings = core.modules.settings;'
     , ''
     , 'app.use(\'/admin\', admin);'
     , 'app.use(core);'
-    , 'app.use(express.logger(\'dev\'));'
-    , 'app.listen(settings.PORT, settings.HOST);'
+    , 'app.listen(settings.get(\'PORT\'), settings.get(\'HOST\'));'
     , ''
-    , 'console.log(\'Running at http://%s:%d\', settings.HOST, settings.PORT);'
+    , 'console.log(\'Running at http://%s:%d\', settings.get(\'HOST\'), settings.get(\'PORT\'));'
   ].join(os.EOL);
 
 
