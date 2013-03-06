@@ -228,12 +228,11 @@ else if(program.init) {
       write(p, templates[template]);
     }
 
+    // Instructions
     console.log();
     console.log(util.cyan('Now run: '));
     console.log('    cd ' + target);
     console.log('    npm install');
-    console.log('    captainjs syncdb');
-    console.log('    captainjs createuser');
     console.log('    npm start');
   }
 
