@@ -18,7 +18,8 @@
     "uuid": "0.0.2",
     "underscore": "~1.4.4",
     "async": "~0.1.22",
-    "js-schema": "~0.6.2"
+    "js-schema": "~0.6.2",
+    "winston": "~0.6.2"
   },
   "devDependencies": {
     "mocha": "*",
