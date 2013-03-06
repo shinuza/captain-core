@@ -241,7 +241,7 @@ else if(program.init) {
     console.log();
 
     // Creating dirs
-    dirs(name, ['media', 'cache']);
+    dirs(name, ['media', 'cache', 'logs']);
 
     // Creating files
     var templates = files(name);
