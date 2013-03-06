@@ -140,31 +140,9 @@ function files(name) {
     , '}'
   ].join(os.EOL);
 
-  var settings = [
-    , 'exports.DEBUG = true;'
-    , ''
-    , 'exports.SITE_TITLE = \'' + name + '\';'
-    , 'exports.SITE_URL = \'http://' + name + '.com/\';'
-    , 'exports.SITE_ID = \'' + uuid.v4() + '\';'
-    , 'exports.MEDIA_ROOT = __dirname + \'media\';'
-    , ''
-    , 'exports.SECRET_KEY = \'' + crypto.randomBytes(64).toString('base64') + '\';'
-    , ''
-    , 'exports.HOST = \'localhost\';'
-    , 'exports.PORT = 3000;'
-    , ''
-    , 'exports.DATABASE = {'
-    , '  NAME: __dirname + \'/' + name +'.sqlite\','
-    , '  ENGINE: \'sqlite\''
-    , '  HOST: \'\''
-    , '  PORT: \'\''
-    , '};'
-  ].join(os.EOL);
-
   return {
     'index.js': index,
     'package.json': package,
-    'settings.js': settings,
     'README.md': '## ' + name
   };
 }
@@ -250,12 +228,11 @@ else if(program.init) {
       write(p, templates[key]);
     });
 
+    // Instructions
     console.log();
     console.log(util.cyan('Now run: '));
     console.log('    cd ' + target);
     console.log('    npm install');
-    console.log('    captainjs syncdb');
-    console.log('    captainjs createuser');
     console.log('    npm start');
   }
 
