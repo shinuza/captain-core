@@ -75,6 +75,7 @@ app.resource('users', users);
 
 app.post('/setup/database', setup.database);
 app.get('/setup/connection-test', setup.connectionTest);
+app.get('/setup/table-creation', setup.tableCreation);
 app.resource('setup', setup);
 
 app.resource('sessions', sessions);

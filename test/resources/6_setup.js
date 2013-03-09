@@ -1,5 +1,8 @@
 var assert = require('assert');
+var restify = require('restify');
+
 var client = require('../client');
+var settings = require('../../lib/settings.js');
 
 describe('Resource:', function() {
 
@@ -21,11 +24,13 @@ describe('Resource:', function() {
       });
     });
 
-    it.skip('should create the tables', function(done) {
-      client.get('/setup/table-creation', function(err, req, res, json) {
+    it('should create the tables', function(done) {
+      var client = restify.createStringClient({
+        url: 'http://localhost:' + settings.get('PORT')
+      });
+      client.get('/setup/table-creation', function(err, req, res) {
         assert.ifError(err);
-        assert.equal(res.statusCode, 200);
-        assert.equal(json.length, 3);
+        assert.equal(res.headers['content-type'], "text/event-stream; charset=utf-8");
         done();
       });
     });
@@ -34,7 +39,6 @@ describe('Resource:', function() {
       client.get('/setup/generate-id', function(err, req, res, json) {
         assert.ifError(err);
         assert.equal(res.statusCode, 200);
-        assert.equal(json.length, 3);
         done();
       });
     });
@@ -43,7 +47,6 @@ describe('Resource:', function() {
       client.get('/setup/generate-key', function(err, req, res, json) {
         assert.ifError(err);
         assert.equal(res.statusCode, 200);
-        assert.equal(json.length, 3);
         done();
       });
     });
@@ -52,7 +55,6 @@ describe('Resource:', function() {
       client.get('/setup/create-user', function(err, req, res, json) {
         assert.ifError(err);
         assert.equal(res.statusCode, 200);
-        assert.equal(json.length, 3);
         done();
       });
     });
