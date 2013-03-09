@@ -93,13 +93,22 @@ function isEmptyDirectory(path) {
  *
  * @param {Boolean} forceDrop
  */
-function syncAll(forceDrop) {
-  db.syncAll(forceDrop, function(err) {
-    if(err) {
-      util.abort('Failed syncing', err);
-    } else {
-      util.exit('\nAll done\n\n');
-    }
+
+function syncDB(forceDrop) {
+  db.syncDB({
+    oncomplete: function(err) {
+      if(err) {
+        util.abort('Failed syncing', err);
+      } else {
+        util.exit('\nAll done\n\n');
+      }
+    },
+
+    onprogress: function(script) {
+      console.log('Running: \n========\n%s\n', script);
+    },
+
+    forceDrop: forceDrop
   });
 }
 
@@ -173,11 +182,11 @@ if(program.createuser) {
 
 else if(program.syncdb) {
   if(program.force) {
-    syncAll(true);
+    syncDB(true);
   } else {
     program.prompt('Force drop? (y/n): ', function(answer) {
       var forceDrop = !!answer.match(/y|yes|arrr/);
-      syncAll(forceDrop);
+      syncDB(forceDrop);
     });
   }
 }
