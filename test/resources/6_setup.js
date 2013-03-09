@@ -13,7 +13,7 @@ describe('Resource:', function() {
       });
     });
 
-    it.skip('should test the database connection', function(done) {
+    it('should test the database connection', function(done) {
       client.get('/setup/connection-test', function(err, req, res) {
         assert.ifError(err);
         assert.equal(res.statusCode, 200);
