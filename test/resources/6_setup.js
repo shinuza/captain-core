@@ -18,6 +18,15 @@ describe('Resource:', function() {
       });
     });
 
+    it('should create a user', function(done) {
+      client.post('/setup/create-user', {username: 'foo', password: 'bar'}, function(err, req, res, json) {
+        assert.ifError(err);
+        assert.equal(res.statusCode, 201);
+        assert.notEqual(json.username, undefined);
+        done();
+      });
+    });
+
     it('should generate the settings-file', function(done) {
       client.post('/setup/commit', {uri: 'tcp://shinuza@localhost/shinuza'}, function(err, req, res) {
         assert.ifError(err);
@@ -39,13 +48,6 @@ describe('Resource:', function() {
       });
     });
 
-    it.skip('should create a user', function(done) {
-      client.post('/setup/create-user', {username: 'foo', password: 'bar'}, function(err, req, res) {
-        assert.ifError(err);
-        assert.equal(res.statusCode, 201);
-        done();
-      });
-    });
 
   });
 
