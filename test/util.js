@@ -11,11 +11,11 @@ describe('Util', function() {
 
   it('should convert a timezone to its minutes equivalent', function() {
     var result = util.tzToMinutes();
-    var result2 = util.tzToMinutes('America/Chicago');
+    var result2 = util.tzToMinutes('America/Guyana');
     var result3 = util.tzToMinutes('Asia/Tokyo');
     var result4 = util.tzToMinutes('Lol/Cat');
     assert.strictEqual(result, 0);
-    assert.strictEqual(result2, 360);
+    assert.strictEqual(result2, 240);
     assert.strictEqual(result3, -540);
     assert.strictEqual(result4, 0);
   });
