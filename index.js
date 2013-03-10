@@ -53,7 +53,6 @@ app.configure('development', function() {
   app.use(express.logger('dev'));
   app.use(express.responseTime());
   app.use(middleware.configurationHandler());
-  app.resource('setup', setup);
 });
 app.use(app.router);
 app.use(middleware.notFoundHandler());
@@ -73,6 +72,12 @@ app.resource('tags', tags);
 
 app.get('/users/count', users.count);
 app.resource('users', users);
+
+app.post('/setup/connection-test', setup.connectionTest);
+app.post('/setup/table-creation', setup.tableCreation);
+app.post('/setup/commit', setup.commit);
+app.post('/setup/create-user', setup.createUser);
+app.resource('setup', setup);
 
 app.resource('sessions', sessions);
 app.resource('feed', feed);
