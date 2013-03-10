@@ -1,12 +1,10 @@
 #!/usr/bin/env node
 var fs = require('fs'),
     os = require('os'),
-    crypto = require('crypto'),
     path = require('path');
 
 var program = require('commander'),
-    async = require('async'),
-    uuid = require('node-uuid');
+    async = require('async');
 
 var pkg = require('../package.json'),
     db = require('./../lib/db'),
