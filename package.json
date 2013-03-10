@@ -23,7 +23,7 @@
   },
   "devDependencies": {
     "mocha": "*",
-    "restify": "*",
+    "restify": "~2.3.4",
     "boganipsum": "*"
   },
   "repository": "git://github.com/shinuza/captainjs-core",
