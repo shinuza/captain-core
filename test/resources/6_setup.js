@@ -1,3 +1,5 @@
+var fs = require('fs');
+
 var assert = require('assert');
 var restify = require('restify');
 
@@ -8,16 +10,8 @@ describe('Resource:', function() {
 
   describe('Setup:', function() {
 
-    it('should setup the database', function(done) {
-      client.post('/setup/database/', {uri: 'tcp://shinuza@localhost/shinuza'}, function(err, req, res) {
-        assert.ifError(err);
-        assert.equal(res.statusCode, 201);
-        done();
-      });
-    });
-
-    it('should test the database connection', function(done) {
-      client.get('/setup/connection-test', function(err, req, res) {
+    it('should the database connection', function(done) {
+      client.post('/setup/connection-test/', {uri: 'tcp://shinuza@localhost/shinuza'}, function(err, req, res) {
         assert.ifError(err);
         assert.equal(res.statusCode, 200);
         done();
@@ -35,24 +29,17 @@ describe('Resource:', function() {
       });
     });
 
-    it.skip('should generate a site id', function(done) {
-      client.get('/setup/generate-id', function(err, req, res, json) {
+    it.skip('should generate the settings-file', function(done) {
+      client.get('/setup/write', function(err, req, res, json) {
         assert.ifError(err);
         assert.equal(res.statusCode, 200);
-        done();
-      });
-    });
-
-    it.skip('should generate a secret key', function(done) {
-      client.get('/setup/generate-key', function(err, req, res, json) {
-        assert.ifError(err);
-        assert.equal(res.statusCode, 200);
+        assert.equal(fs.existsSync(settings.path(settings.DEFAULT_FILENAME)), false);
         done();
       });
     });
 
     it.skip('should create a user', function(done) {
-      client.get('/setup/create-user', function(err, req, res, json) {
+      client.post('/setup/create-user', {username: 'foo', password: 'bar'}, function(err, req, res, json) {
         assert.ifError(err);
         assert.equal(res.statusCode, 200);
         done();
