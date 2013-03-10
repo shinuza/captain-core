@@ -74,8 +74,8 @@ app.get('/users/count', users.count);
 app.resource('users', users);
 
 app.post('/setup/connection-test', setup.connectionTest);
-app.get('/setup/table-creation', setup.tableCreation);
-app.get('/setup/commit', setup.commit);
+app.post('/setup/table-creation', setup.tableCreation);
+app.post('/setup/commit', setup.commit);
 app.resource('setup', setup);
 
 app.resource('sessions', sessions);
