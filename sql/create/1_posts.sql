@@ -1,4 +1,4 @@
-CREATE TABLE posts (
+CREATE TABLE IF NOT EXISTS posts (
   id serial UNIQUE,
   uuid VARCHAR(50) NOT NULL UNIQUE,
   title VARCHAR(255) NOT NULL,
