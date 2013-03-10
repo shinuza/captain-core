@@ -1,7 +1,7 @@
 {
   "name": "captainjs-core",
   "description": "Captain JS",
-  "version": "0.12.5",
+  "version": "0.13.5",
   "author": "Samori Gorse <samorigorse@gmail.com>",
   "private": true,
   "preferGlobal": true,
