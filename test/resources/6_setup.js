@@ -19,7 +19,7 @@ describe('Resource:', function() {
     });
 
     it('should create a user', function(done) {
-      client.post('/setup/create-user', {username: 'foo', password: 'bar'}, function(err, req, res, json) {
+      client.post('/setup/user-creation', {username: 'foo', password: 'bar'}, function(err, req, res, json) {
         assert.ifError(err);
         assert.equal(res.statusCode, 201);
         assert.notEqual(json.username, undefined);
