@@ -27,7 +27,7 @@ describe('Resource:', function() {
       });
     });
 
-    it.only('should generate the settings-file', function(done) {
+    it('should generate the settings-file', function(done) {
       client.post('/setup/commit', function(err, req, res) {
         assert.ifError(err);
         assert.equal(res.statusCode, 201);
