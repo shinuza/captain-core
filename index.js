@@ -14,7 +14,8 @@ var util = require('./lib/util'),
     sessions = require('./lib/resources/sessions'),
     users = require('./lib/resources/users'),
     posts = require('./lib/resources/posts'),
-    tags = require('./lib/resources/tags');
+    tags = require('./lib/resources/tags'),
+    conf = require('./lib/resources/conf');
 
 var app = express();
 
@@ -78,6 +79,7 @@ app.get('/setup/table-creation', setup.tableCreation);
 app.post('/setup/commit', setup.commit);
 app.post('/setup/user-creation', setup.userCreation);
 
+app.resource('conf', conf);
 app.resource('sessions', sessions);
 app.resource('feed', feed);
 
