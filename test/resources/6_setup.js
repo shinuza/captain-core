@@ -40,7 +40,7 @@ describe('Resource:', function() {
       var client = restify.createStringClient({
         url: 'http://localhost:' + settings.get('PORT')
       });
-      client.get('/setup/table-creation?uri=tcp://shinuza@localhost/shinuza', function(err, req, res) {
+      client.get('/setup/table-creation', function(err, req, res) {
         assert.ifError(err);
         assert.equal(res.headers['content-type'], "text/event-stream; charset=utf-8");
         client.close();
