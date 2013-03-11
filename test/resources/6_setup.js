@@ -19,7 +19,7 @@ describe('Resource:', function() {
     });
 
     it('should create a user', function(done) {
-      client.post('/setup/create-user', {username: 'foo', password: 'bar'}, function(err, req, res, json) {
+      client.post('/setup/user-creation', {username: 'foo', password: 'bar'}, function(err, req, res, json) {
         assert.ifError(err);
         assert.equal(res.statusCode, 201);
         assert.notEqual(json.username, undefined);
@@ -28,7 +28,7 @@ describe('Resource:', function() {
     });
 
     it('should generate the settings-file', function(done) {
-      client.post('/setup/commit', {uri: 'tcp://shinuza@localhost/shinuza'}, function(err, req, res) {
+      client.post('/setup/commit', function(err, req, res) {
         assert.ifError(err);
         assert.equal(res.statusCode, 201);
         assert.equal(fs.existsSync(settings.path(settings.DEFAULT_FILENAME)), false);
@@ -40,7 +40,7 @@ describe('Resource:', function() {
       var client = restify.createStringClient({
         url: 'http://localhost:' + settings.get('PORT')
       });
-      client.post('/setup/table-creation', {uri: 'tcp://shinuza@localhost/shinuza'}, function(err, req, res) {
+      client.get('/setup/table-creation', function(err, req, res) {
         assert.ifError(err);
         assert.equal(res.headers['content-type'], "text/event-stream; charset=utf-8");
         client.close();

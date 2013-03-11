@@ -76,7 +76,7 @@ app.resource('users', users);
 app.post('/setup/connection-test', setup.connectionTest);
 app.get('/setup/table-creation', setup.tableCreation);
 app.post('/setup/commit', setup.commit);
-app.post('/setup/create-user', setup.createUser);
+app.post('/setup/user-creation', setup.userCreation);
 
 app.resource('sessions', sessions);
 app.resource('feed', feed);
