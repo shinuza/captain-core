@@ -1,4 +1,5 @@
 var fs = require('fs');
+var path = require('path');
 
 var assert = require('assert');
 var restify = require('restify');
@@ -26,11 +27,12 @@ describe('Resource:', function() {
       });
     });
 
-    it('should generate the settings-file', function(done) {
+    it.only('should generate the settings-file', function(done) {
       client.post('/setup/commit', function(err, req, res) {
         assert.ifError(err);
         assert.equal(res.statusCode, 201);
-        assert.equal(fs.existsSync(settings.path(settings.DEFAULT_FILENAME)), false);
+        assert.equal(fs.existsSync(path.join(process.cwd(), settings.DEFAULT_FILENAME)), true);
+        assert
         done();
       });
     });
