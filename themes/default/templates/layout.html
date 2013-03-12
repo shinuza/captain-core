@@ -2,6 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title id="title">{%block title %}{{SITE_TITLE}}{% endblock %}</title>
     <link rel="stylesheet" href="{{STATIC_URL}}css/main.css">
     {% if links.prev %}
@@ -12,16 +13,18 @@
     {% endif %}
   </head>
   <body>
-    <header class="ctx">
-      <h1 class="float-left marginTop0">{% block header %}{{SITE_TITLE}}{% endblock %}</h1>
-      <nav class="float-right">
-        <a href="/posts">Blog</a>
-        <a href="/tags">Tags</a>
-      </nav>
+    <header>
+      <h1>{% block header %}{{SITE_TITLE}}{% endblock %}</h1>
+        <nav>
+            <a href="/posts">Blog</a>
+            <a href="/tags">Tags</a>
+        </nav>
     </header>
+
     <div id="content">
       {% block content %}{% endblock %}
     </div>
+
     <small>Powered by Captain.js</small>
   </body>
 </html>

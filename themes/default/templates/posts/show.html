@@ -3,5 +3,18 @@
 {% block title %}{{post.title}}{% endblock %}
 
 {% block content %}
-{% include "includes/post.html" %}
+<div class="date">{{post.created_at|date(DATE_FORMAT)}}</div>
+<div class="content">
+    <h2 class="title">{{post.title}}</a></h2>
+    <div>
+        {% autoescape off %}
+        {{post.summary|markdown}}
+        {% endautoescape %}
+    </div>
+    <div>
+        {% autoescape off %}
+        {{post.body|markdown}}
+        {% endautoescape %}
+    </div>
+</div>
 {% endblock %}
