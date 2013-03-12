@@ -14,18 +14,18 @@ header h1 { font-size: 4em; text-align: center; }
 header nav { margin: 0 auto; text-align: center; }
 header a { padding: .4em; }
 
-.entry { margin: 2em 0; overflow: hidden; }
-.entry .date { float: left; margin: 0 1.5em .2em 0; }
-.entry .content { overflow: hidden; }
-.entry .title { margin: 0; }
+article { margin: 2em 0; overflow: hidden; }
+article .date { float: left; margin: 0 1.5em .2em 0; }
+article .content { overflow: hidden; }
+article .title { margin: 0; }
 
 .pagination { text-align: center; margin: .7em auto; }
 
 @media handheld, only screen and (max-width:400px) and (orientation:portrait) {
   body { width: 98%; margin: .5em; }
 
-  .entry { margin: .5em 0; }
-  .entry .date { float: none; }
+  article { margin: .5em 0; }
+  article .date { float: none; }
 }
 
 @media handheld, only screen and (max-width:768px) and (orientation:landscape) {
