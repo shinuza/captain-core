@@ -7,7 +7,8 @@
     <h2>Nothing to see here</h2>
   {% endfor %}
 
-  <div class="pagination">
+  {% if count > POSTS_BY_PAGE %}
+  <nav class="pagination">
     {% if prev %}
       <a href="/?page={{page - 1}}">« Previous</a>
     {% else %}
@@ -21,5 +22,6 @@
     {% else %}
     <span>Next »</span>
     {% endif %}
-  </div>
+  </nav>
+  {% endif %}
 {% endblock %}

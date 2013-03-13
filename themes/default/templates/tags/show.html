@@ -1,9 +1,21 @@
 {% extends "layout.html" %}
 
-{% block content %}
-<p>Showing {{posts.length}} entries for "{{tag.title}}"</p>
+{% block title %}{{tag.title}} - {{SITE_TITLE}}{% endblock %}
 
-{% for post in posts %}
-{% include "includes/post.html" %}
-{% endfor %}
+{% block header %}
+<h1 class="textAlignL">{{tag.title}}</h1>
+{% endblock %}
+
+{% block content %}
+
+<ul>
+    {% for post in posts %}
+    <li>
+        <a href="/posts/{{post.slug}}">{{post.title}}</a>
+    </li>
+    {% endfor %}
+</ul>
+
+<h3>Navigation</h3>
+{% include "includes/menu.html" %}
 {% endblock %}
