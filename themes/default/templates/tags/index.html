@@ -9,13 +9,7 @@
 
 {% block content %}
     {% if tags.length %}
-    <ul>
-        {% for tag in tags %}
-            <li>
-                <a href="/tags/{{tag.slug}}/posts/">{{tag.title}}</a>
-            </li>
-        {% endfor %}
-    </ul>
+    {% include "includes/tags.html" %}
     {% else %}
     <h2>Nothing to see here</h2>
     {% endif %}
