@@ -84,14 +84,7 @@ app.resource('sessions', sessions);
 app.resource('feed', feed);
 
 // Locals
-function cacheSettings() {
-  ['SITE_TITLE', 'SITE_ID', 'SITE_URL', 'STATIC_URL', 'DATE_FORMAT', 'POSTS_BY_PAGE',
-    'TIME_ZONE', 'THEME', 'SESSION_MAX_AGE'].forEach(function(s) {
-      app.locals[s] = settings.get(s);
-    });
-}
-signals.on('settings:change', cacheSettings);
-cacheSettings();
+settings.cache(app);
 
 if(require.main === module) {
   var port = settings.get('PORT');
