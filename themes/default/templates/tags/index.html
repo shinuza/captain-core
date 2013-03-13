@@ -1,9 +1,22 @@
 {% extends "layout.html" %}
 
+{% block title %}Tags - {{SITE_TITLE}}{% endblock %}
+
+{% block header %}
+<h1>Tags</h1>
+{% include "includes/menu.html" %}
+{% endblock %}
+
 {% block content %}
-{% for tag in tags %}
-  <a href="/tags/{{tag.slug}}/posts/" style="font-size:{{tag.count * 14}}px">{{tag.title}}</a>
-{% else %}
-<h2>Nothing to see here</h2>
-{% endfor %}
+    {% if tags.length %}
+    <ul>
+        {% for tag in tags %}
+            <li>
+                <a href="/tags/{{tag.slug}}/posts/">{{tag.title}}</a>
+            </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <h2>Nothing to see here</h2>
+    {% endif %}
 {% endblock %}

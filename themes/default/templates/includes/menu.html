@@ -1,0 +1,5 @@
+<nav>
+    {% for link in MENU %}
+    <a href="{{link}}">{{loop.key}}</a>
+    {% endfor %}
+</nav>

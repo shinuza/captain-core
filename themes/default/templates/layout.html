@@ -14,12 +14,10 @@
   </head>
   <body>
     <header>
-      <h1>{% block header %}{{SITE_TITLE}}{% endblock %}</h1>
-        <nav>
-            {% for link in MENU %}
-                <a href="{{link}}">{{loop.key}}</a>
-            {% endfor %}
-        </nav>
+      {% block header %}
+      <h1>{{SITE_TITLE}}</h1>
+        {% include "includes/menu.html" %}
+        {% endblock %}
     </header>
 
     <section>
