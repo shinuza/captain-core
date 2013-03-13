@@ -60,7 +60,7 @@ describe('Resource', function() {
 
     it('should not be possible to create a post with an existing slug', function(done) {
       client.post('/posts',
-        {title: 'A blog post about Node.js', summary: 'A description bis', body: "Lorem ipsum!!", published: false}, function(err, req, res) {
+        {title: 'This is a small but insightful blog post about Node.js', summary: 'A description bis', body: "Lorem ipsum!!", published: false}, function(err, req, res) {
           assert.equal(res.statusCode, 409);
           done();
         });
@@ -78,17 +78,17 @@ describe('Resource', function() {
       client.get('/posts/5', function(err, req, res, json) {
         assert.ifError(err);
         assert.equal(res.statusCode, 200);
-        assert.equal(json.title, 'A blog post about Trance');
-        assert.equal(json.slug, 'a-blog-post-about-trance');
+        assert.equal(json.title, 'This is a small but insightful blog post about Trance');
+        assert.equal(json.slug, 'this-is-a-small-but-insightful-blog-post-about-trance');
         done();
       });
     });
 
     it('should be possible to view single post by slug', function(done) {
-      client.get('/posts/a-blog-post-about-trance', function(err, req, res, json) {
+      client.get('/posts/this-is-a-small-but-insightful-blog-post-about-trance', function(err, req, res, json) {
         assert.ifError(err);
         assert.equal(res.statusCode, 200);
-        assert.equal(json.title, 'A blog post about Trance');
+        assert.equal(json.title, 'This is a small but insightful blog post about Trance');
         assert.equal(json.id, 5);
         done();
       });
@@ -114,7 +114,7 @@ describe('Resource', function() {
       it('should be possible to view only a subset of posts', function(done) {
         client.get('/posts', function(err, req, res, json) {
           assert.equal(json.posts.length, 5);
-          assert.equal(json.posts[0].title, 'A blog post about Node.js');
+          assert.equal(json.posts[0].title, 'This is a small but insightful blog post about Node.js');
           done();
         });
       });

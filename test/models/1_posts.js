@@ -9,7 +9,7 @@ describe('Models', function() {
 
     var posts = {
       title: 'Foobar',
-      summary: 'Integer posuere erat a ante venenatis dapibus posuere velit aliquet.',
+      summary: 'Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Something something something dark side',
       body: bogan(),
       published: true,
       user_id: 1
@@ -48,7 +48,7 @@ describe('Models', function() {
     it('get by id', function(done) {
       db.posts.find('1', function(err, post) {
         assert.ifError(err);
-        assert.equal(post.slug, 'a-blog-post-about-sql');
+        assert.equal(post.slug, 'this-is-a-small-but-insightful-blog-post-about-sql');
         done();
       });
     });
