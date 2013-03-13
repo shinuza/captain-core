@@ -45,6 +45,6 @@ footer { border-top: 1px solid #ddd; }
   article .date { float: none; margin-bottom: 0.4em; }
 }
 
-@media handheld, only screen and (max-width:768px) and (orientation:landscape) {
+@media handheld, only screen and (min-width:400px) and (max-width:768px) and (orientation:landscape) {
   body { width: 90%; }
 }
