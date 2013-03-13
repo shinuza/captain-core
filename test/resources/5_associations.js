@@ -9,7 +9,7 @@ describe('Resource:', function() {
     describe('posts -> tags:', function() {
 
       it('should get the associated posts to tag "General" from its slug', function(done) {
-        client.get('/tags/general/posts/', function(err, req, res, json) {
+        client.get('/tags/general/', function(err, req, res, json) {
           assert.ifError(err);
           assert.equal(res.statusCode, 200);
           assert.equal(json.length, 3);
@@ -18,7 +18,7 @@ describe('Resource:', function() {
       });
 
       it('should get the associated posts to tag "General" from its id', function(done) {
-        client.get('/tags/2/posts/', function(err, req, res, json) {
+        client.get('/tags/2/', function(err, req, res, json) {
           assert.ifError(err);
           assert.equal(res.statusCode, 200);
           assert.equal(json.length, 3);
@@ -27,7 +27,7 @@ describe('Resource:', function() {
       });
 
       it('should return 404 for an non-existent tag"', function(done) {
-        client.get('/tags/drugs/posts/', function(err, req, res) {
+        client.get('/tags/drugs/', function(err, req, res) {
           assert.equal(res.statusCode, 404);
           done();
         });

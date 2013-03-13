@@ -67,7 +67,7 @@ app.post('/posts/:post/tags', posts.tags.set);
 app.get('/posts/:post/tags', posts.tags.get);
 app.resource('posts', posts);
 
-app.get('/tags/:tag/posts', tags.posts.get);
+app.get('/tags/:tag/', tags.posts.get);
 app.get('/tags/count', tags.count);
 app.resource('tags', tags);
 
