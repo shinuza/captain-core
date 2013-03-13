@@ -3,8 +3,7 @@
 {% block title %}{{tag.title}} - {{SITE_TITLE}}{% endblock %}
 
 {% block header %}
-<h1>{{tag.title}}</h1>
-{% include "includes/menu.html" %}
+<h1 class="textAlignL">{{tag.title}}</h1>
 {% endblock %}
 
 {% block content %}
@@ -16,4 +15,7 @@
     </li>
     {% endfor %}
 </ul>
+
+<h3>Navigation</h3>
+{% include "includes/menu.html" %}
 {% endblock %}

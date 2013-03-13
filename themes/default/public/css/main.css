@@ -6,6 +6,7 @@ h2 { font-size: 1.7em; line-height: 1.2em; }
 h3 { margin: 1em 0; }
 p { margin: 0.7em 0; }
 ul { list-style-type: circle; }
+li { margin-bottom: .3em; }
 
 p, ul { margin-bottom: 1.5em; -webkit-hyphens: auto; -moz-hyphens: auto; hyphens: auto;}
 
@@ -16,6 +17,7 @@ a:hover { border-bottom-color: #333; }
 .float-right { float: right; }
 .ctx { overflow: hidden; }
 .marginTop0 { margin-top: 0 !important; }
+.textAlignL { text-align: left !important; }
 
 header { margin: 3em 0; }
 header h1 { font-size: 4em; text-align: center; }
