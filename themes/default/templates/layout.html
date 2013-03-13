@@ -16,8 +16,9 @@
     <header>
       <h1>{% block header %}{{SITE_TITLE}}{% endblock %}</h1>
         <nav>
-            <a href="/posts">Blog</a>
-            <a href="/tags">Tags</a>
+            {% for link in MENU %}
+                <a href="{{link}}">{{loop.key}}</a>
+            {% endfor %}
         </nav>
     </header>
 
