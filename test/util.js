@@ -21,7 +21,7 @@ describe('Util', function() {
     assert.strictEqual(result4, 0);
   });
 
-  it.only('should convert a human interval into a date', function() {
+  it('should convert a human interval into a date', function() {
     var result,
         date = new Date(),
         date2 = new Date(date);
