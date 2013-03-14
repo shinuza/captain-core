@@ -61,6 +61,7 @@ app.use(middleware.errorHandler());
 
 // Routes
 app.get('/', posts.index);
+app.get('/archive', posts.archive);
 app.get('/posts/count', posts.count);
 app.get('/posts/count_published', posts.countPublished);
 app.post('/posts/:post/tags', posts.tags.set);
