@@ -35,6 +35,14 @@ describe('Models', function() {
       });
     });
 
+    it('get by token', function(done) {
+      db.tokens.findByToken('foobar', function(err, token) {
+        assert.ifError(err);
+        assert.equal(token.token, 'foobar');
+        done();
+      });
+    });
+
     it('del', function(done) {
       db.tokens.del('foobar', function(err, count) {
         assert.ifError(err);
