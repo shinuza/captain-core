@@ -32,6 +32,15 @@ describe('Resource:', function() {
       });
     });
 
+    it('should update the touch when a request is done while logged in', function(done) {
+      var t = client.headers.cookie[0].split(';')[0].split('=')[1];
+      db.tokens.findByToken(t, function(err, token) {
+        assert.ifError(err);
+        assert.ok(token.expires_at > new Date());
+        done();
+      });
+    });
+
     it('should log out', function(done) {
       client.del('/sessions/current', function(err, req, res) {
         assert.equal(res.statusCode, 204);
