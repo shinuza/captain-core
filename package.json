@@ -1,9 +1,8 @@
 {
-  "name": "captainjs-core",
-  "description": "Captain JS",
+  "name": "captain-core",
+  "description": "Captain is a blog engine for node.js",
   "version": "0.18.10",
   "author": "Samori Gorse <samorigorse@gmail.com>",
-  "private": true,
   "preferGlobal": true,
   "dependencies": {
     "commander": "~1.1.1",
@@ -25,12 +24,12 @@
     "restify": "~2.3.4",
     "boganipsum": "*"
   },
-  "repository": "git://github.com/shinuza/captainjs-core",
+  "repository": "git://github.com/shinuza/captain-core",
   "main": "index",
   "bin": {
-    "captainjs": "./bin/captainjs"
+    "captain": "./bin/captain"
   },
-  "engine": {
-    "node": ">=0.6"
+  "engines": {
+    "node": ">=0.6 <0.10"
   }
 }
