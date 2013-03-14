@@ -7,8 +7,8 @@ run:
 
 test:
 	@\
-	CAPTAINJS_SETTINGS=$(SETTINGS) ./bin/captainjs syncdb --force &&\
-	CAPTAINJS_SETTINGS=$(SETTINGS) ./bin/captainjs loaddata data &&\
+	CAPTAINJS_SETTINGS=$(SETTINGS) ./bin/captain syncdb --force &&\
+	CAPTAINJS_SETTINGS=$(SETTINGS) ./bin/captain loaddata data &&\
 	CAPTAINJS_SETTINGS=$(SETTINGS) mocha -G -b --recursive
 
 .PHONY: test run
