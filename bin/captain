@@ -15,6 +15,8 @@ program
   .option('createuser', 'Creates a user account')
   .option('syncdb', 'Synchronise all definitions')
   .option('loaddata [filename]', 'Loads data')
+  .option('themes', 'Display available themes')
+  .option('theme [theme]', 'Install theme')
   .option('init [projectname]', 'Creates a new project')
   .option('-f, --force', 'Force operation')
   .parse(process.argv);
@@ -61,7 +63,6 @@ function dirs(base, subs) {
     mkdir(path.join(base, sub));
   });
 }
-
 
 /**
  * Test if `path` is empty.
@@ -259,6 +260,18 @@ else if(program.init) {
   } else {
     initProject(target);
   }
+}
+
+else if(program.themes) {
+  (function() {
+
+  })();
+}
+
+else if(program.theme) {
+  (function(target) {
+    if(target === true) { return program.help(); }
+  })(program.theme);
 }
 
 else {
