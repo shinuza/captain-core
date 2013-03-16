@@ -4,11 +4,14 @@ var fs = require('fs'),
     path = require('path');
 
 var program = require('commander'),
-    async = require('async');
+    async = require('async'),
+    ncp = require('ncp');
 
 var pkg = require('../package.json'),
     db = require('./../lib/db'),
     util = require('../lib/util');
+
+const PROJECT_ROOT = path.resolve(__dirname, '..');
 
 program
   .version(pkg.version)
@@ -21,6 +24,15 @@ program
   .option('-f, --force', 'Force operation')
   .parse(process.argv);
 
+/**
+ * Returns str preceded by four spaces
+ *
+ * @param str
+ */
+
+function pad(str) {
+  return '    ' + str;
+}
 
 /**
  * echo str > path.
@@ -31,7 +43,7 @@ program
 
 function write(path, str) {
   fs.writeFileSync(path, str);
-  console.log(util.cyan('   create : ') + path);
+  console.log(util.cyan(pad('create : ')) + path);
 }
 
 /**
@@ -43,9 +55,9 @@ function write(path, str) {
 function mkdir(path) {
   if(!fs.existsSync(path)) {
     fs.mkdirSync(path, 0755);
-    console.log(util.cyan('   create : ') + path);
+    console.log(util.cyan(pad('create : ')) + path);
   } else {
-    console.log(util.yellow('   dir exists : ') + path);
+    console.log(util.yellow(pad('dir exists : ')) + path);
   }
 }
 
@@ -65,9 +77,41 @@ function dirs(base, subs) {
 }
 
 /**
+ * Install `theme` in `process.cwd()`
+ *
+ * @param theme
+ */
+
+function installTheme(theme, fn) {
+  theme = path.join(PROJECT_ROOT, 'themes', theme);
+
+  if(fs.existsSync(theme)) {
+    ncp(theme, path.join(process.cwd(), 'themes'), fn);
+  } else {
+    util.abort('Theme not found');
+  }
+}
+
+/**
+ * Copy `asset` to `./assets/asset`
+ *
+ * @param asset
+ */
+
+function copyAsset(root, asset) {
+  var out = path.join('assets', asset),
+      target = path.join(PROJECT_ROOT, out),
+      p = path.join(process.cwd(), root, out);
+
+  fs.writeFileSync(p, fs.readFileSync(target));
+  console.log(util.cyan(pad('create : ')) + path.join(root, out));
+}
+
+/**
  * Test if `path` is empty.
  *
  * @param {String} path
+ * @returns {Boolean}
  */
 
 function isEmptyDirectory(path) {
@@ -155,7 +199,7 @@ function files(name) {
 }
 
 // Handlers
-
+//TODO: Use IIFE
 if(program.createuser) {
   program.prompt('username: ', function(username) {
     program.password('password: ', '*', function(password) {
@@ -222,11 +266,12 @@ else if(program.init) {
   var target = program.init;
 
   function initProject(name) {
+    console.log();
     console.log(util.cyan('Creating project: ') + name);
     console.log();
 
     // Creating dirs
-    dirs(name, ['media', 'cache', 'logs']);
+    dirs(name, ['assets', 'cache', 'media', 'logs']);
 
     // Creating files
     var templates = files(name);
@@ -235,12 +280,22 @@ else if(program.init) {
       write(p, templates[key]);
     });
 
-    // Instructions
-    console.log();
-    console.log(util.cyan('Now run: '));
-    console.log('    cd ' + target);
-    console.log('    npm install');
-    console.log('    npm start');
+    copyAsset(name, 'syndication.html');
+    installTheme('default', function(err) {
+      if(err) {
+        util.abort(err);
+      } else {
+        console.log();
+        console.log(util.cyan('Installed theme: '), 'default');
+      }
+
+      // Instructions
+      console.log();
+      console.log(util.cyan('Now run: '));
+      console.log(pad('cd ' + target));
+      console.log(pad('npm install'));
+      console.log(pad('npm start'));
+    });
   }
 
   if(target === true) {
@@ -264,13 +319,31 @@ else if(program.init) {
 
 else if(program.themes) {
   (function() {
+    var themes = fs.readdirSync(path.join(PROJECT_ROOT, 'assets', 'themes'));
 
+    console.log(util.cyan('Available themes:'));
+    console.log(themes.map(pad).join(os.EOL));
   })();
 }
 
 else if(program.theme) {
   (function(target) {
-    if(target === true) { return program.help(); }
+    if(target === true) { program.help(); }
+
+    try {
+      var pkg = require(path.join(process.cwd(), '/package.json'));
+
+      if(Object.keys(pkg.dependencies).indexOf('captain-core') !== -1) {
+        installTheme(target);
+      } else {
+        util.abort('Not a Captain project, aborting');
+      }
+    } catch(e) {
+      console.log(e);
+      if(e.code === 'MODULE_NOT_FOUND') {
+        util.abort('Captain project not found');
+      }
+    }
   })(program.theme);
 }
 
