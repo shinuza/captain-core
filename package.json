@@ -1,7 +1,7 @@
 {
   "name": "captain-core",
   "description": "Captain is a blog engine for node.js",
-  "version": "0.18.10",
+  "version": "0.19.10",
   "author": "Samori Gorse <samorigorse@gmail.com>",
   "preferGlobal": true,
   "dependencies": {
