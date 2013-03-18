@@ -3,6 +3,6 @@ data/**
 logs/**
 sql/**
 test/**
-settings*
+./settings*
 .idea
 Makefile
