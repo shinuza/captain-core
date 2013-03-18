@@ -3,6 +3,7 @@ data/**
 logs/**
 sql/**
 test/**
-./settings*
+settings.js
+settings_test.js
 .idea
 Makefile
