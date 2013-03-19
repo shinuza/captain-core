@@ -25,6 +25,7 @@ var debug = settings.get('DEBUG'),
     mediaRoot = settings.get('MEDIA_ROOT');
 
 app.modules = {
+  'express': express,
   'settings': settings,
   'middleware': middleware,
   'signals': signals
@@ -38,7 +39,7 @@ swig.init({
   tzOffset: util.tzToMinutes(settings.get('TIME_ZONE')),
   filters: filters
 });
-app.set('views',templateDir);
+app.set('views', templateDir);
 app.set('view engine', 'html');
 app.set('view options', { layout: false });
 app.engine('.html', cons.swig);
@@ -56,7 +57,6 @@ app.configure('development', function() {
   app.use(middleware.configurationHandler());
 });
 app.use(app.router);
-app.use(middleware.notFoundHandler());
 app.use(middleware.errorHandler());
 
 // Routes
