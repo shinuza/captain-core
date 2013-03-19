@@ -2,7 +2,7 @@
   "name": "captain-core",
   "description": "Core module for captain.js",
   "keywords": ["blog", "cms", "content", "management", "web"],
-  "version": "0.19.13",
+  "version": "0.19.14",
   "author": {
     "name": "Samori Gorse",
     "email": "samorigorse@gmail.com"
