@@ -5,7 +5,7 @@ var assert = require('assert');
 var restify = require('restify');
 
 var client = require('../client');
-var settings = require('../../lib/settings.js');
+var settings = require('../../lib/conf.js');
 
 describe('Resource:', function() {
 
