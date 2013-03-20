@@ -29,7 +29,8 @@
     "node-uuid": "~1.4.0",
     "pg": "~0.12.3",
     "underscore": "~1.4.4",
-    "js-schema": "~0.6.2"
+    "js-schema": "~0.6.2",
+    "cjson": "~0.2.1"
   },
   "devDependencies": {
     "mocha": "*",

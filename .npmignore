@@ -2,6 +2,7 @@ cache/**
 data/**
 logs/**
 test/**
+conf/**
 settings_test.js
 .idea
 Makefile
