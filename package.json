@@ -1,7 +1,13 @@
 {
   "name": "captain-core",
   "description": "Core module for captain.js",
-  "keywords": ["blog", "cms", "content", "management", "web"],
+  "keywords": [
+    "blog",
+    "cms",
+    "content",
+    "management",
+    "web"
+  ],
   "version": "0.20.14",
   "author": {
     "name": "Samori Gorse",
@@ -23,7 +29,8 @@
     "node-uuid": "~1.4.0",
     "pg": "~0.12.3",
     "underscore": "~1.4.4",
-    "js-schema": "~0.6.2"
+    "js-schema": "~0.6.2",
+    "cjson": "~0.2.1"
   },
   "devDependencies": {
     "mocha": "*",
