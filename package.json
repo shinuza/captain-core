@@ -1,7 +1,13 @@
 {
   "name": "captain-core",
   "description": "Core module for captain.js",
-  "keywords": ["blog", "cms", "content", "management", "web"],
+  "keywords": [
+    "blog",
+    "cms",
+    "content",
+    "management",
+    "web"
+  ],
   "version": "0.20.14",
   "author": {
     "name": "Samori Gorse",
