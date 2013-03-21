@@ -1,5 +1,5 @@
-{
+module.exports = {
   "db": "tcp://shinuza@localhost/shinuza",
   "site_id": "d73ec817-2c2a-4be0-ba04-9d668690b83e",
   "secret_key": "SOKcM228ciZ5WdwNHJMOIhQfHgD6vIMkm5kEUmlQsnXpAXJrRk7LId8G8eOLzNCvi6wUDsGS/iHnptmA/Tu8OA=="
-}
+};
