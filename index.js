@@ -4,7 +4,6 @@ var resource = require('express-resource'),
 var util = require('./lib/util'),
     conf = require('./lib/conf'),
     middleware = require('./lib/middleware'),
-    signals = require('./lib/signals'),
     templates = require('./lib/templates.js'),
 
     feed = require('./lib/resources/feed'),
@@ -16,11 +15,7 @@ var util = require('./lib/util'),
 var app = express(),
     join = require('path').join;
 
-app.modules = {
-  'conf': conf,
-  'middleware': middleware,
-  'signals': signals
-};
+app.conf = conf;
 
 // Locals
 templates.setup(app);
