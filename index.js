@@ -6,6 +6,7 @@ var util = require('./lib/util'),
     conf = require('./lib/conf'),
     middleware = require('./lib/middleware'),
     templates = require('./lib/templates.js'),
+    models = require('./lib/models'),
 
     feed = require('./lib/resources/feed'),
     sessions = require('./lib/resources/sessions'),
@@ -18,6 +19,7 @@ var app = express(),
 
 // Locals
 app.conf = conf;
+app.models = models;
 _.each(conf, function(value, key) {
   app.locals[key] = value;
 });
