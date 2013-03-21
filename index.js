@@ -32,6 +32,8 @@ app.configure('development', function() {
   app.use(express.static(conf.static_root));
   app.use(express.logger('dev'));
   app.use(express.responseTime());
+  app.use(middleware.firstRun());
+  app.post('/create_user', resources.users.create_user);
 });
 app.use(app.router);
 app.use(middleware.errorHandler());
