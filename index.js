@@ -1,5 +1,6 @@
 var resource = require('express-resource'),
-    express = require('express');
+    express = require('express'),
+    _ = require('underscore');
 
 var util = require('./lib/util'),
     conf = require('./lib/conf'),
@@ -15,9 +16,13 @@ var util = require('./lib/util'),
 var app = express(),
     join = require('path').join;
 
-app.conf = conf;
-
 // Locals
+app.conf = conf;
+_.each(conf, function(value, key) {
+  app.locals[key] = value;
+});
+
+// Templates
 templates.setup(app);
 
 // Middleware
