@@ -1,18 +1,12 @@
 var resource = require('express-resource'),
-    express = require('express'),
-    _ = require('underscore');
+    express = require('express');
 
 var util = require('./lib/util'),
     conf = require('./lib/conf'),
     middleware = require('./lib/middleware'),
     templates = require('./lib/templates.js'),
     models = require('./lib/models'),
-
-    feed = require('./lib/resources/feed'),
-    sessions = require('./lib/resources/sessions'),
-    users = require('./lib/resources/users'),
-    posts = require('./lib/resources/posts'),
-    tags = require('./lib/resources/tags');
+    resources = require('./lib/resources');
 
 var app = express(),
     join = require('path').join;
@@ -20,8 +14,9 @@ var app = express(),
 // Locals
 app.conf = conf;
 app.models = models;
-_.each(conf, function(value, key) {
-  app.locals[key] = value;
+app.resources = resources;
+Object.keys(conf).forEach(function(key) {
+  app.locals[key] = conf[key];
 });
 
 // Templates
@@ -42,24 +37,24 @@ app.use(app.router);
 app.use(middleware.errorHandler());
 
 // Routes
-app.get('/', posts.index);
-app.get('/archive', posts.archive);
-app.get('/posts/count', posts.count);
-app.get('/posts/count_published', posts.countPublished);
-app.post('/posts/:post/tags', posts.tags.set);
-app.get('/posts/:post/tags', posts.tags.get);
-app.resource('posts', posts);
+app.get('/', resources.posts.index);
+app.get('/archive', resources.posts.archive);
+app.get('/posts/count', resources.posts.count);
+app.get('/posts/count_published', resources.posts.countPublished);
+app.post('/posts/:post/tags', resources.posts.tags.set);
+app.get('/posts/:post/tags', resources.posts.tags.get);
+app.resource('posts', resources.posts);
 
-app.get('/tags/:tag/', tags.posts.get);
-app.get('/tags/count', tags.count);
-app.resource('tags', tags);
+app.get('/tags/:tag/', resources.tags.posts.get);
+app.get('/tags/count', resources.tags.count);
+app.resource('tags', resources.tags);
 
-app.get('/users/count', users.count);
-app.resource('users', users);
+app.get('/users/count', resources.users.count);
+app.resource('users', resources.users);
 
-app.resource('conf', conf);
-app.resource('sessions', sessions);
-app.resource('feed', feed);
+app.resource('conf', resources.conf);
+app.resource('sessions', resources.sessions);
+app.resource('feed', resources.feed);
 
 if(require.main === module) {
   app.listen(conf.port, function() {
