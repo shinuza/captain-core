@@ -6,3 +6,6 @@ conf/**
 settings_test.js
 .idea
 Makefile
+.git/
+.DS_Store
+.gitignore
