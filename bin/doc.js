@@ -9,7 +9,7 @@ var PROJECT_ROOT = path.resolve(__dirname, '..');
 var lib_path = join(PROJECT_ROOT, 'lib');
 var doc_path = join(PROJECT_ROOT, 'docs');
 
-function generate(dir) {
+function generate(dir, includeIndex) {
   var sourceDir = join(lib_path, dir);
   var outputDir = join(doc_path, dir);
 
@@ -18,7 +18,7 @@ function generate(dir) {
   }
 
   fs.readdirSync(sourceDir).forEach(function(file) {
-    if(file == 'index.js') return;
+    if(!includeIndex && file == 'index.js') return;
     var sourceFile = join(sourceDir, file);
     var outputFile = path.basename(file, '.js') + '.md';
 
@@ -29,3 +29,4 @@ function generate(dir) {
 }
 
 generate('models');
+generate('resources');
