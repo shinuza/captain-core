@@ -29,13 +29,14 @@
     "node-uuid": "~1.4.0",
     "pg": "~0.12.3",
     "underscore": "~1.4.4",
-    "js-schema": "~0.6.2",
-    "cjson": "~0.2.1"
+    "js-schema": "~0.6.2"
   },
   "devDependencies": {
-    "mocha": "*",
+    "node-dev": "~2.0.1",
+    "mocha": "~1.8.2",
     "restify": "~2.3.4",
-    "boganipsum": "*"
+    "boganipsum": "0.0.0",
+    "markdox": "~0.1.2"
   },
   "engines": {
     "node": ">=0.6 <0.10"

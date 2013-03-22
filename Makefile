@@ -1,12 +1,15 @@
 default: run
 
 run:
-	@node-dev index.js
+	@node_modules/.bin/node-dev index.js
 
 test:
 	@\
 	captain syncdb --force &&\
 	captain loaddata data &&\
-	mocha -G -b --recursive
+	node_modules/.bin/mocha -G -b --recursive
+
+doc:
+	@bin/doc.js
 
 .PHONY: test run
