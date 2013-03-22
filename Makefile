@@ -9,7 +9,7 @@ test:
 	captain loaddata data &&\
 	node_modules/.bin/mocha -G -b --recursive
 
-doc:
+docs:
 	@bin/doc.js
 
-.PHONY: test run
+.PHONY: test run docs
