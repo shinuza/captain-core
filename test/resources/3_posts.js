@@ -16,6 +16,7 @@ describe('Resource', function() {
 
     it('should not list unpublished posts when not logged it', function(done) {
       client.get('/posts', function(err, req, res, json) {
+        assert.ifError(err);
         assert.equal(res.statusCode, 200);
         assert.equal(json.posts.length, 5);
         assert.equal(json.posts[1].published, true);
@@ -68,6 +69,7 @@ describe('Resource', function() {
 
     it('should be possible to edit posts', function(done) {
       client.put('/posts/3', {title: 'Some edited title 1', published: true}, function(err, req, res, json) {
+        assert.ifError(err);
         assert.equal(res.statusCode, 201);
         assert.equal(json.title, 'Some edited title 1');
         done();

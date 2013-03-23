@@ -1,19 +1,20 @@
 var assert = require('assert');
-var util = require('../lib/util');
+var date = require('../lib/util/date');
+var string = require('../lib/util/string');
 
 
 describe('Util', function() {
 
   it('should slugify the given string', function() {
-    var result = util.slugify("Un éléphant à l'orée du bois");
+    var result = string.slugify("Un éléphant à l'orée du bois");
     assert.equal(result, 'un-elephant-a-loree-du-bois');
   });
 
   it('should convert a timezone to its minutes equivalent', function() {
-    var result = util.tzToMinutes(),
-        result2 = util.tzToMinutes('America/Guyana'),
-        result3 = util.tzToMinutes('Asia/Tokyo'),
-        result4 = util.tzToMinutes('Lol/Cat');
+    var result = date.tzToMinutes(),
+        result2 = date.tzToMinutes('America/Guyana'),
+        result3 = date.tzToMinutes('Asia/Tokyo'),
+        result4 = date.tzToMinutes('Lol/Cat');
 
     assert.strictEqual(result, 0);
     assert.strictEqual(result2, 240);
@@ -23,16 +24,16 @@ describe('Util', function() {
 
   it('should convert a human interval into a date', function() {
     var result,
-        date = new Date(),
-        date2 = new Date(date);
+        d = new Date(),
+        d2 = new Date(d);
 
-    date2.setDate(date2.getDate() + 2);
-    date2.setHours(date2.getHours() + 4);
-    date2.setSeconds(date2.getSeconds() + 50);
+    d2.setDate(d2.getDate() + 2);
+    d2.setHours(d2.getHours() + 4);
+    d2.setSeconds(d2.getSeconds() + 50);
 
-    result = util.stampify('2 days, 4 hours, 50 seconds', date);
+    result = date.stampify('2 days, 4 hours, 50 seconds', d);
 
-    assert.equal(result.toJSON(), date2.toJSON());
+    assert.equal(result.toJSON(), d2.toJSON());
   });
 
 });
