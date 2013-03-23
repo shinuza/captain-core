@@ -10,6 +10,6 @@ test:
 	node_modules/.bin/mocha -G -b --recursive
 
 docs:
-	@bin/doc.js
+	@bin/docs.js
 
 .PHONY: test run docs
