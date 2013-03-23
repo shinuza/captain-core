@@ -6,7 +6,7 @@ run:
 test:
 	@\
 	captain syncdb --force &&\
-	captain loaddata data &&\
+	captain load_data data &&\
 	node_modules/.bin/mocha -G -b --recursive
 
 docs:
