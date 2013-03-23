@@ -24,16 +24,16 @@ describe('Util', function() {
 
   it('should convert a human interval into a date', function() {
     var result,
-        date = new Date(),
-        date2 = new Date(date);
+        d = new Date(),
+        d2 = new Date(d);
 
-    date2.setDate(date2.getDate() + 2);
-    date2.setHours(date2.getHours() + 4);
-    date2.setSeconds(date2.getSeconds() + 50);
+    d2.setDate(d2.getDate() + 2);
+    d2.setHours(d2.getHours() + 4);
+    d2.setSeconds(d2.getSeconds() + 50);
 
-    result = date.stampify('2 days, 4 hours, 50 seconds', date);
+    result = date.stampify('2 days, 4 hours, 50 seconds', d);
 
-    assert.equal(result.toJSON(), date2.toJSON());
+    assert.equal(result.toJSON(), d2.toJSON());
   });
 
 });
