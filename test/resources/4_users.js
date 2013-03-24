@@ -50,6 +50,7 @@ describe('Resource', function() {
 
     it('should be possible to modify a user', function(done) {
       client.put('/users/5', {password: 'pass'}, function(err, req, res) {
+        assert.ifError(err);
         assert.equal(res.statusCode, 201);
         done();
       });
