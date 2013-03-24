@@ -3,6 +3,7 @@ var path = require('path'),
     join = path.join;
 
 exports.themes_root = resolve(__dirname, '..', '..', 'captain', 'themes');
+exports.theme = 'default';
 exports.theme_root = join(exports.themes_root, exports.theme);
 exports.template_dir = join(exports.theme_root, 'templates');
 exports.static_root = join(exports.theme_root, 'public');
