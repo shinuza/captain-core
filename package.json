@@ -32,7 +32,6 @@
     "js-schema": "~0.6.2"
   },
   "devDependencies": {
-    "node-dev": "~2.0.1",
     "mocha": "~1.8.2",
     "restify": "~2.3.4",
     "boganipsum": "0.0.0",
