@@ -2,6 +2,8 @@ var path = require('path'),
     resolve = path.resolve,
     join = path.join;
 
+exports.port = 5555;
+
 exports.themes_root = resolve(__dirname, '..', '..', 'captain', 'themes');
 exports.theme = 'default';
 exports.theme_root = join(exports.themes_root, exports.theme);
