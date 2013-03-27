@@ -123,11 +123,11 @@ describe('Resource', function() {
 
       it('should be possible to posts by page', function(done) {
         client.get('/posts?page=1', function(err, req, res, json) {
-        assert.equal(json.posts.length, 5);
-        assert.equal(json.posts[4].title, 'Foobar');
-        done();
+          assert.equal(json.posts.length, 5);
+          assert.equal(json.posts[4].title, 'Foobar');
+          done();
+        });
       });
-  });
     });
 
     it('should not be possible to remove a non-existing post', function(done) {
