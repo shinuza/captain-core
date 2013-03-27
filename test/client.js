@@ -1,6 +1,6 @@
 var restify = require('restify');
-var settings = require('../lib/conf/');
+var conf = require('../lib/conf/');
 
 module.exports = restify.createJsonClient({
-  url: 'http://localhost:' + settings.port
+  url: 'http://localhost:' + conf.port
 });
