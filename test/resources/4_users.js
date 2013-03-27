@@ -104,14 +104,14 @@ describe('Resource', function() {
 
     it('should be possible to remove a user', function(done) {
       client.del('/users/5', function(err, req, res) {
-        assert.equal(res.statusCode, 204);
+        assert.equal(res.statusCode, 200);
         done();
       });
     });
 
     it('should log out', function(done) {
       client.del('/sessions/current', function(err, req, res) {
-        assert.equal(res.statusCode, 204);
+        assert.equal(res.statusCode, 200);
         done();
       });
     });

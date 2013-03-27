@@ -43,7 +43,7 @@ describe('Resource:', function() {
 
     it('should log out', function(done) {
       client.del('/sessions/current', function(err, req, res) {
-        assert.equal(res.statusCode, 204);
+        assert.equal(res.statusCode, 200);
         done();
       });
     });
