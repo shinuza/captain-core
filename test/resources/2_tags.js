@@ -50,7 +50,7 @@ describe('Resource', function() {
     it('retrieve all tags', function(done) {
       client.get('/tags', function(err, req, res, json) {
         assert.equal(res.statusCode, 200);
-        assert.equal(json.length, 3);
+        assert.equal(json.length, 4);
         done();
       });
     });
@@ -76,13 +76,6 @@ describe('Resource', function() {
       client.get('/tags/i-dont-exist', function(err, req, res, json) {
         assert.equal(res.statusCode, 404);
         assert.equal(json.message, 'Not found');
-        done();
-      });
-    });
-
-    it('should be possible to view multiple tags at once', function(done) {
-      client.get('/tags', function(err, req, res, json) {
-        assert.equal(json.length, 3);
         done();
       });
     });

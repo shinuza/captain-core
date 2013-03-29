@@ -54,6 +54,14 @@ describe('Models', function() {
     it('all', function(done) {
       db.tags.all(function(err, tags) {
         assert.ifError(err);
+        assert.equal(tags.length, 4);
+        done();
+      });
+    });
+
+    it('all with posts', function(done) {
+      db.tags.allWithPosts(function(err, tags) {
+        assert.ifError(err);
         assert.equal(tags.length, 3);
         done();
       });
