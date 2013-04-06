@@ -83,7 +83,7 @@ describe('Resource', function() {
     it('should be possible to view all users', function(done) {
       client.get('/users', function(err, req, res, json) {
         assert.equal(res.statusCode, 200);
-        assert.equal(json.length, 3);
+        assert.equal(json.users.length, 3);
         done();
       });
     });
