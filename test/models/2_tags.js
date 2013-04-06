@@ -51,18 +51,36 @@ describe('Models', function() {
       });
     });
 
-    it('all', function(done) {
-      db.tags.all(function(err, tags) {
+    it('count', function(done) {
+      db.tags.count(function(err, count) {
         assert.ifError(err);
-        assert.equal(tags.length, 4);
+        assert.equal(count, 4);
+        done();
+      });
+    });
+
+    it('all', function(done) {
+      db.tags.all({page: 4, limit: 1}, function(err, obj) {
+        assert.ifError(err);
+        assert.equal(obj.page, 4);
+        assert.equal(obj.rows.length, 1);
+        done();
+      });
+    });
+
+    it('count with posts', function(done) {
+      db.tags.countWithPosts(function(err, count) {
+        assert.ifError(err);
+        assert.equal(count, 3);
         done();
       });
     });
 
     it('all with posts', function(done) {
-      db.tags.allWithPosts(function(err, tags) {
+      db.tags.allWithPosts({page: 2, limit: 2}, function(err, obj) {
         assert.ifError(err);
-        assert.equal(tags.length, 3);
+        assert.equal(obj.page, 2);
+        assert.equal(obj.rows.length, 1);
         done();
       });
     });

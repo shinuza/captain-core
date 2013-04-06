@@ -59,10 +59,19 @@ describe('Models', function() {
       });
     });
 
-    it('all', function(done) {
-      db.users.all(function(err, users) {
+    it('count', function(done) {
+      db.users.count(function(err, count) {
         assert.ifError(err);
-        assert.equal(users.length, 3);
+        assert.equal(count, 3);
+        done();
+      });
+    });
+
+    it('all', function(done) {
+      db.users.all({page: 2, limit: 2}, function(err, obj) {
+        assert.ifError(err);
+        assert.equal(obj.page, 2);
+        assert.equal(obj.rows.length, 1);
         done();
       });
     });
