@@ -62,10 +62,36 @@ describe('Models', function() {
       });
     });
 
+    it('count', function(done) {
+      db.posts.count(function(err, count) {
+        assert.ifError(err);
+        assert.equal(count, 7);
+        done();
+      });
+    });
+
+    it('all', function(done) {
+      db.posts.all({page: 3, limit: 3}, function(err, obj) {
+        assert.ifError(err);
+        assert.equal(obj.page, 3);
+        assert.equal(obj.rows.length, 1);
+        done();
+      });
+    });
+
     it('count published', function(done) {
       db.posts.countPublished(function(err, count) {
         assert.ifError(err);
         assert.equal(count, 6);
+        done();
+      });
+    });
+
+    it('all published', function(done) {
+      db.posts.allPublished({page: 2, limit: 5}, function(err, obj) {
+        assert.ifError(err);
+        assert.equal(obj.page, 2);
+        assert.equal(obj.rows.length, 1);
         done();
       });
     });
