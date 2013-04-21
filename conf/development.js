@@ -1,6 +1,7 @@
-var path = require('path'),
-    resolve = path.resolve,
-    join = path.join;
+var path = require('path')
+  , resolve = path.resolve
+  , join = path.join;
+
 
 exports.port = 5555;
 
