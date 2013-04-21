@@ -1,7 +1,9 @@
-var assert = require('assert');
-var db = require('../../lib/db');
+"use strict";
 
-var bogan = require('boganipsum');
+var assert = require('assert')
+  , db = require('../../lib/db')
+  , bogan = require('boganipsum');
+
 
 describe('Models', function() {
 

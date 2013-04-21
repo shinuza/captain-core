@@ -1,6 +1,8 @@
-var assert = require('assert');
-var date = require('../lib/util/date');
-var string = require('../lib/util/string');
+"use strict";
+
+var assert = require('assert')
+  , date = require('../lib/util/date')
+  , string = require('../lib/util/string');
 
 
 describe('Util', function() {
@@ -23,9 +25,9 @@ describe('Util', function() {
   });
 
   it('should convert a human interval into a date', function() {
-    var result,
-        d = new Date(),
-        d2 = new Date(d);
+    var result
+      , d = new Date()
+      , d2 = new Date(d);
 
     d2.setDate(d2.getDate() + 2);
     d2.setHours(d2.getHours() + 4);

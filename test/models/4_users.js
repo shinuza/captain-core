@@ -1,5 +1,8 @@
-var assert = require('assert');
-var db = require('../../lib/db');
+"use strict";
+
+var assert = require('assert')
+  , db = require('../../lib/db');
+
 
 describe('Models', function() {
 
