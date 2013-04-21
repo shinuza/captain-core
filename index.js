@@ -1,15 +1,15 @@
-var resource = require('express-resource'),
-    express = require('express');
+"use strict";
 
-var util = require('./lib/util'),
-    conf = require('./lib/conf'),
-    middleware = require('./lib/middleware'),
-    templates = require('./lib/templates.js'),
-    models = require('./lib/models'),
-    resources = require('./lib/resources');
-
-var app = express(),
-    join = require('path').join;
+var resource = require('express-resource')
+  , express = require('express')
+  , util = require('./lib/util')
+  , conf = require('./lib/conf')
+  , middleware = require('./lib/middleware')
+  , templates = require('./lib/templates.js')
+  , models = require('./lib/models')
+  , resources = require('./lib/resources')
+  , app = express()
+  , join = require('path').join;
 
 // Locals
 app.conf = conf;

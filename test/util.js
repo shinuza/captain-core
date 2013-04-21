@@ -1,6 +1,8 @@
-var assert = require('assert');
-var date = require('../lib/util/date');
-var string = require('../lib/util/string');
+"use strict";
+
+var assert = require('assert')
+  , date = require('../lib/util/date')
+  , string = require('../lib/util/string');
 
 
 describe('Util', function() {

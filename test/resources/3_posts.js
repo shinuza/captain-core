@@ -1,6 +1,9 @@
-var assert = require('assert');
-var client = require('../client');
-var db = require('../../lib/db');
+"use strict";
+
+var assert = require('assert')
+  , client = require('../client')
+  , db = require('../../lib/db');
+
 
 describe('Resource', function() {
 
